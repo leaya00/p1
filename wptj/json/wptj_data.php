@@ -1,0 +1,41 @@
+<?php
+header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里
+require '../../lib/dbUtils.php';
+$Db = new Db();
+switch ($_GET['op']) {
+	case "select":
+		$sql="SELECT a.id,a.shop,a.object,a.price,a.sdate,a.edate,a.createname,shop.caption as shop_s,object.caption object_s
+			FROM`wptj_data`AS a
+			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='shop') AS shop ON a.shop = shop.code
+			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code order by id desc";
+		$sql=sprintf($sql);
+		$query = $Db->query($sql);
+		$result=array();
+		while($row = $Db->fetch($query)){
+			$result[]=$row;
+		}
+		echo json_encode($result);
+		$Db->close();
+		break;
+	case "save":
+		// 'id', 'sdate', 'edate','price','shop','object','createname'
+		$id=$_POST['id'];
+		if($id==""){
+			$sql= sprintf("INSERT INTO `wptj_data` (sdate,edate,price,shop,object,createname) values ('%s','%s','%s','%s','%s','%s')"
+			,$_POST['sdate'],$_POST['edate'],$_POST['price']
+			,$_POST['shop'],$_POST['object'],$_POST['createname']);
+		}else{
+			$sql= sprintf("UPDATE  `wptj_data` set sdate='%s',edate='%s',price='%s',shop='%s',object='%s',createname='%s' where id=%s"
+			,$_POST['sdate'],$_POST['edate'],$_POST['price']
+			,$_POST['shop'],$_POST['object'],$_POST['createname']
+			,$id);
+		}
+		$r= ($Db->query($sql));
+		echo json_encode(array('result' => (Bool)$r));
+		break;
+	case "delete":
+		$sql=sprintf("DELETE FROM `wptj_data` where id=%s",$_POST['id']);
+		$r= ($Db->query($sql));
+		echo json_encode(array('result' => (Bool)$r));
+		break;
+}

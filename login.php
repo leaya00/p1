@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>登录系统</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>	
+	<meta http-equiv="X-UA-Compatible" content="IE=7" />
+	<script src="./js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link href="./js/ext-4.2.1/resources/css/ext-all-neptune.css" rel="stylesheet" type="text/css" />
+    <script src="./js/ext-4.2.1/ext-all-debug.js" type="text/javascript"></script>
+    <script src="./js/ext-4.2.1/locale/ext-lang-zh_CN.js" type="text/javascript"></script>
+	
+</head>
+<body>
+	<script>
+	
+	Ext.require([
+    'Ext.form.*',
+    'Ext.layout.container.Absolute',
+    'Ext.window.Window'
+]);
+
+Ext.onReady(function() {
+    var form = Ext.create('Ext.form.Panel', {
+        layout: 'absolute',
+        url: 'save-form.php',
+        defaultType: 'textfield',
+		fieldDefaults: {
+			labelWidth: 80,
+			labelAlign:'right'
+		},
+        border: false,
+		region:'center',
+        items: [		
+		{
+            fieldLabel: '用户名',
+            fieldWidth: 70,
+            msgTarget: 'side',
+            allowBlank: false,            
+            x: 0,
+            y: 20,
+            name: 'username'
+        }, {
+            fieldLabel: '密码',
+            fieldWidth: 70,
+            x: 0,
+            y: 55,
+			inputType:'password',
+            name: 'password'
+			}
+		]
+    });
+
+    var win = Ext.create('Ext.window.Window', {
+        autoShow: true,
+        title: '登录',
+        width: 400,
+        height: 200,
+		closable:false,
+		draggable:false,
+		resizable:false,
+		layout:'border',
+        plain:true,
+        items: [
+		{
+			
+			width:100,
+			border: false,
+			region:'west',	
+			html:"<div style='margin-top:10px;margin-left:10px;'><image src='./image/login/login.png'></image></div>"
+		}
+		,form],
+
+        buttons: [{
+            text: '登录'
+        },{
+            text: '关闭'
+        }]
+    });
+});
+	</script>
+	
+</body>
+</html>
