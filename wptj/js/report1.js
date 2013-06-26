@@ -18,7 +18,6 @@ Ext.onReady(function() {
 					labelWidth : 50,
 					labelAlign : 'right',
 					width : 200,
-					height:50,
 					x : 5,
 					y : 15,
 					id : 'txt_shop',
