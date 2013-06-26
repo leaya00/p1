@@ -2,17 +2,28 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>登录系统</title>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>	
-	<meta http-equiv="X-UA-Compatible" content="IE=7" />
-	<script src="./js/jquery-1.7.1.min.js" type="text/javascript"></script>
-    <link href="./js/ext-4.2.1/resources/css/ext-all-neptune.css" rel="stylesheet" type="text/css" />
-    <script src="./js/ext-4.2.1/ext-all-debug.js" type="text/javascript"></script>
-    <script src="./js/ext-4.2.1/locale/ext-lang-zh_CN.js" type="text/javascript"></script>
-	
+<title>登录系统</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<script src="./js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<link href="./js/ext-4.2.1/resources/css/ext-all-neptune.css"
+	rel="stylesheet" type="text/css" />
+<script src="./js/ext-4.2.1/ext-all-debug.js" type="text/javascript"></script>
+<script src="./js/ext-4.2.1/locale/ext-lang-zh_CN.js"
+	type="text/javascript"></script>
+
 </head>
 <body>
-	<script>
+<?php
+if(isset($_POST['username']) && isset($_POST['password'])){
+	require './lib/dbUtils.php';
+	//		登录成功跳转
+	$db=new Db();
+	$result=$db->query_fetch("select count(1) as r from user where username='".$_POST['username']."' and password='".$_POST['password']."'");
+	print_r($result);
+}
+?>
+<script>
 	
 	Ext.require([
     'Ext.form.*',
@@ -23,8 +34,10 @@
 Ext.onReady(function() {
     var form = Ext.create('Ext.form.Panel', {
         layout: 'absolute',
-        url: 'save-form.php',
+        url: 'login.php',
         defaultType: 'textfield',
+        method: 'POST',
+        standardSubmit:true,
 		fieldDefaults: {
 			labelWidth: 80,
 			labelAlign:'right'
@@ -72,13 +85,19 @@ Ext.onReady(function() {
 		,form],
 
         buttons: [{
-            text: '登录'
+            text: '登录',
+            handler:function(){
+        		form.submit();            
+       		 }
         },{
-            text: '关闭'
+            text: '重置',
+            	handler:function(){
+        		form.reset();            
+       		 }
         }]
     });
 });
 	</script>
-	
+
 </body>
 </html>

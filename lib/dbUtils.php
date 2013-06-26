@@ -57,7 +57,7 @@ class Db{
 	function fetch($row)
 	{
 		 
-		return mysql_fetch_array( $row,MYSQL_ASSOC );
+		return mysql_fetch_array( $row );
 		 
 	}
 
