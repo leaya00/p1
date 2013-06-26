@@ -4,7 +4,7 @@
 -- http://www.yanue.net 
 --
 -- 主机: localhost
--- 生成日期: 2013 年  06 月 23 日 22:28
+-- 生成日期: 2013 年  06 月 26 日 22:11
 -- MySQL版本: 5.5.27
 -- PHP 版本: 5.4.7
 
@@ -63,7 +63,7 @@ CREATE TABLE `wptj_dict` (
   `code` varchar(20) CHARACTER SET latin1 NOT NULL,
   `caption` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 wptj_dict
@@ -83,3 +83,4 @@ INSERT INTO `wptj_dict` VALUES('11','shop','005','shop5');
 INSERT INTO `wptj_dict` VALUES('12','shop','006','shop6');
 INSERT INTO `wptj_dict` VALUES('13','object','03','装饰1');
 INSERT INTO `wptj_dict` VALUES('14','object','04','物品1');
+INSERT INTO `wptj_dict` VALUES('15','object','05','冰箱');
