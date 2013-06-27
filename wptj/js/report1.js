@@ -1,5 +1,7 @@
-Ext.require( [ 'Ext.grid.*' ]);
-txt_date=null;
+Ext.require([ 'Ext.grid.*' ]);
+txt_date = null;
+txt_shop = null;
+txt_object = null;
 Ext.onReady(function() {
 
 	LoadUI();
@@ -14,50 +16,50 @@ Ext.onReady(function() {
 			layout : 'absolute',
 			margin : '5 5 0 5',
 			items : [ {
-				
-					labelWidth : 50,
-					labelAlign : 'right',
-					width : 200,
-					x : 5,
-					y : 15,
-					id : 'txt_shop',
-					fieldLabel : '店铺',
-					xtype : 'combobox',
-					allowBlank : false,
-					// store: shopStore,
-					valueField : 'code',
-					displayField : 'caption',
-					typeAhead : true,
-					queryMode : 'local',
-					emptyText : '请选择...'
-				}, {
-					labelWidth : 50,
-					labelAlign : 'right',
-					width : 200,
-					x : 205,
-					y : 15,
-					id : 'txt_object',
-					fieldLabel : '物品',
-					xtype : 'combobox',
-					allowBlank : false,
-					// store: shopStore,
-					valueField : 'code',
-					displayField : 'caption',
-					typeAhead : true,
-					queryMode : 'local',
-					emptyText : '请选择...'
-				}, {
-					id : 'txt_date',
-					x : 425,
-					y : 15,
-					fieldLabel : '报表截止时间',
-					xtype : 'datefield',
-					format : 'Y-m-d',
-					allowBlank : false
-				}, ext_btnFind,
 
-				]
-			
+				labelWidth : 50,
+				labelAlign : 'right',
+				width : 200,
+				x : 5,
+				y : 15,
+				id : 'txt_shop',
+				fieldLabel : '店铺',
+				xtype : 'triggerfield',
+				editable : false,
+				triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
+				code : '',
+				onTriggerClick : function() {
+					popWin('./DictSelect.php', 'shop', this);
+				}
+
+			}, {
+				labelWidth : 50,
+				labelAlign : 'right',
+				width : 200,
+				x : 205,
+				y : 15,
+				id : 'txt_object',
+				fieldLabel : '商品',
+				xtype : 'triggerfield',
+				editable : false,
+				triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
+				code : '',
+				onTriggerClick : function() {
+					popWin('./DictSelect.php', 'object', this);
+				}
+
+			}, {
+				id : 'txt_date',
+				x : 425,
+				y : 15,
+				fieldLabel : '报表截止时间',
+				xtype : 'datefield',
+				format : 'Y-m-d',
+				allowBlank : false
+			}, ext_btnFind,
+
+			]
+
 		}, {
 			region : 'center',
 			margin : '5 5 0 5',
@@ -65,7 +67,9 @@ Ext.onReady(function() {
 			items : [ dataGrid ]
 		} ]
 	});
-	txt_date=Ext.ComponentManager.get('txt_date');
+	txt_date = Ext.getCmp('txt_date');
+	txt_shop = Ext.getCmp('txt_shop');
+	txt_object = Ext.getCmp('txt_object');
 	txt_date.setValue(new Date());
 });
 
@@ -78,9 +82,16 @@ LoadUI = function() {
 		x : 705,
 		y : 15,
 		handler : function() {
-			gridStore.proxy.setExtraParam('report','report1');
-			gridStore.proxy.setExtraParam('date',txt_date.getValue().format("yyyy-MM-dd"));
-			gridStore.reload();
+			try {
+				gridStore.proxy.setExtraParam('report', 'report1');
+				gridStore.proxy.setExtraParam('shop', txt_shop.code);
+				gridStore.proxy.setExtraParam('object', txt_object.code);
+				gridStore.proxy.setExtraParam('date', txt_date.getValue()
+						.format("yyyy-MM-dd"));
+				gridStore.reload();
+			} catch (e) {
+				alert("条件设置错误!");
+			}
 		}
 	});
 };
@@ -91,14 +102,15 @@ LoadGrid = function() {
 	Ext.define('gridModel', {
 		extend : 'Ext.data.Model',
 		fields : [ 'id', 'sdate', 'edate', 'price', 'sumday', 'nowday',
-				'nowprice', 'lostday', 'lostprice', 'shop', 'object','shop_s','object_s' ]
+				'nowprice', 'lostday', 'lostprice', 'shop', 'object', 'shop_s',
+				'object_s' ]
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 		buffered : false,
 		pageSize : 300,
 		proxy : {
 			type : "ajax",
-			actionMethods:'post',
+			actionMethods : 'post',
 			url : "./json/wptj_report.php",
 			reader : {
 				root : 'root',
@@ -122,7 +134,7 @@ LoadGrid = function() {
 			dataIndex : 'shop'
 		}, {
 			text : '店铺名称',
-//			flex : 1,
+			// flex : 1,
 			width : 200,
 			dataIndex : 'shop_s'
 		}, {
@@ -174,11 +186,11 @@ LoadGrid = function() {
 		enableLocking : true,
 
 		iconCls : 'icon-grid',
-		 bbar: {
-            xtype: 'pagingtoolbar',
-            store: gridStore,
-            displayInfo: true
-        },
+		bbar : {
+			xtype : 'pagingtoolbar',
+			store : gridStore,
+			displayInfo : true
+		},
 		header : false,
 		autoScroll : true
 

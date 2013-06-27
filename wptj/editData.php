@@ -11,6 +11,7 @@
     <script src="../js/ext-4.2.1/locale/ext-lang-zh_CN.js" type="text/javascript"></script>
 	<script src="../js/utils.js" type="text/javascript"></script>
 	<script src="./js/editData.js" type="text/javascript"></script>
+	<script src="./js/popWinDictSelect.js" type="text/javascript"></script>
 </head>
 <body>
 	

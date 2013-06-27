@@ -7,7 +7,7 @@ txt_sdate = null;
 txt_edate = null;
 Ext.onReady(function() {
 	myMask = new Ext.LoadMask($('body').get(0), {
-		msg : "Please wait..."
+		msg : "请等待，正在执行任务..."
 	});
 	// myMask.show();
 	// myMask.hide();
@@ -110,11 +110,11 @@ Ext.onReady(function() {
 					items : [ dataGrid ]
 				} ]
 	});
-	txt_shop = Ext.ComponentManager.get('txt_shop');
-	txt_object = Ext.ComponentManager.get('txt_object');
-	txt_price = Ext.ComponentManager.get('txt_price');
-	txt_sdate = Ext.ComponentManager.get('txt_sdate');
-	txt_edate = Ext.ComponentManager.get('txt_edate');
+	txt_shop = Ext.getCmp('txt_shop');
+	txt_object = Ext.getCmp('txt_object');
+	txt_price = Ext.getCmp('txt_price');
+	txt_sdate = Ext.getCmp('txt_sdate');
+	txt_edate = Ext.getCmp('txt_edate');
 });
 LoadDict = function() {
 	Ext.define('dictModel', {
@@ -400,32 +400,3 @@ del = function() {
 	});
 };
 
-popWin = function(url, dictType,dist_cm) {
-	var win = Ext
-			.create(
-					'Ext.window.Window',
-					{
-						title : '筛选--双击选择项目',
-						height : 500,
-						width : 400,
-						layout : 'fit',
-						resizable : false,
-						modal : true,
-						items : {
-							region : 'center',
-							html : '<iframe id="select_iframe" src="'
-									+ url
-									+ '" width="100%" height="100%" frameborder="0" ></iframe>'
-						}
-					}).show();
-	var setDictValue=function(code,caption){
-		dist_cm.setValue(caption);
-		dist_cm.code = code;
-		win.close();
-	};
-	$('#select_iframe').load(function() {
-		// 装载内容
-		$('#select_iframe').get(0).contentWindow.LoadInfo(dictType, setDictValue);
-
-	});
-};

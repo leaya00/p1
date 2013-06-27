@@ -3,6 +3,7 @@ txt_code = null;
 txt_caption = null;
 dictType = "";
 Ext.onReady(function() {
+	myMask = new Ext.LoadMask($('body').get(0), { msg: "请等待，正在执行任务..." });
 	dictType = $('#hid_type').val();
 	if (dictType === '') {
 		alert('error');
@@ -56,8 +57,8 @@ Ext.onReady(function() {
 					items : [ dataGrid ]
 				} ]
 	});
-	txt_code = Ext.ComponentManager.get('txt_code');
-	txt_caption = Ext.ComponentManager.get('txt_caption');
+	txt_code = Ext.getCmp('txt_code');
+	txt_caption = Ext.getCmp('txt_caption');
 });
 
 LoadUI = function() {
@@ -234,6 +235,7 @@ Clear_form = function() {
 	txt_caption.setValue('');
 };
 save = function() {
+	myMask.show();
 	var mydata = {
 		id : $("#hid_id").val(),
 		code : txt_code.getValue(),
@@ -250,13 +252,18 @@ save = function() {
 				alert("信息: 保存成功!");
 			} else {
 				alert("错误信息: " + msg.result);
+				ext_btnSave.setDisabled(false);
+				ext_btnModify.setText("取消修改");
+				Set_formState(true);
 			}
+			myMask.hide();
 		}
 	});
 };
 del = function() {
-	Ext.MessageBox.confirm('确认删除', '您确认要删除此条信息?', function(re) {
+	Ext.MessageBox.confirm('确认删除', '您确认要删除此条信息?', function(re) {		
 		if (re == "yes") {
+			myMask.show();
 			$.ajax( {
 				type : "POST",
 				url : "./json/wptj_dict.php?op=delete",
@@ -270,6 +277,7 @@ del = function() {
 					} else {
 						alert("错误信息: " + msg.result);
 					}
+					myMask.hide();
 				}
 
 			});

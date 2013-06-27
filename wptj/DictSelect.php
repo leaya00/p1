@@ -15,6 +15,9 @@
 
 </head>
 <body>
+<?php 
+//todo:增加多选的方式
+?>
 <script type="text/javascript">
 	LoadInfo=function(dictType,setDictValue) {
 		Ext.define('gridModel', {
@@ -102,11 +105,7 @@
 							}
 			        	 }
 				      },
-				      
-				    	 
 				    	  dataGrid
-					    
-				      
 				]
 		});
 		

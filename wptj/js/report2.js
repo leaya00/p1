@@ -78,8 +78,8 @@ Ext.onReady(function() {
 			items : [ dataGrid ]
 		} ]
 	});
-	txt_sdate=Ext.ComponentManager.get('txt_sdate');
-	txt_edate=Ext.ComponentManager.get('txt_edate');
+	txt_sdate=Ext.getCmp('txt_sdate');
+	txt_edate=Ext.getCmp('txt_edate');
 });
 
 LoadUI = function() {
@@ -91,10 +91,14 @@ LoadUI = function() {
 		x : 705,
 		y : 15,
 		handler : function() {
-			gridStore.proxy.setExtraParam('report','report2');
-			gridStore.proxy.setExtraParam('sdate',txt_sdate.getValue().format("yyyy-MM-dd"));
-			gridStore.proxy.setExtraParam('edate',txt_edate.getValue().format("yyyy-MM-dd"));
-			gridStore.reload();
+			try{
+				gridStore.proxy.setExtraParam('report','report2');
+				gridStore.proxy.setExtraParam('sdate',txt_sdate.getValue().format("yyyy-MM-dd"));
+				gridStore.proxy.setExtraParam('edate',txt_edate.getValue().format("yyyy-MM-dd"));
+				gridStore.reload();
+			}catch (e) {
+				alert("条件设置错误!");
+			}
 		}
 	});
 };

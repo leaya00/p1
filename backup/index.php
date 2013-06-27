@@ -110,7 +110,7 @@ Ext.onReady(function() {
         items: [form]
     });
     myMask = new Ext.LoadMask(win, { msg: "请等待，正在执行任务..." });
-    txt_filename=Ext.ComponentManager.get('txt_filename');
+    txt_filename=Ext.getCmp('txt_filename');
 });
 run_backup=function(){
 	  myMask.show();
