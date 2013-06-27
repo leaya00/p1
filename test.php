@@ -13,36 +13,14 @@
 
 
 <?php
-
-header("Content-Type: text/html; charset=utf-8");     //编码及内容类型头信息加在这里
-//require './lib/dbUtils.php';
-//require './lib/DbManage.php';
-//$backup=new DbManage(Db::$root,Db::$user,Db::$pass,Db::$db);
-//$backup->backup('','./backup_file/',null);
-
-//date_default_timezone_set('PRC');
-//echo date ( 'Y-m-d-H-i-s' );
-
-
-//iconv('GB2312','UTF-8',$file)
-$dir = "./backup_file/";
-// Open a known directory, and proceed to read its contents
-$result=array();
-if (is_dir($dir)) {
-	if ($dh = opendir($dir)) {
-		while (($file = readdir($dh)) !== false) {
-			if(filetype($dir . $file)=='file')
-				$result[]= iconv('GB2312','UTF-8',$file)."<br/>";
-		} closedir($dh);
-	}
-}
-//['filename']
-$xx=array();
-foreach ($result as $tmp){
-	$xx[]['filename']=$tmp;
+$var="a";
+if (empty($var)) {  
+    echo '$var is either 0 or not set at all';
+}else{
+	echo '$xxxxxx';
 	
 }
-echo json_encode($xx);
+
 ?>
 </body>
 </html>

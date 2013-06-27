@@ -5,11 +5,12 @@ $Db = new Db();
 
 switch ($_POST['report']) {
 	case "report1":
-		if(isset($_POST['shop'])){
-			$where_shop="(a.shop='".$_POST['shop']."')";
+		$where="where 1=1";
+		if(!empty($_POST['shop'])){
+			$where="$where and (a.shop='".$_POST['shop']."')";
 		}
-		if(isset($_POST['object'])){
-			$where_object="(a.object='".$_POST['object']."')";
+		if(!empty($_POST['object'])){
+			$where="$where and (a.object='".$_POST['object']."')";
 		}
 		//todo:增加where条件
 		//总摊销天数
@@ -30,7 +31,8 @@ switch ($_POST['report']) {
 			$sql_lostprice as lostprice
 			FROM wptj_data as a
 			LEFT JOIN (SELECT code,caption FROM wptj_dict WHERE TYPE='shop') AS shop ON a.shop = shop.code 
-			LEFT JOIN (SELECT code,caption FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code";
+			LEFT JOIN (SELECT code,caption FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code
+			 $where ";
 			$sql=str_replace("#now",$_POST['date'],$sql);
 			//		查询
 			$result=$Db->query_fetch($sql);

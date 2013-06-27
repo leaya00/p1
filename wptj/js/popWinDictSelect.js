@@ -1,4 +1,4 @@
-popWin = function(url, dictType,dist_cm) {
+popWin = function(url, dictType, dist_cm) {
 	var win = Ext
 			.create(
 					'Ext.window.Window',
@@ -11,19 +11,18 @@ popWin = function(url, dictType,dist_cm) {
 						modal : true,
 						items : {
 							region : 'center',
-							html : '<iframe id="select_iframe" src="'
-									+ url
-									+ '" width="100%" height="100%" frameborder="0" ></iframe>'
+							html : '<iframe id="select_iframe" src="' + url + '" width="100%" height="100%" frameborder="0" ></iframe>'
 						}
 					}).show();
-	var setDictValue=function(code,caption){
+	var setDictValue = function(code, caption) {
 		dist_cm.setValue(caption);
 		dist_cm.code = code;
 		win.close();
 	};
 	$('#select_iframe').load(function() {
 		// 装载内容
-		$('#select_iframe').get(0).contentWindow.LoadInfo(dictType, setDictValue);
+			$('#select_iframe').get(0).contentWindow.LoadInfo(dictType,
+					setDictValue);
 
-	});
+		});
 };

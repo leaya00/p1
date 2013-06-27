@@ -15,11 +15,12 @@
 
 </head>
 <body>
-<?php 
+<?php
 //todo:增加多选的方式
 ?>
 <script type="text/javascript">
-	LoadInfo=function(dictType,setDictValue) {
+
+	LoadInfo=function(dictType,setDictValue) {		
 		Ext.define('gridModel', {
 			extend : 'Ext.data.Model',
 			fields : [ 'id', 'code', 'type', 'caption' ]
@@ -41,13 +42,18 @@
 				}
 			},
 			model : 'gridModel',
-			autoLoad : true
+			autoLoad : false,
+			listeners:{
+				'load':function(){
+					//Ext.getCmp('txt_code').focus();
+				}
+			}
 			
 		});
 		dataGrid = Ext.create('Ext.grid.Panel', {
 			store : gridStore,
 			sortableColumns : false,
-			 region:'center',
+			 region:'center',			 			
 			'columns' : [
 			 {
 				xtype : 'rownumberer',
@@ -87,29 +93,45 @@
 			items : [
 			         {
 			        	 region : 'north',
-			        	 layout:'fit',			        	 
-			        	 items:{margin : '5 5 0 5',
+			        	 layout:'absolute',
+			        	 height:40,			        	 
+			        	 items:[{
+							x:0,
+							y:5,
 							xtype:'textfield',
-							id : 'txt_code',
+							id : 'txt_tj',
 							fieldLabel : '关键字',
 							labelWidth : 50,
-							labelAlign : 'right',
-							enableKeyEvents:true,
-							listeners : {
-								'keydown' : function(me, e, eOpts) {
-									 if(e.getKey()==13){
-										 gridStore.proxy.setExtraParam('tj',this.getValue());
-										 gridStore.reload();
-									 }
+							width:250,							
+							labelAlign : 'right'
+			        	 },
+			        	 {
+							xtype:'button',
+							text : '查询',
+							x:260,
+							y:7,
+							handler:function(){
+			        		 	gridStore.proxy.setExtraParam('tj',Ext.getCmp('txt_tj').getValue());
+							 	gridStore.reload();
+							}								
+				        },
+			        	 {
+							xtype:'button',
+							text : '赋空值',
+							x:300,
+							y:7,
+							handler:function(){
+				        	if(setDictValue){
+								setDictValue('','');
 								}
-							}
-			        	 }
+							}								
+				        }
+			        	 ]
 				      },
 				    	  dataGrid
 				]
 		});
-		
-	
+		gridStore.load();		
 	};
 	
 </script>
