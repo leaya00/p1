@@ -16,43 +16,7 @@
 </head>
 <body>
 <script type="text/javascript">
-	Ext.onReady(function() {
-		LoadGrid();
-		Ext.create('Ext.Viewport', {
-			layout : 'border',
-			border : false,
-			items : [
-			         {
-			        	 region : 'north',
-			        	 layout:'fit',
-			        	 items:{
-							xtype:'textfield',
-							id : 'txt_code',
-							fieldLabel : '关键字',
-							labelWidth : 50,
-							labelAlign : 'right',
-							enableKeyEvents:true,
-							listeners : {
-								'keydown' : function(me, e, eOpts) {
-									 if(e.getKey()==13){
-										 gridStore.proxy.setExtraParam('tj',this.getValue());
-										 gridStore.reload();
-									 }
-								}
-							}
-			        	 }
-				      },
-				      {
-				    	  region:'center',
-				    	  items:dataGrid
-					     }
-				      
-				]
-		});
-	
-		
-	});
-	LoadGrid = function() {
+	LoadInfo=function(dictType,setDictValue) {
 		Ext.define('gridModel', {
 			extend : 'Ext.data.Model',
 			fields : [ 'id', 'code', 'type', 'caption' ]
@@ -69,8 +33,8 @@
 					totalProperty : 'count'
 				},
 				extraParams : {					
-					type : 'shop'//dictType
-					,tj:'xxx'	
+					type : dictType
+					,tj:''	
 				}
 			},
 			model : 'gridModel',
@@ -80,6 +44,7 @@
 		dataGrid = Ext.create('Ext.grid.Panel', {
 			store : gridStore,
 			sortableColumns : false,
+			 region:'center',
 			'columns' : [
 			 {
 				xtype : 'rownumberer',
@@ -88,7 +53,7 @@
 			}, 
 			{
 				text : '代码',
-				width : 120,
+				width : 80,
 				dataIndex : 'code'
 			},
 			{
@@ -104,13 +69,50 @@
 			header : false,
 			autoScroll : true,
 			listeners : {
-				'itemclick' : function(me, record, item, index, e, eOpts) {
-					alert(111);
+				'itemdblclick' : function(me, record, item, index, e, eOpts) {
+					if(setDictValue){
+						setDictValue(record.data.code,record.data.caption);
+						}
 				}
 			}
 
 		});
+		
+		Ext.create('Ext.Viewport', {
+			layout : 'border',
+			border : false,
+			items : [
+			         {
+			        	 region : 'north',
+			        	 layout:'fit',			        	 
+			        	 items:{margin : '5 5 0 5',
+							xtype:'textfield',
+							id : 'txt_code',
+							fieldLabel : '关键字',
+							labelWidth : 50,
+							labelAlign : 'right',
+							enableKeyEvents:true,
+							listeners : {
+								'keydown' : function(me, e, eOpts) {
+									 if(e.getKey()==13){
+										 gridStore.proxy.setExtraParam('tj',this.getValue());
+										 gridStore.reload();
+									 }
+								}
+							}
+			        	 }
+				      },
+				      
+				    	 
+				    	  dataGrid
+					    
+				      
+				]
+		});
+		
+	
 	};
+	
 </script>
 
 </body>
