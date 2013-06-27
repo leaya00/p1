@@ -20,7 +20,11 @@
 ?>
 <script type="text/javascript">
 
-	LoadInfo=function(dictType,setDictValue) {		
+	LoadInfo=function(dictType,setDictValue) {
+		myMask = new Ext.LoadMask(Ext.getBody(), {
+			msg : "请等待，正在执行任务..."
+		});
+		myMask.show();
 		Ext.define('gridModel', {
 			extend : 'Ext.data.Model',
 			fields : [ 'id', 'code', 'type', 'caption' ]
@@ -44,14 +48,20 @@
 			model : 'gridModel',
 			autoLoad : false,
 			listeners:{
-				'load':function(){
-					//Ext.getCmp('txt_code').focus();
+				'load':function(){					
+					myMask.hide();
+					Ext.getCmp('txt_tj').focus();
 				}
 			}
 			
 		});
+		var selModel = Ext.create('Ext.selection.CheckboxModel',{
+				mode:'MULTI'
+				//SINGLE,单 SIMPLE 多 
+		}); 
 		dataGrid = Ext.create('Ext.grid.Panel', {
 			store : gridStore,
+			selModel:selModel,
 			sortableColumns : false,
 			 region:'center',			 			
 			'columns' : [
@@ -76,19 +86,14 @@
 			enableLocking : true,
 			iconCls : 'icon-grid',			
 			header : false,
-			autoScroll : true,
-			listeners : {
-				'itemdblclick' : function(me, record, item, index, e, eOpts) {
-					if(setDictValue){
-						setDictValue(record.data.code,record.data.caption);
-						}
-				}
-			}
+			loadMask:false,
+			autoScroll : true
 
 		});
 		
 		Ext.create('Ext.Viewport', {
 			layout : 'border',
+			renderTo:Ext.getBody(),
 			border : false,
 			items : [
 			         {
@@ -102,34 +107,67 @@
 							id : 'txt_tj',
 							fieldLabel : '关键字',
 							labelWidth : 50,
-							width:250,							
+							width:250,
+							height:27,
 							labelAlign : 'right'
 			        	 },
 			        	 {
 							xtype:'button',
 							text : '查询',
-							x:260,
+							width:40,
+							x:265,
 							y:7,
 							handler:function(){
+								myMask.show();
 			        		 	gridStore.proxy.setExtraParam('tj',Ext.getCmp('txt_tj').getValue());
 							 	gridStore.reload();
 							}								
-				        },
+				        }
+			        	 ]
+				      }
+					  ,
+					  {
+						region : 'south',
+			        	layout:'absolute',
+			        	height:40,
+						items:[
+						{
+							xtype:'button',
+							text : '确定选择',
+							width:100,
+							x:80,
+							y:7,
+							handler:function(){
+								var selModel = dataGrid.getSelectionModel() ;  
+								if (selModel.hasSelection()) {
+								    var selected = selModel.getSelection();
+									
+									Ext.each(selected, function (item) {
+										
+										 alert(item.data.caption);
+									});
+                           
+								}
+							}			
+						},
 			        	 {
 							xtype:'button',
 							text : '赋空值',
-							x:300,
+							x:230,
 							y:7,
+							width:100,
 							handler:function(){
-				        	if(setDictValue){
-								setDictValue('','');
-								}
+								if(setDictValue){
+									setDictValue('','');
+									}
 							}								
 				        }
-			        	 ]
-				      },
+						]
+					  }
+					  ,
 				    	  dataGrid
 				]
+				
 		});
 		gridStore.load();		
 	};

@@ -1,9 +1,11 @@
+
 popWin = function(url, dictType, dist_cm) {
-	var win = Ext
+	
+		var pop_win = Ext
 			.create(
 					'Ext.window.Window',
 					{
-						title : '筛选--双击选择项目',
+						title : '选择项目',
 						height : 500,
 						width : 400,
 						layout : 'fit',
@@ -12,17 +14,27 @@ popWin = function(url, dictType, dist_cm) {
 						items : {
 							region : 'center',
 							html : '<iframe id="select_iframe" src="' + url + '" width="100%" height="100%" frameborder="0" ></iframe>'
+						},
+						listeners : {
+							'close':function(){
+								$('#select_iframe').attr('src','about:blank');
+							}
 						}
-					}).show();
+						
+					});
+	
+	pop_win.show();
 	var setDictValue = function(code, caption) {
 		dist_cm.setValue(caption);
 		dist_cm.code = code;
-		win.close();
+		pop_win.close();
 	};
 	$('#select_iframe').load(function() {
 		// 装载内容
-			$('#select_iframe').get(0).contentWindow.LoadInfo(dictType,
-					setDictValue);
+			if($('#select_iframe').attr('src')){
+				$('#select_iframe').get(0).contentWindow.LoadInfo(dictType,
+						setDictValue);
+			}
 
 		});
 };

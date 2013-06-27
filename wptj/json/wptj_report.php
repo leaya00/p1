@@ -11,8 +11,7 @@ switch ($_POST['report']) {
 		}
 		if(!empty($_POST['object'])){
 			$where="$where and (a.object='".$_POST['object']."')";
-		}
-		//todo:增加where条件
+		}		
 		//总摊销天数
 		$sql_sumday="(TIMESTAMPDIFF(DAY,sdate,edate)+1)";
 		//		已摊销天数
