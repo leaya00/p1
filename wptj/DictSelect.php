@@ -15,9 +15,7 @@
 
 </head>
 <body>
-<?php
-//todo:增加多选的方式
-?>
+
 <script type="text/javascript">
 
 	LoadInfo=function(dictType,setDictValue,isMuti) {
@@ -32,7 +30,7 @@
 			});
 			gridStore = Ext.create('Ext.data.Store', {
 				buffered : false,
-				pageSize : 300,
+				pageSize : 15,
 				proxy : {
 					type : "ajax",
 					actionMethods:'post',
@@ -90,6 +88,11 @@
 					dataIndex : 'caption'
 				}
 				],
+				bbar : {
+				xtype : 'pagingtoolbar',
+				store : gridStore,
+				displayInfo : true
+			},
 				columnLines : true,
 				enableLocking : true,
 				iconCls : 'icon-grid',			
@@ -115,7 +118,7 @@
 								id : 'txt_tj',
 								fieldLabel : '关键字',
 								labelWidth : 50,
-								width:250,
+								width:350,
 								height:27,
 								labelAlign : 'right'
 							 },
@@ -123,7 +126,7 @@
 								xtype:'button',
 								text : '查询',
 								width:40,
-								x:265,
+								x:365,
 								y:7,
 								handler:function(){
 									myMask.show();
@@ -163,7 +166,7 @@
 							 {
 								xtype:'button',
 								text : '赋空值',
-								x:230,
+								x:330,
 								y:7,
 								width:100,
 								handler:function(){

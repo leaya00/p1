@@ -7,7 +7,7 @@ popWin = function(url, dictType, dist_cm,isMuti) {
 					{
 						title : '选择项目',
 						height : 500,
-						width : 400,
+						width : 500,
 						layout : 'fit',
 						resizable : false,
 						modal : true,

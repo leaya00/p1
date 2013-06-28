@@ -90,7 +90,13 @@ Ext.onReady(function() {
             width:100,
 		    renderTo: Ext.getBody(),
 		    handler: function() {
-					run_restore();
+				if(!txt_filename.getValue()){
+					return;
+				}
+				var re=window.confirm("确定要恢复["+txt_filename.getValue()+"]备份文件吗？");
+					if(re){
+						run_restore();
+					}
 		    	}
 			}
 		]

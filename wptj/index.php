@@ -9,11 +9,20 @@
     
 </head>
 <body>
+	<ul>
+		<li> <a href="../backup" target="_blank">备份恢复数据</a></li>
+	</ul>
+	<ul>	
+		<li><a href="editdict.php?type=shop" target="_blank">店铺录入</a></li>
+		<li><a href="editdict.php?type=object" target="_blank">物品录入</a></li>
+	</ul>
+	<ul>
+		<li> <a href="editData.php" target="_blank">基本数据录入</a></li>
+	</ul>
+	<ul>
+		<li><a href="report1.php" target="_blank">报表1</a></li>
+		<li><a href="report2.php" target="_blank">报表2</a></li>
+	</ul>
 	
-    <a href="editData.php" target="_blank">基本数据录入</a>
-	<a href="editdict.php?type=shop" target="_blank">店铺录入</a>
-	<a href="editdict.php?type=object" target="_blank">物品录入</a>
-	<a href="report1.php" target="_blank">报表1</a>
-	<a href="report2.php" target="_blank">报表2</a>
 </body>
 </html>
