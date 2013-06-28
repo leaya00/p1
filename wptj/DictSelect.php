@@ -30,7 +30,7 @@
 			});
 			gridStore = Ext.create('Ext.data.Store', {
 				buffered : false,
-				pageSize : 15,
+				pageSize : 50,
 				proxy : {
 					type : "ajax",
 					actionMethods:'post',
@@ -88,11 +88,6 @@
 					dataIndex : 'caption'
 				}
 				],
-				bbar : {
-				xtype : 'pagingtoolbar',
-				store : gridStore,
-				displayInfo : true
-			},
 				columnLines : true,
 				enableLocking : true,
 				iconCls : 'icon-grid',			

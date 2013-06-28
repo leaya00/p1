@@ -72,6 +72,7 @@ Ext.onReady(function() {
 	txt_date = Ext.getCmp('txt_date');
 	txt_shop = Ext.getCmp('txt_shop');
 	txt_object = Ext.getCmp('txt_object');
+	//设置初始值
 	txt_date.setValue(new Date());
 });
 
@@ -109,7 +110,7 @@ LoadGrid = function() {
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 		buffered: false,
-		pageSize: 300,
+		pageSize: 25,
 		proxy: {
 			type: "ajax",
 			actionMethods: 'post',

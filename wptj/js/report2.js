@@ -15,39 +15,39 @@ Ext.onReady(function() {
 			layout : 'absolute',
 			margin : '5 5 0 5',
 			items : [ {
-				
-					labelWidth : 60,
-					labelAlign : 'right',
-					width : 200,
-					x : 5,
-					y : 15,
-					id : 'txt_shop',
-					fieldLabel : '店铺',
-					xtype : 'combobox',
-					allowBlank : false,
-					// store: shopStore,
-					valueField : 'code',
-					displayField : 'caption',
-					typeAhead : true,
-					queryMode : 'local',
-					emptyText : '请选择...'
-				}, {
-					labelWidth : 60,
-					labelAlign : 'right',
-					width : 200,
-					x : 205,
-					y : 15,
-					id : 'txt_object',
-					fieldLabel : '物品',
-					xtype : 'combobox',
-					allowBlank : false,
-					// store: shopStore,
-					valueField : 'code',
-					displayField : 'caption',
-					typeAhead : true,
-					queryMode : 'local',
-					emptyText : '请选择...'
-				}, {
+
+						labelWidth: 50,
+						labelAlign: 'right',
+						width: 200,
+						x: 5,
+						y: 15,
+						id: 'txt_shop',
+						fieldLabel: '店铺',
+						xtype: 'triggerfield',
+						editable: false,
+						triggerCls: Ext.baseCSSPrefix + 'form-search-trigger',
+						code: '',
+						onTriggerClick: function() {
+							popWin('./DictSelect.php', 'shop', this, true);
+						}
+
+					}, {
+						labelWidth: 50,
+						labelAlign: 'right',
+						width: 200,
+						x: 205,
+						y: 15,
+						id: 'txt_object',
+						fieldLabel: '商品',
+						xtype: 'triggerfield',
+						editable: false,
+						triggerCls: Ext.baseCSSPrefix + 'form-search-trigger',
+						code: '',
+						onTriggerClick: function() {
+							popWin('./DictSelect.php', 'object', this, true);
+						}
+
+					}, {
 					id : 'txt_sdate',
 					x : 5,
 					y : 50,
@@ -80,6 +80,8 @@ Ext.onReady(function() {
 	});
 	txt_sdate=Ext.getCmp('txt_sdate');
 	txt_edate=Ext.getCmp('txt_edate');
+	txt_shop = Ext.getCmp('txt_shop');
+	txt_object = Ext.getCmp('txt_object');
 });
 
 LoadUI = function() {
@@ -93,6 +95,8 @@ LoadUI = function() {
 		handler : function() {
 			try{
 				gridStore.proxy.setExtraParam('report','report2');
+				gridStore.proxy.setExtraParam('shop', txt_shop.code);
+				gridStore.proxy.setExtraParam('object', txt_object.code);
 				gridStore.proxy.setExtraParam('sdate',txt_sdate.getValue().format("yyyy-MM-dd"));
 				gridStore.proxy.setExtraParam('edate',txt_edate.getValue().format("yyyy-MM-dd"));
 				gridStore.reload();
@@ -113,7 +117,7 @@ LoadGrid = function() {
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 		buffered : false,
-		pageSize : 300,
+		pageSize : 25,
 		proxy : {
 			type : "ajax",
 			actionMethods:'post',

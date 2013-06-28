@@ -47,7 +47,7 @@ switch ($_GET['op']) {
 		echo json_encode(array('result' => (Bool)$r));
 		break;
 	case "filter":
-		$limit_sql="limit ".$_POST['start'].",".$_POST['limit'];
+		$limit_sql=" limit ".$_POST['start'].",".$_POST['limit'];
 		$tj="%".$_POST['tj']."%";
 		$base_sql="SELECT * FROM `wptj_dict` where type='".$_POST['type']."' and (code like '$tj' or caption like '$tj')";
 		$data=$Db->query_fetch("select count(1) from ($base_sql) as a");
