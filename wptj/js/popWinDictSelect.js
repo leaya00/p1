@@ -1,5 +1,5 @@
 
-popWin = function(url, dictType, dist_cm) {
+popWin = function(url, dictType, dist_cm,isMuti) {
 	
 		var pop_win = Ext
 			.create(
@@ -33,7 +33,7 @@ popWin = function(url, dictType, dist_cm) {
 		// 装载内容
 			if($('#select_iframe').attr('src')){
 				$('#select_iframe').get(0).contentWindow.LoadInfo(dictType,
-						setDictValue);
+						setDictValue,isMuti);
 			}
 
 		});

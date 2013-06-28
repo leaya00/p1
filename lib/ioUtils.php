@@ -1,6 +1,9 @@
 <?php
 
-
+/*
+输入：目录
+返回：目录存在的文件名数组
+*/
 function getDirFileToArray($dir){
 	$result=array();
 	if (is_dir($dir)) {

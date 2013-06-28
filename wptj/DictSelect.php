@@ -20,7 +20,7 @@
 ?>
 <script type="text/javascript">
 
-	LoadInfo=function(dictType,setDictValue) {
+	LoadInfo=function(dictType,setDictValue,isMuti) {
 		Ext.onReady(function () {
 			myMask = new Ext.LoadMask(Ext.getBody(), {
 				msg : "请等待，正在执行任务..."
@@ -56,10 +56,17 @@
 				}
 				
 			});
-			var selModel = Ext.create('Ext.selection.CheckboxModel',{
-					mode:'MULTI'
-					//SINGLE,单 SIMPLE 多 
-			}); 
+			var tmpModel="SINGLE";
+			//SINGLE,单 SIMPLE 多
+			if (isMuti) {
+				tmpModel= "SIMPLE";
+			} 
+
+				
+			var selModel = Ext.create('Ext.selection.CheckboxModel', {
+				mode: tmpModel
+
+			});
 			dataGrid = Ext.create('Ext.grid.Panel', {
 				store : gridStore,
 				selModel:selModel,
@@ -142,12 +149,14 @@
 									var selModel = dataGrid.getSelectionModel() ;  
 									if (selModel.hasSelection()) {
 										var selected = selModel.getSelection();
-										
+										// setDictValue
+										var tmpcaption=[];
+										var tmpcode=[];
 										Ext.each(selected, function (item) {
-											
-											 alert(item.data.caption);
+											tmpcode.push(item.data.code);
+											tmpcaption.push(item.data.caption);
 										});
-							   
+										setDictValue(tmpcode.join(','),tmpcaption.join(','));
 									}
 								}			
 							},

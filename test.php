@@ -13,14 +13,13 @@
 
 
 <?php
-$var="a";
-if (empty($var)) {  
-    echo '$var is either 0 or not set at all';
-}else{
-	echo '$xxxxxx';
-	
-}
+    $m="01,02";
+    $r = explode(",",$m);
 
+    foreach ($r as $key => $value) {
+            $r[$key]="'$value'";
+    }
+    print_r(implode($r, ","));
 ?>
 </body>
 </html>

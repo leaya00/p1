@@ -1,16 +1,17 @@
 <?php
 header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里
 require '../../lib/dbUtils.php';
+require '../../lib/strUtils.php';
 $Db = new Db();
 
 switch ($_POST['report']) {
 	case "report1":
 		$where="where 1=1";
 		if(!empty($_POST['shop'])){
-			$where="$where and (a.shop='".$_POST['shop']."')";
+			$where="$where and (a.shop in (".parseParm($_POST['shop'])."))";
 		}
 		if(!empty($_POST['object'])){
-			$where="$where and (a.object='".$_POST['object']."')";
+			$where="$where and (a.object in (".parseParm($_POST['object'])."))";
 		}		
 		//总摊销天数
 		$sql_sumday="(TIMESTAMPDIFF(DAY,sdate,edate)+1)";
@@ -36,6 +37,7 @@ switch ($_POST['report']) {
 			//		查询
 			$result=$Db->query_fetch($sql);
 			echo json_encode($result);
+			// echo $sql;
 			$Db->close();
 			break;
 	case "report2":
@@ -60,5 +62,4 @@ switch ($_POST['report']) {
 		$Db->close();
 		break;
 }
-
 
