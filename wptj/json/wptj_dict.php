@@ -4,8 +4,19 @@ require '../../lib/dbUtils.php';
 $Db = new Db();
 switch ($_GET['op']) {
 	case "select":
-		$sql=sprintf("SELECT * FROM `wptj_dict` where type='%s'",$_GET['type']);
-		$result=$Db->query_fetch($sql);
+		$tj="";
+		if(!empty($_GET['tj'])){
+			$tmptj="%".$_GET['tj']."%";
+			$tj=" and (code like '$tmptj' or caption like '$tmptj')";	
+		}
+		
+		$limit_sql="limit ".$_GET['start'].",".$_GET['limit'];
+		$sql="SELECT count(1) FROM `wptj_dict` where type='".$_GET['type']."'".$tj;
+		$data=$Db->query_fetch($sql);
+		$count=$data[0][0];		
+		$sql="SELECT * FROM `wptj_dict` where type='".$_GET['type']."' $tj $limit_sql";		
+		$data=$Db->query_fetch($sql);
+		$result=array('root'=>$data,'count'=>$count);
 		echo json_encode($result);
 		$Db->close();
 		break;
