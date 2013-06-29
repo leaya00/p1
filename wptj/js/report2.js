@@ -3,6 +3,8 @@ txt_sdate = null;
 txt_edate = null;
 txt_shop = null;
 txt_object = null;
+txt_shop_s = null;
+txt_object_s = null;
 Ext.onReady(function () {
 
 	LoadUI();
@@ -17,43 +19,62 @@ Ext.onReady(function () {
 				layout : 'absolute',
 				margin : '5 5 0 5',
 				items : [{
-
-						labelWidth : 50,
+						id : 'txt_shop_s',
+						fieldLabel : '店铺名称',
+						labelWidth : 70,
 						labelAlign : 'right',
-						width : 200,
+						width : 220,
+						xtype : 'textfield',
 						x : 5,
 						y : 15,
+						readOnly : true
+					},
+					{
+
+						labelWidth : 70,
+						labelAlign : 'right',
+						width : 220,
+						x : 5,
+						y : 50,
 						id : 'txt_shop',
-						fieldLabel : '店铺',
+						fieldLabel : '店铺代码',
 						xtype : 'triggerfield',
-						editable : false,
 						triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 						code : '',
 						onTriggerClick : function () {
-							popWin('./DictSelect.php', 'shop', this, true);
+							popWin('./DictSelect.php', 'shop', txt_shop, txt_shop_s, true, this.getValue());
 						}
 
 					}, {
-						labelWidth : 50,
+						id : 'txt_object_s',
+						fieldLabel : '商品名称',
+						labelWidth : 70,
 						labelAlign : 'right',
-						width : 200,
-						x : 205,
+						width : 220,
+						xtype : 'textfield',
+						x : 225,
 						y : 15,
+						readOnly : true
+					}, {
+						labelWidth : 70,
+						labelAlign : 'right',
+						width : 220,
+						x : 225,
+						y : 50,
 						id : 'txt_object',
-						fieldLabel : '商品',
+						fieldLabel : '商品代码',
 						xtype : 'triggerfield',
-						editable : false,
 						triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 						code : '',
 						onTriggerClick : function () {
-							popWin('./DictSelect.php', 'object', this, true);
+							popWin('./DictSelect.php', 'object', txt_object, txt_object_s, true, this.getValue());
 						}
 
 					}, {
 						id : 'txt_sdate',
-						x : 5,
-						y : 50,
-						labelWidth : 60,
+						x : 440,
+						y : 15,
+						labelWidth : 70,
 						labelAlign : 'right',
 						fieldLabel : '起止时间',
 						xtype : 'datefield',
@@ -61,12 +82,11 @@ Ext.onReady(function () {
 						allowBlank : false
 					}, {
 						id : 'txt_edate',
-						x : 225,
+						x : 440,
 						y : 50,
-						labelWidth : 20,
-						labelSeparator : '',
+						labelWidth : 70,
 						labelAlign : 'right',
-						fieldLabel : '--',
+						fieldLabel : '截止时间',
 						xtype : 'datefield',
 						format : 'Y-m-d',
 						allowBlank : false
@@ -85,6 +105,15 @@ Ext.onReady(function () {
 	txt_edate = Ext.getCmp('txt_edate');
 	txt_shop = Ext.getCmp('txt_shop');
 	txt_object = Ext.getCmp('txt_object');
+	txt_shop_s = Ext.getCmp('txt_shop_s');
+	txt_object_s = Ext.getCmp('txt_object_s');
+	//设置初始值
+	v = new Date();
+	v.setDate(1);
+	txt_sdate.setValue(v);
+	v.setMonth(v.getMonth() + 1);
+	v.setDate(0);
+	txt_edate.setValue(v);
 });
 
 LoadUI = function () {
@@ -98,8 +127,8 @@ LoadUI = function () {
 			handler : function () {
 				try {
 					gridStore.proxy.setExtraParam('report', 'report2');
-					gridStore.proxy.setExtraParam('shop', txt_shop.code);
-					gridStore.proxy.setExtraParam('object', txt_object.code);
+					gridStore.proxy.setExtraParam('shop', txt_shop.getValue());
+					gridStore.proxy.setExtraParam('object', txt_object.getValue());
 					gridStore.proxy.setExtraParam('sdate', txt_sdate.getValue().format("yyyy-MM-dd"));
 					gridStore.proxy.setExtraParam('edate', txt_edate.getValue().format("yyyy-MM-dd"));
 					gridStore.reload();
@@ -141,11 +170,19 @@ LoadGrid = function () {
 
 	dataGrid = Ext.create('Ext.grid.Panel', {
 			store : gridStore,
+			features : [{
+					ftype : 'summary',
+					dock : 'bottom'
+				}
+			],
 			sortableColumns : false,
 			'columns' : [{
 					xtype : 'rownumberer',
 					width : 30,
-					sortable : false
+					sortable : false,
+					summaryRenderer : function (value) {
+						return '合计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+					}
 				}, {
 					text : '店铺代码',
 					width : 70,

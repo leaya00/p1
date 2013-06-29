@@ -157,7 +157,7 @@ LoadGrid = function () {
 			sortableColumns : false,
 			'columns' : [{
 					xtype : 'rownumberer',
-					width : 40,
+					width : 30,
 					sortable : false,
 					summaryRenderer : function (value) {
 						return '合计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
