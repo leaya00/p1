@@ -4,9 +4,9 @@
 -- http://www.yanue.net 
 --
 -- 主机: localhost
--- 生成日期: 2013 年  06 月 28 日 22:16
--- MySQL版本: 5.5.27
--- PHP 版本: 5.4.7
+-- 生成日期: 2013 年  06 月 29 日 09:47
+-- MySQL版本: 5.5.32
+-- PHP 版本: 5.4.16
 
 --
 -- 数据库: `lilang`
@@ -44,15 +44,14 @@ CREATE TABLE `wptj_data` (
   `object` varchar(20) CHARACTER SET latin1 NOT NULL,
   `createname` varchar(100) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 wptj_data
 --
 
-INSERT INTO `wptj_data` VALUES('1','2013-01-01','2013-12-31','10000','001','02','test');
-INSERT INTO `wptj_data` VALUES('3','2012-06-25','2013-06-24','10000','002','01','test');
-INSERT INTO `wptj_data` VALUES('4','2013-06-05','2013-06-29','20000','002','05','test');
+INSERT INTO `wptj_data` VALUES('5','2013-04-04','2016-04-03','22644','002','01','test');
+INSERT INTO `wptj_data` VALUES('6','2013-06-01','2014-05-31','12000','002','01','test');
 --
 -- 表的结构wptj_dict
 --
