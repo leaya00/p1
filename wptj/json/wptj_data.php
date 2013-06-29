@@ -11,7 +11,7 @@ switch ($_GET['op']) {
 		}	
 		$limit_sql=" limit ".$_GET['start'].",".$_GET['limit'];
 		
-		$base_sql="SELECT a.id,a.shop,a.object,a.price,a.sdate,a.edate,a.createname,shop.caption as shop_s,object.caption object_s
+		$base_sql="SELECT a.id,a.shop,a.object,a.price,a.sdate,a.edate,a.createname,shop.caption as shop_s,object.caption object_s,a.remark
 			FROM`wptj_data`AS a
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='shop') AS shop ON a.shop = shop.code
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code $tj order by id desc";
@@ -24,16 +24,17 @@ switch ($_GET['op']) {
 		$Db->close();
 		break;
 	case "save":
-		// 'id', 'sdate', 'edate','price','shop','object','createname'
+		// 'id', 'sdate', 'edate','price','shop','object','createname','remark'
 		$id=$_POST['id'];
 		if($id==""){
-			$sql= sprintf("INSERT INTO `wptj_data` (sdate,edate,price,shop,object,createname) values ('%s','%s','%s','%s','%s','%s')"
+			$sql= sprintf("INSERT INTO `wptj_data` (sdate,edate,price,shop,object,createname,remark) values ('%s','%s','%s','%s','%s','%s','%s')"
 			,$_POST['sdate'],$_POST['edate'],$_POST['price']
-			,$_POST['shop'],$_POST['object'],$_POST['createname']);
+			,$_POST['shop'],$_POST['object'],$_POST['createname'],$_POST['remark']);
 		}else{
-			$sql= sprintf("UPDATE  `wptj_data` set sdate='%s',edate='%s',price='%s',shop='%s',object='%s',createname='%s' where id=%s"
+			$sql= sprintf("UPDATE  `wptj_data` set sdate='%s',edate='%s',price='%s',shop='%s',object='%s'
+			 ,createname='%s',remark='%s' where id=%s"
 			,$_POST['sdate'],$_POST['edate'],$_POST['price']
-			,$_POST['shop'],$_POST['object'],$_POST['createname']
+			,$_POST['shop'],$_POST['object'],$_POST['createname'],$_POST['remark']
 			,$id);
 		}
 		$r= ($Db->query($sql));

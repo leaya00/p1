@@ -18,170 +18,158 @@
 
 <script type="text/javascript">
 
-	LoadInfo=function(dictType,setDictValue,isMuti) {
+	LoadInfo = function (dictType, setDictValue, isMuti, defaultTJ) {
 		Ext.onReady(function () {
 			myMask = new Ext.LoadMask(Ext.getBody(), {
-				msg : "请等待，正在执行任务..."
-			});
+					msg : "请等待，正在执行任务..."
+				});
 			myMask.show();
 			Ext.define('gridModel', {
 				extend : 'Ext.data.Model',
-				fields : [ 'id', 'code', 'type', 'caption' ]
+				fields : ['id', 'code', 'type', 'caption']
 			});
 			gridStore = Ext.create('Ext.data.Store', {
-				buffered : false,
-				pageSize : 50,
-				proxy : {
-					type : "ajax",
-					actionMethods:'post',
-					url : "./json/wptj_dict.php?op=filter",
-					reader : {
-						root : 'root',
-						totalProperty : 'count'
+					buffered : false,
+					pageSize : 50,
+					proxy : {
+						type : "ajax",
+						actionMethods : 'post',
+						url : "./json/wptj_dict.php?op=filter",
+						reader : {
+							root : 'root',
+							totalProperty : 'count'
+						},
+						extraParams : {
+							type : dictType,
+							tj : defaultTJ
+						}
 					},
-					extraParams : {					
-						type : dictType
-						,tj:''	
+					model : 'gridModel',
+					autoLoad : false,
+					listeners : {
+						'load' : function () {
+							myMask.hide();
+							Ext.getCmp('txt_tj').focus();
+						}
 					}
-				},
-				model : 'gridModel',
-				autoLoad : false,
-				listeners:{
-					'load':function(){					
-						myMask.hide();
-						Ext.getCmp('txt_tj').focus();
-					}
-				}
-				
-			});
-			var tmpModel="SINGLE";
+
+				});
+			var tmpModel = "SINGLE";
 			//SINGLE,单 SIMPLE 多
 			if (isMuti) {
-				tmpModel= "SIMPLE";
-			} 
+				tmpModel = "SIMPLE";
+			}
 
-				
 			var selModel = Ext.create('Ext.selection.CheckboxModel', {
-				mode: tmpModel
+					mode : tmpModel
 
-			});
+				});
 			dataGrid = Ext.create('Ext.grid.Panel', {
-				store : gridStore,
-				selModel:selModel,
-				sortableColumns : false,
-				 region:'center',			 			
-				'columns' : [
-				 {
-					xtype : 'rownumberer',
-					width : 30,
-					sortable : false
-				}, 
-				{
-					text : '代码',
-					width : 80,
-					dataIndex : 'code'
-				},
-				{
-					text : '名称',
-					width : 120,
-					flex : 1,
-					dataIndex : 'caption'
-				}
-				],
-				columnLines : true,
-				enableLocking : true,
-				iconCls : 'icon-grid',			
-				header : false,
-				loadMask:false,
-				autoScroll : true
+					store : gridStore,
+					selModel : selModel,
+					sortableColumns : false,
+					region : 'center',
+					'columns' : [{
+							xtype : 'rownumberer',
+							width : 30,
+							sortable : false
+						}, {
+							text : '代码',
+							width : 80,
+							dataIndex : 'code'
+						}, {
+							text : '名称',
+							width : 120,
+							flex : 1,
+							dataIndex : 'caption'
+						}
+					],
+					columnLines : true,
+					enableLocking : true,
+					iconCls : 'icon-grid',
+					header : false,
+					loadMask : false,
+					autoScroll : true
 
-			});
-			
+				});
+
 			Ext.create('Ext.Viewport', {
 				layout : 'border',
-				renderTo:Ext.getBody(),
+				renderTo : Ext.getBody(),
 				border : false,
-				items : [
-						 {
-							 region : 'north',
-							 layout:'absolute',
-							 height:40,			        	 
-							 items:[{
-								x:0,
-								y:5,
-								xtype:'textfield',
+				items : [{
+						region : 'north',
+						layout : 'absolute',
+						height : 40,
+						items : [{
+								x : 0,
+								y : 5,
+								xtype : 'textfield',
 								id : 'txt_tj',
 								fieldLabel : '关键字',
 								labelWidth : 50,
-								width:350,
-								height:27,
+								width : 350,
+								height : 27,
 								labelAlign : 'right'
-							 },
-							 {
-								xtype:'button',
+							}, {
+								xtype : 'button',
 								text : '查询',
-								width:40,
-								x:365,
-								y:7,
-								handler:function(){
+								width : 40,
+								x : 365,
+								y : 7,
+								handler : function () {
 									myMask.show();
-									gridStore.proxy.setExtraParam('tj',Ext.getCmp('txt_tj').getValue());
+									gridStore.proxy.setExtraParam('tj', Ext.getCmp('txt_tj').getValue());
 									gridStore.reload();
-								}								
+								}
 							}
-							 ]
-						  }
-						  ,
-						  {
-							region : 'south',
-							layout:'absolute',
-							height:40,
-							items:[
-							{
-								xtype:'button',
+						]
+					}, {
+						region : 'south',
+						layout : 'absolute',
+						height : 40,
+						items : [{
+								xtype : 'button',
 								text : '确定选择',
-								width:100,							
-								x:80,
-								y:7,
-								handler:function(){
-									var selModel = dataGrid.getSelectionModel() ;  
+								width : 100,
+								x : 80,
+								y : 7,
+								handler : function () {
+									var selModel = dataGrid.getSelectionModel();
 									if (selModel.hasSelection()) {
 										var selected = selModel.getSelection();
 										// setDictValue
-										var tmpcaption=[];
-										var tmpcode=[];
+										var tmpcaption = [];
+										var tmpcode = [];
 										Ext.each(selected, function (item) {
 											tmpcode.push(item.data.code);
 											tmpcaption.push(item.data.caption);
 										});
-										setDictValue(tmpcode.join(','),tmpcaption.join(','));
+										setDictValue(tmpcode.join(','), tmpcaption.join(','));
 									}
-								}			
-							},
-							 {
-								xtype:'button',
+								}
+							}, {
+								xtype : 'button',
 								text : '赋空值',
-								x:330,
-								y:7,
-								width:100,
-								handler:function(){
-									if(setDictValue){
-										setDictValue('','');
-										}
-								}								
+								x : 330,
+								y : 7,
+								width : 100,
+								handler : function () {
+									if (setDictValue) {
+										setDictValue('', '');
+									}
+								}
 							}
-							]
-						  }
-						  ,
-							  dataGrid
-					]
-					
+						]
+					},
+					dataGrid
+				]
+
 			});
-			gridStore.load();		
+			gridStore.load();
 		});
-		
+
 	};
-	
 </script>
 
 </body>

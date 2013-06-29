@@ -25,11 +25,11 @@ Ext.onReady(function() {
 						id: 'txt_shop',
 						fieldLabel: '店铺',
 						xtype: 'triggerfield',
-						editable: false,
+						//editable: false,
 						triggerCls: Ext.baseCSSPrefix + 'form-search-trigger',
 						code: '',
 						onTriggerClick: function() {
-							popWin('./DictSelect.php', 'shop', this, true);
+							popWin('./DictSelect.php', 'shop', this, true,this.getValue());
 						}
 
 					}, {

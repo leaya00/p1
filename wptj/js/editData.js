@@ -2,22 +2,25 @@ Ext.require(['Ext.grid.*']);
 
 txt_shop = null;
 txt_object = null;
+txt_shop_s = null;
+txt_object_s = null;
 txt_price = null;
 txt_sdate = null;
 txt_edate = null;
+txt_remark = null;
 Ext.onReady(function () {
 	myMask = new Ext.LoadMask($('body').get(0), {
 			msg : "请等待，正在执行任务..."
-		});	
+		});
 	LoadUI();
-	LoadGrid();	
+	LoadGrid();
 	Ext.create('Ext.Viewport', {
 		layout : 'border',
 		border : false,
 		items : [{
 				border : false,
 				region : 'north',
-				height : 150,
+				height : 180,
 				layout : 'anchor',
 				margin : '5 5 0 5',
 				items : [{
@@ -49,7 +52,7 @@ Ext.onReady(function () {
 						xtype : 'form',
 						layout : {
 							type : 'table',
-							columns : 3
+							columns : 4
 						},
 						defaultType : 'textfield',
 						fieldDefaults : {
@@ -58,30 +61,34 @@ Ext.onReady(function () {
 						},
 						items : [{
 								id : 'txt_shop',
-								fieldLabel : '店铺',
+								fieldLabel : '店铺代码',
 								xtype : 'triggerfield',
-								editable : false,
-								triggerCls : Ext.baseCSSPrefix
-								 + 'form-search-trigger',
-								code : '',
+								triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 								onTriggerClick : function () {
 									popWin('./DictSelect.php',
-										'shop', this);
+										'shop', txt_shop, txt_shop_s, false, this.getValue());
 								}
 
 							}, {
+								id : 'txt_shop_s',
+								fieldLabel : '店铺名称',
+								readOnly : true
+							}, {
 								id : 'txt_object',
-								fieldLabel : '商品',
+								fieldLabel : '商品代码',
 								xtype : 'triggerfield',
-								editable : false,
 								triggerCls : Ext.baseCSSPrefix
 								 + 'form-search-trigger',
 								code : '',
 								onTriggerClick : function () {
 									popWin('./DictSelect.php',
-										'object', this);
+										'object', txt_object, txt_object_s, false, this.getValue());
 								}
 
+							}, {
+								id : 'txt_object_s',
+								fieldLabel : '商品名称',
+								readOnly : true
 							}, {
 								id : 'txt_price',
 								xtype : 'numberfield',
@@ -105,8 +112,15 @@ Ext.onReady(function () {
 								fieldLabel : '结束时间',
 								xtype : 'datefield',
 								format : 'Y-m-d',
-								allowBlank : false
+								allowBlank : false,
+								colspan : 2
 
+							}, {
+								id : 'txt_remark',
+								name : 'message',
+								fieldLabel : '备注',
+								width : 470,
+								colspan : 2
 							}
 						]
 
@@ -122,10 +136,13 @@ Ext.onReady(function () {
 		]
 	});
 	txt_shop = Ext.getCmp('txt_shop');
+	txt_shop_s = Ext.getCmp('txt_shop_s');
 	txt_object = Ext.getCmp('txt_object');
+	txt_object_s = Ext.getCmp('txt_object_s');
 	txt_price = Ext.getCmp('txt_price');
 	txt_sdate = Ext.getCmp('txt_sdate');
 	txt_edate = Ext.getCmp('txt_edate');
+	txt_remark = Ext.getCmp('txt_remark');
 });
 
 LoadUI = function () {
@@ -193,7 +210,7 @@ LoadGrid = function () {
 	Ext.define('gridModel', {
 		extend : 'Ext.data.Model',
 		fields : ['id', 'sdate', 'edate', 'price', 'shop', 'object',
-			'createname', 'shop_s', 'object_s']
+			'createname', 'shop_s', 'object_s', 'remark']
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 			buffered : false,
@@ -239,26 +256,26 @@ LoadGrid = function () {
 					sortable : false
 				},
 				// {
-					// text : 'id',
-					// width : 120,
-					// dataIndex : 'id'
-				// }, 
+				// text : 'id',
+				// width : 120,
+				// dataIndex : 'id'
+				// },
 				{
-					text : '店铺',
-					width : 200,
-					dataIndex : 'shop_s'
-				}, {
 					text : '店铺代码',
 					width : 120,
 					dataIndex : 'shop'
 				}, {
-					text : '物品',
+					text : '店铺',
 					width : 200,
-					dataIndex : 'object_s'
+					dataIndex : 'shop_s'
 				}, {
 					text : '物品代码',
 					width : 100,
 					dataIndex : 'object'
+				}, {
+					text : '物品',
+					width : 200,
+					dataIndex : 'object_s'
 				}, {
 					text : '总额',
 					width : 120,
@@ -272,9 +289,13 @@ LoadGrid = function () {
 					width : 120,
 					dataIndex : 'edate'
 				}, {
-					text : '创建人',
+					text : '备注',
 					width : 120,
 					flex : 1,
+					dataIndex : 'remark'
+				}, {
+					text : '创建人',
+					width : 120,
 					dataIndex : 'createname'
 				}
 			],
@@ -302,13 +323,15 @@ LoadGrid = function () {
 					var data = record.data;
 					$("#hid_id").val(data.id);
 
-					txt_shop.setValue(data.shop_s);
-					txt_shop.code = data.shop;
-					txt_object.setValue(data.object_s);
+					txt_shop.setValue(data.shop);
+					txt_shop_s.setValue(data.shop_s);
+					txt_object.setValue(data.object);
+					txt_object_s.setValue(data.object_s);
 					txt_object.code = data.object;
 					txt_price.setValue(data.price);
 					txt_sdate.setValue(data.sdate);
 					txt_edate.setValue(data.edate);
+					txt_remark.setValue(data.remark);
 				}
 			}
 
@@ -322,15 +345,33 @@ Set_formState = function (v) {
 	txt_price.setDisabled(!v);
 	txt_sdate.setDisabled(!v);
 	txt_edate.setDisabled(!v);
+	txt_remark.setDisabled(!v);
 };
 Clear_form = function () {
 	txt_shop.setValue('');
 	txt_object.setValue('');
+	txt_shop_s.setValue('');
+	txt_object_s.setValue('');
 	txt_price.setValue('');
 	txt_sdate.setValue('');
 	txt_edate.setValue('');
+	txt_remark.setValue('');
 };
+check_save=function(){
+	
+	if(txt_sdate.getValue() && txt_edate.getValue() && txt_price.getValue()
+			&& txt_shop_s.getValue() &&txt_object_s.getValue())
+		return true;
+	else
+		return false;
+
+}
+
 save = function () {
+	if(!check_save()){
+		alert("数据项目填写不全！");
+		return;
+	}	
 	myMask.show();
 	var mydata = {
 		id : $("#hid_id").val(),
@@ -338,10 +379,14 @@ save = function () {
 		sdate : txt_sdate.getValue().format("yyyy-MM-dd"),
 		edate : txt_edate.getValue().format("yyyy-MM-dd"),
 		price : txt_price.getValue(),
-		shop : txt_shop.code,
-		object : txt_object.code,
+		shop : txt_shop.getValue(),
+		object : txt_object.getValue(),
+		remark : txt_remark.getValue(),
 		createname : 'test'
 	};
+	
+	
+	return;
 	$.ajax({
 		type : "POST",
 		url : "./json/wptj_data.php?op=save",

@@ -1,5 +1,5 @@
 
-popWin = function(url, dictType, dist_cm,isMuti) {
+popWin = function(url, dictType, dist_cm,dist_cm_s,isMuti,defaultTJ) {
 	
 		var pop_win = Ext
 			.create(
@@ -25,15 +25,15 @@ popWin = function(url, dictType, dist_cm,isMuti) {
 	
 	pop_win.show();
 	var setDictValue = function(code, caption) {
-		dist_cm.setValue(caption);
-		dist_cm.code = code;
+		dist_cm_s.setValue(caption);
+		dist_cm.setValue(code);
 		pop_win.close();
 	};
 	$('#select_iframe').load(function() {
 		// 装载内容
 			if($('#select_iframe').attr('src')){
 				$('#select_iframe').get(0).contentWindow.LoadInfo(dictType,
-						setDictValue,isMuti);
+						setDictValue,isMuti,defaultTJ);
 			}
 
 		});
