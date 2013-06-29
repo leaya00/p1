@@ -389,7 +389,6 @@ save = function () {
 	};
 	
 	
-	return;
 	$.ajax({
 		type : "POST",
 		url : "./json/wptj_data.php?op=save",

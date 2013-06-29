@@ -63,8 +63,7 @@ switch ($_POST['report']) {
 					  ,'price_sum'=>$price_sum
 					  ,'nowprice_sum'=>$nowprice_sum
 					  ,'lostprice_sum'=>$lostprice_sum);
-		echo json_encode($result);
-		$Db->close();	
+		echo json_encode($result);		
 		break;
 	case "report2":
 		$limit_sql=" limit ".$_POST['start'].",".$_POST['limit'];
@@ -94,8 +93,7 @@ switch ($_POST['report']) {
 		$count=$data[0][0];	
 		$data=$Db->query_fetch($base_sql.$limit_sql);
 		$result=array('root'=>$data,'count'=>$count);
-		echo json_encode($result);
-		$Db->close();
+		echo json_encode($result);		
 		break;
 }
 

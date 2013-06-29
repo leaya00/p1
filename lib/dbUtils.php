@@ -11,7 +11,7 @@ class Db{
 	
 	public $conn;
 	// c 普通连接 p持久连接
-	public $links='c';
+	public $links='p';
 
 	function __construct() {
 		$this->connect();	

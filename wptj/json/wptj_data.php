@@ -21,7 +21,7 @@ switch ($_GET['op']) {
 		$data=$Db->query_fetch($base_sql.$limit_sql);
 		$result=array('root'=>$data,'count'=>$count);
 		echo json_encode($result);
-		$Db->close();
+		// $Db->close();
 		break;
 	case "save":
 		// 'id', 'sdate', 'edate','price','shop','object','createname','remark'

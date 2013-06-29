@@ -15,8 +15,7 @@ switch ($_GET['op']) {
 		$count=$data[0][0];	
 		$data=$Db->query_fetch($base_sql.$limit_sql);
 		$result=array('root'=>$data,'count'=>$count);
-		echo json_encode($result);
-		$Db->close();
+		echo json_encode($result);		
 		break;
 	case "save":
 		$id=$_POST['id'];
@@ -54,7 +53,6 @@ switch ($_GET['op']) {
 		$count=$data[0][0];	
 		$data=$Db->query_fetch($base_sql.$limit_sql);
 		$result=array('root'=>$data,'count'=>$count);
-		echo json_encode($result);
-		$Db->close();	
+		echo json_encode($result);		
 		break;
 }
