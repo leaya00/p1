@@ -43,7 +43,7 @@ switch ($_POST['report']) {
 			$data=$Db->query_fetch($base_sql.$limit_sql);
 			// echo $base_sql.$limit_sql;
 			// break;
-			$result=array('root'=>$data,'count'=>$count);
+			$result=array('root'=>$data,'count'=>$count,'sum1'=>'hahahahah');
 			echo json_encode($result);
 			$Db->close();	
 			break;
