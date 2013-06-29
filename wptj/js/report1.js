@@ -17,8 +17,7 @@ Ext.onReady(function () {
 				height : 100,
 				layout : 'absolute',
 				margin : '5 5 0 5',
-				items : [
-					{
+				items : [{
 						id : 'txt_shop_s',
 						fieldLabel : '店铺名称',
 						labelWidth : 70,
@@ -41,10 +40,10 @@ Ext.onReady(function () {
 						triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 						code : '',
 						onTriggerClick : function () {
-							popWin('./DictSelect.php', 'shop', txt_shop,txt_shop_s, true, this.getValue());
+							popWin('./DictSelect.php', 'shop', txt_shop, txt_shop_s, true, this.getValue());
 						}
 
-					},{
+					}, {
 						id : 'txt_object_s',
 						fieldLabel : '商品名称',
 						labelWidth : 70,
@@ -66,7 +65,7 @@ Ext.onReady(function () {
 						triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 						code : '',
 						onTriggerClick : function () {
-							popWin('./DictSelect.php', 'object', txt_object,txt_object_s, true,this.getValue());
+							popWin('./DictSelect.php', 'object', txt_object, txt_object_s, true, this.getValue());
 						}
 
 					}, {
@@ -140,7 +139,8 @@ LoadGrid = function () {
 				url : "./json/wptj_report.php",
 				reader : {
 					root : 'root',
-					totalProperty : 'count'
+					totalProperty : 'count',
+					mymeta : 'sum1'
 				}
 			},
 			model : 'gridModel',
@@ -149,15 +149,24 @@ LoadGrid = function () {
 
 	dataGrid = Ext.create('Ext.grid.Panel', {
 			store : gridStore,
+			features : [{
+					ftype : 'summary',
+					dock : 'bottom'
+				}
+			],
 			sortableColumns : false,
 			'columns' : [{
 					xtype : 'rownumberer',
-					width : 30,
-					sortable : false
+					width : 40,
+					sortable : false,
+					summaryRenderer : function (value) {
+						return '合计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+					}
 				}, {
 					text : '店铺代码',
 					width : 70,
 					dataIndex : 'shop'
+
 				}, {
 					text : '店铺名称',
 					// flex : 1,
@@ -174,7 +183,13 @@ LoadGrid = function () {
 				}, {
 					text : '总金额',
 					width : 100,
-					dataIndex : 'price'
+					dataIndex : 'price',
+					summaryRenderer : function (value) {
+						if (gridStore.proxy.reader.jsonData) {
+							return gridStore.proxy.reader.jsonData.price_sum;
+						}
+						return 0;
+					}
 				}, {
 					text : '摊销起始日期',
 					width : 100,
@@ -194,7 +209,13 @@ LoadGrid = function () {
 				}, {
 					text : '已摊销金额',
 					width : 100,
-					dataIndex : 'nowprice'
+					dataIndex : 'nowprice',
+					summaryRenderer : function (value) {
+						if (gridStore.proxy.reader.jsonData) {
+							return gridStore.proxy.reader.jsonData.nowprice_sum;
+						}
+						return 0;
+					}
 				}, {
 					text : '剩余摊销天数',
 					width : 100,
@@ -202,10 +223,13 @@ LoadGrid = function () {
 				}, {
 					text : '剩余摊销金额',
 					width : 100,
-
-					dataIndex : 'lostprice'
+					dataIndex : 'lostprice',
+					summaryRenderer : function (value) {
+						if (gridStore.proxy.reader.jsonData) {
+							return gridStore.proxy.reader.jsonData.lostprice_sum;
+						}
+					}
 				}
-
 			],
 
 			columnLines : true,
