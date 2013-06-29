@@ -20,8 +20,8 @@
 		<li> <a href="editData.php" target="_blank">基本数据录入</a></li>
 	</ul>
 	<ul>
-		<li><a href="report1.php" target="_blank">报表1</a></li>
-		<li><a href="report2.php" target="_blank">报表2</a></li>
+		<li><a href="report1.php" target="_blank">剩余摊销汇总表</a></li>
+		<li><a href="report2.php" target="_blank">阶段摊销额汇总表</a></li>
 	</ul>
 	
 </body>

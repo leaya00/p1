@@ -7,13 +7,16 @@ $Db = new Db();
 switch ($_POST['report']) {
 	case "report1":
 		$limit_sql=" limit ".$_POST['start'].",".$_POST['limit'];
-		$where="where 1=1";
+		//摊销开始时间大于查询时间的 不在报表1出现
+		$where="where '#now'>=sdate ";
+		// 其他限定条件
 		if(!empty($_POST['shop'])){
 			$where="$where and (a.shop in (".parseParm($_POST['shop'])."))";
 		}
 		if(!empty($_POST['object'])){
 			$where="$where and (a.object in (".parseParm($_POST['object'])."))";
-		}		
+		}	
+	
 		//总摊销天数
 		$sql_sumday="(TIMESTAMPDIFF(DAY,sdate,edate)+1)";
 		//		已摊销天数
@@ -33,11 +36,13 @@ switch ($_POST['report']) {
 			FROM wptj_data as a
 			LEFT JOIN (SELECT code,caption FROM wptj_dict WHERE TYPE='shop') AS shop ON a.shop = shop.code 
 			LEFT JOIN (SELECT code,caption FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code
-			 $where ";
+			 $where ";			
 			$base_sql=str_replace("#now",$_POST['date'],$base_sql);
 			$data=$Db->query_fetch("select count(1) from ($base_sql) as a");
 			$count=$data[0][0];	
 			$data=$Db->query_fetch($base_sql.$limit_sql);
+			// echo $base_sql.$limit_sql;
+			// break;
 			$result=array('root'=>$data,'count'=>$count);
 			echo json_encode($result);
 			$Db->close();	
