@@ -72,6 +72,7 @@ Ext.onReady(function () {
 							}, {
 								id : 'txt_shop_s',
 								fieldLabel : '店铺名称',
+								allowBlank : false,
 								readOnly : true
 							}, {
 								id : 'txt_object',
@@ -88,6 +89,7 @@ Ext.onReady(function () {
 							}, {
 								id : 'txt_object_s',
 								fieldLabel : '商品名称',
+								allowBlank : false,
 								readOnly : true
 							}, {
 								id : 'txt_price',
@@ -98,6 +100,7 @@ Ext.onReady(function () {
 								// Remove spinner buttons, and arrow
 								// key and mouse wheel listeners
 								hideTrigger : true,
+								allowBlank : false,
 								keyNavEnabled : false,
 								mouseWheelEnabled : false
 
