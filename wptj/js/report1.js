@@ -8,6 +8,17 @@ Ext.onReady(function () {
 
 	LoadUI();
 	LoadGrid();
+	var tjstates = Ext.create('Ext.data.Store', {
+			fields : ['value', 'caption'],
+			data : [{
+					"value" : "tx1",
+					"caption" : "摊销1"
+				}, {
+					"value" : "tx2",
+					"caption" : "摊销2"
+				}
+			]
+		});
 	Ext.create('Ext.Viewport', {
 		layout : 'border',
 		border : false,
@@ -72,10 +83,23 @@ Ext.onReady(function () {
 						id : 'txt_date',
 						x : 460,
 						y : 15,
+						labelAlign : 'right',
 						fieldLabel : '报表截止时间',
 						xtype : 'datefield',
 						format : 'Y-m-d',
 						allowBlank : false
+					}, {
+						xtype : 'combobox',
+						labelAlign : 'right',
+						x : 460,
+						y : 45,
+						id : 'txt_tj',
+						fieldLabel : '摊销状态',
+						store : tjstates,
+						editable:false,
+						queryMode : 'local',
+						displayField : 'caption',
+						valueField : 'value'
 					},
 					ext_btnFind,
 
@@ -89,6 +113,7 @@ Ext.onReady(function () {
 			}
 		]
 	});
+	
 	txt_date = Ext.getCmp('txt_date');
 	txt_shop = Ext.getCmp('txt_shop');
 	txt_object = Ext.getCmp('txt_object');
@@ -104,7 +129,7 @@ LoadUI = function () {
 			text : '查询',
 			icon : '../image/btn/find.png',
 			width : 100,
-			x : 735,
+			x : 740,
 			y : 15,
 			handler : function () {
 				try {
