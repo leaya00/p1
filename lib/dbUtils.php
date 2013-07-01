@@ -3,7 +3,7 @@
 
 class Db{
 	/************数据库配置参数*******/
-	public static  $root='localhost';
+	public static  $root='127.0.0.1';
 	public static  $user='root';
 	public static  $pass='root';
 	public static  $db='lilang';
