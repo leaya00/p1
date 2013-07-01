@@ -28,8 +28,7 @@ Ext.onReady(function () {
 						x : 5,
 						y : 15,
 						readOnly : true
-					},
-					{
+					}, {
 
 						labelWidth : 70,
 						labelAlign : 'right',
@@ -203,7 +202,13 @@ LoadGrid = function () {
 				}, {
 					text : '总金额',
 					width : 100,
-					dataIndex : 'price'
+					dataIndex : 'price',
+					summaryRenderer : function (value) {
+						if (gridStore.proxy.reader.jsonData) {
+							return gridStore.proxy.reader.jsonData.price_sum;
+						}
+						return 0;
+					}
 				}, {
 					text : '摊销起始日期',
 					width : 100,
@@ -223,7 +228,13 @@ LoadGrid = function () {
 				}, {
 					text : '本期摊销金额',
 					width : 100,
-					dataIndex : 'nowprice'
+					dataIndex : 'nowprice',
+					summaryRenderer : function (value) {
+						if (gridStore.proxy.reader.jsonData) {
+							return gridStore.proxy.reader.jsonData.nowprice_sum;
+						}
+						return 0;
+					}
 				}
 
 			],
