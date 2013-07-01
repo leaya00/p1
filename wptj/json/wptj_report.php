@@ -86,7 +86,7 @@ switch ($_POST['report']) {
 		//已摊销天数
 		$sql_nowday="(TIMESTAMPDIFF(DAY,$sql_stdate,$sql_etdate)+1)";
 		//已摊销金额
-		$sql_nowprice="(price / ".$sql_sumday." * ".$sql_nowday.")";
+		$sql_nowprice="ROUND((price / ".$sql_sumday." * ".$sql_nowday."),2)";
 		//普通字段
 		$sql_field="id,sdate, edate, price,shop,object,shop.caption as shop_s,object.caption as object_s
 			, $sql_sumday as sumday,
@@ -113,7 +113,6 @@ switch ($_POST['report']) {
 		$count=$data[0][0];	
 		//获取本页数据
 		$select_sql=sprintf($base_sql,$sql_field);
-		$select_sql=str_replace("#now",$_POST['date'],$select_sql);
 		$select_sql=str_replace("#in_sdate",$_POST['sdate'],$select_sql);
 		$select_sql=str_replace("#in_edate",$_POST['edate'],$select_sql);
 		$data=$Db->query_fetch($select_sql.$limit_sql);	
