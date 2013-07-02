@@ -1,11 +1,16 @@
 <?php
-// include_once "../../global.php";
+if(!defined('global_lib')){
+	require_once "../../global.php";
+}
 require_once './lib/dbUtils.php';
 require_once './lib/strUtils.php';
 
 $Db = new Db();
+// 已摊销完的那个 已摊销天数 和已摊销额 就可以直接等于总的摊销天数 和总金额了
+// 剩余部分为0
 function report1(){		
 		global $Db;
+		// print_r($_POST);
 		$limit_sql=" limit ".$_POST['start'].",".$_POST['limit'];
 		//摊销开始时间大于查询时间的 不在报表1出现
 		$where="where '#now'>=sdate ";
@@ -46,6 +51,7 @@ function report1(){
 		$sum_sql=sprintf($base_sql,$sql_sum_field);
 		$sum_sql=str_replace("#now",$_POST['date'],$sum_sql);
 		$data=$Db->query_fetch($sum_sql);
+		// echo $sum_sql;
 		$price_sum=$data[0]['price_sum'];
 		$nowprice_sum=$data[0]['nowprice_sum'];
 		$lostprice_sum=$data[0]['lostprice_sum'];

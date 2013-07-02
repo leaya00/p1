@@ -4,6 +4,7 @@ txt_shop = null;
 txt_object = null;
 txt_shop_s = null;
 txt_object_s = null;
+txt_txzt=null;
 Ext.onReady(function () {
 
 	LoadUI();
@@ -12,10 +13,10 @@ Ext.onReady(function () {
 			fields : ['value', 'caption'],
 			data : [{
 					"value" : "tx1",
-					"caption" : "摊销1"
+					"caption" : "未摊销完"
 				}, {
 					"value" : "tx2",
-					"caption" : "摊销2"
+					"caption" : "已摊销完"
 				}
 			]
 		});
@@ -93,16 +94,17 @@ Ext.onReady(function () {
 						labelAlign : 'right',
 						x : 460,
 						y : 45,
-						id : 'txt_tj',
+						id : 'txt_txzt',
 						fieldLabel : '摊销状态',
 						store : tjstates,
-						editable:false,
+						editable : false,
 						queryMode : 'local',
 						displayField : 'caption',
-						valueField : 'value'
+						valueField : 'value',
+						value:'tx1'
 					},
 					ext_btnFind,
-
+					ext_btnExport
 				]
 
 			}, {
@@ -113,12 +115,14 @@ Ext.onReady(function () {
 			}
 		]
 	});
-	
+
 	txt_date = Ext.getCmp('txt_date');
 	txt_shop = Ext.getCmp('txt_shop');
 	txt_object = Ext.getCmp('txt_object');
 	txt_shop_s = Ext.getCmp('txt_shop_s');
 	txt_object_s = Ext.getCmp('txt_object_s');
+	txt_txzt = Ext.getCmp('txt_txzt');
+	
 	//设置初始值
 	txt_date.setValue(new Date());
 });
@@ -136,8 +140,32 @@ LoadUI = function () {
 					gridStore.proxy.setExtraParam('report', 'report1');
 					gridStore.proxy.setExtraParam('shop', txt_shop.getValue());
 					gridStore.proxy.setExtraParam('object', txt_object.getValue());
+					gridStore.proxy.setExtraParam('txzt', txt_txzt.getValue());
 					gridStore.proxy.setExtraParam('date', txt_date.getValue().format("yyyy-MM-dd"));
 					gridStore.reload();
+				} catch (e) {
+					alert("条件设置错误!");
+				}
+			}
+		});
+	ext_btnExport = Ext.create('Ext.Button', {
+			text : '导出',
+			icon : '../image/btn/export.png',
+			width : 100,
+			x : 845,
+			y : 15,
+			handler : function () {
+				
+				try {
+					$('#hid_report').val('report1');
+					$('#hid_start').val(0);
+					$('#hid_limit').val(10000);
+					$('#hid_shop').val(txt_shop.getValue());
+					$('#hid_object').val(txt_object.getValue());
+					$('#hid_date').val(txt_date.getValue().format("yyyy-MM-dd"));
+					$('#exportform').submit();
+
+					
 				} catch (e) {
 					alert("条件设置错误!");
 				}

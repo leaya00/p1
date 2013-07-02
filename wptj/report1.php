@@ -14,7 +14,15 @@
 	<script src="./js/popWinDictSelect.js" type="text/javascript"></script>
 </head>
 <body>
-	
+	<form id='exportform' name='exportform' action="./report1-xls.php" method="post" >
+		<input type="hidden" id="hid_report" name="report"/>
+		<input type="hidden" id="hid_start" name="start"/>
+		<input type="hidden" id="hid_limit" name="limit"/>
+		<input type="hidden" id="hid_shop" name="shop"/>
+		<input type="hidden" id="hid_object" name="object"/>
+		<input type="hidden" id="hid_date" name="date"/>
+		<input type="hidden" id="hid_txzt" name="txzt"/>
+	</form>
 	
 </body>
 </html>

@@ -32,13 +32,21 @@ $sheet=$objPHPExcel->setActiveSheetIndex(0);
 
 $result=report1();
 $root=$result['root'];
-$rowIndex=1;
+$rowIndex=2;
 foreach($root as $rowkey=>$row){ 
-	$columnIndex=0;
-	foreach($row as $cellkey=>$cell){
-		$sheet->setCellValueByColumnAndRow($columnIndex,$rowIndex, $cell);
-		$columnIndex++;
-	}
+	$sheet->setCellValueByColumnAndRow(1,$rowIndex, $row['sdate']);
+	$sheet->setCellValueByColumnAndRow(2,$rowIndex, $row['edate']);
+	$sheet->setCellValueByColumnAndRow(3,$rowIndex, $row['price']);
+	$sheet->setCellValueExplicitByColumnAndRow(4,$rowIndex,$row['shop'], PHPExcel_Cell_DataType::TYPE_STRING);
+	$sheet->setCellValueByColumnAndRow(5,$rowIndex, $row['shop_s']);
+	$sheet->setCellValueExplicitByColumnAndRow(6,$rowIndex,$row['object'], PHPExcel_Cell_DataType::TYPE_STRING);
+	$sheet->setCellValueByColumnAndRow(7,$rowIndex, $row['object_s']);
+	$sheet->setCellValueByColumnAndRow(8,$rowIndex, $row['sumday']);
+	$sheet->setCellValueByColumnAndRow(9,$rowIndex, $row['nowday']);
+	$sheet->setCellValueByColumnAndRow(10,$rowIndex, $row['nowprice']);
+	$sheet->setCellValueByColumnAndRow(11,$rowIndex, $row['lostday']);
+	$sheet->setCellValueByColumnAndRow(12,$rowIndex, $row['lostprice']);
+	
 	$rowIndex++;
 } 
 // Rename worksheet
@@ -50,8 +58,10 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 
 // Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
+header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment;filename="demo.xlsx"');
+
+
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
