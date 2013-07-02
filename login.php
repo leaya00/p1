@@ -21,8 +21,11 @@ session_start();
 if(isset($_POST['username']) && isset($_POST['password'])){
 	require './lib/dbUtils.php';
 	//		登录成功跳转
-	$db=new Db();
-	$result=$db->query_fetch("select count(1) as r from user where username='".$_POST['username']."' and password='".$_POST['password']."'");
+	
+	$db=new Dbi();
+	$result=$db->query_prepare_fetch_all('select count(1) as r from user'
+	);	
+	
 	print_r($result);
 	  // $_SESSION['username'] = 'hello world'; 
 

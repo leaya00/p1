@@ -4,7 +4,7 @@ require '../../lib/dbUtils.php';
 $Db = new Db();
 switch ($_POST['op']) {
 	case "admin_select":
-		$result=$Db->query_fetch("select * from user");
+		$result=$Db->query_fetch_all("select * from user");
 		echo json_encode($result);
 		break;
 }

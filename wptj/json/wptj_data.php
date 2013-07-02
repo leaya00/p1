@@ -16,9 +16,9 @@ switch ($_GET['op']) {
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='shop') AS shop ON a.shop = shop.code
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code $tj order by id desc";
 		
-		$data=$Db->query_fetch("select count(1) from ($base_sql) as temp");
+		$data=$Db->query_fetch_all("select count(1) from ($base_sql) as temp");
 		$count=$data[0][0];	
-		$data=$Db->query_fetch($base_sql.$limit_sql);
+		$data=$Db->query_fetch_all($base_sql.$limit_sql);
 		$result=array('root'=>$data,'count'=>$count);
 		echo json_encode($result);
 		// $Db->close();

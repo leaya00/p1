@@ -70,7 +70,7 @@ function report1(){
 		// 获取合计
 		$sum_sql=sprintf($base_sql,$sql_sum_field);
 		$sum_sql=str_replace("#now",$_POST['date'],$sum_sql);
-		$data=$Db->query_fetch($sum_sql);
+		$data=$Db->query_fetch_all($sum_sql);
 		// echo $sum_sql;
 		$price_sum=$data[0]['price_sum'];
 		$nowprice_sum=$data[0]['nowprice_sum'];
@@ -78,12 +78,12 @@ function report1(){
 		///获取总记录数
 		$count_sql=sprintf($base_sql,'1');
 		$count_sql=str_replace("#now",$_POST['date'],$count_sql);
-		$data=$Db->query_fetch("select count(1) from ($count_sql) as a");
+		$data=$Db->query_fetch_all("select count(1) from ($count_sql) as a");
 		$count=$data[0][0];	
 		//获取本页数据
 		$select_sql=sprintf($base_sql,$sql_field);
 		$select_sql=str_replace("#now",$_POST['date'],$select_sql);
-		$data=$Db->query_fetch($select_sql.$limit_sql);	
+		$data=$Db->query_fetch_all($select_sql.$limit_sql);	
 		//返回值
 		$result=array('root'=>$data
 					  ,'count'=>$count
@@ -133,20 +133,20 @@ function report2(){
 		$sum_sql=sprintf($base_sql,$sql_sum_field);
 		$sum_sql=str_replace("#in_sdate",$_POST['sdate'],$sum_sql);
 		$sum_sql=str_replace("#in_edate",$_POST['edate'],$sum_sql);
-		$data=$Db->query_fetch($sum_sql);
+		$data=$Db->query_fetch_all($sum_sql);
 		$price_sum=$data[0]['price_sum'];
 		$nowprice_sum=$data[0]['nowprice_sum'];
 		///获取总记录数
 		$count_sql=sprintf($base_sql,'1');
 		$count_sql=str_replace("#in_sdate",$_POST['sdate'],$count_sql);
 		$count_sql=str_replace("#in_edate",$_POST['edate'],$count_sql);
-		$data=$Db->query_fetch("select count(1) from ($count_sql) as a");
+		$data=$Db->query_fetch_all("select count(1) from ($count_sql) as a");
 		$count=$data[0][0];	
 		//获取本页数据
 		$select_sql=sprintf($base_sql,$sql_field);
 		$select_sql=str_replace("#in_sdate",$_POST['sdate'],$select_sql);
 		$select_sql=str_replace("#in_edate",$_POST['edate'],$select_sql);
-		$data=$Db->query_fetch($select_sql.$limit_sql);	
+		$data=$Db->query_fetch_all($select_sql.$limit_sql);	
 		//返回值
 		$result=array('root'=>$data
 					  ,'count'=>$count
