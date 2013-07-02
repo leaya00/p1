@@ -4,7 +4,7 @@ txt_shop = null;
 txt_object = null;
 txt_shop_s = null;
 txt_object_s = null;
-txt_txzt=null;
+txt_txtj=null;
 Ext.onReady(function () {
 
 	LoadUI();
@@ -94,7 +94,7 @@ Ext.onReady(function () {
 						labelAlign : 'right',
 						x : 460,
 						y : 45,
-						id : 'txt_txzt',
+						id : 'txt_txtj',
 						fieldLabel : '摊销状态',
 						store : tjstates,
 						editable : false,
@@ -121,7 +121,7 @@ Ext.onReady(function () {
 	txt_object = Ext.getCmp('txt_object');
 	txt_shop_s = Ext.getCmp('txt_shop_s');
 	txt_object_s = Ext.getCmp('txt_object_s');
-	txt_txzt = Ext.getCmp('txt_txzt');
+	txt_txtj = Ext.getCmp('txt_txtj');
 	
 	//设置初始值
 	txt_date.setValue(new Date());
@@ -140,7 +140,7 @@ LoadUI = function () {
 					gridStore.proxy.setExtraParam('report', 'report1');
 					gridStore.proxy.setExtraParam('shop', txt_shop.getValue());
 					gridStore.proxy.setExtraParam('object', txt_object.getValue());
-					gridStore.proxy.setExtraParam('txzt', txt_txzt.getValue());
+					gridStore.proxy.setExtraParam('txtj', txt_txtj.getValue());
 					gridStore.proxy.setExtraParam('date', txt_date.getValue().format("yyyy-MM-dd"));
 					gridStore.reload();
 				} catch (e) {
@@ -163,6 +163,7 @@ LoadUI = function () {
 					$('#hid_shop').val(txt_shop.getValue());
 					$('#hid_object').val(txt_object.getValue());
 					$('#hid_date').val(txt_date.getValue().format("yyyy-MM-dd"));
+					$('#hid_txtj').val(txt_txtj.getValue());
 					$('#exportform').submit();
 
 					

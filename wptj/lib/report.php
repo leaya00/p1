@@ -14,6 +14,35 @@ function report1(){
 		$limit_sql=" limit ".$_POST['start'].",".$_POST['limit'];
 		//摊销开始时间大于查询时间的 不在报表1出现
 		$where="where '#now'>=sdate ";
+		//摊销状态
+			
+		if($_POST['txtj']=='tx1'){
+			//未摊销完
+			$where="$where and '#now'<=edate";
+			//总摊销天数
+			$sql_sumday="(TIMESTAMPDIFF(DAY,sdate,edate)+1)";
+			//		已摊销天数
+			$sql_nowday="(TIMESTAMPDIFF(DAY,sdate,'#now')+1)";
+			//		已摊销金额
+			$sql_nowprice="ROUND((price / $sql_sumday * $sql_nowday),2)";
+			//		剩余摊销天数
+			$sql_lostday="(TIMESTAMPDIFF(DAY,'#now',edate))";
+			//		剩余摊销金额
+			$sql_lostprice="ROUND((price / $sql_sumday * $sql_lostday),2)";
+		}else{
+			//已经摊销完
+			$where="$where and '#now'>edate";
+			//总摊销天数
+			$sql_sumday="(TIMESTAMPDIFF(DAY,sdate,edate)+1)";
+			//		已摊销天数
+			$sql_nowday="($sql_sumday)";
+			//		已摊销金额
+			$sql_nowprice="price";
+			//		剩余摊销天数
+			$sql_lostday="(0)";
+			//		剩余摊销金额
+			$sql_lostprice="(0)";
+		}
 		// 其他限定条件
 		if(!empty($_POST['shop'])){
 			$where="$where and (a.shop in (".parseParm($_POST['shop'])."))";
@@ -21,16 +50,7 @@ function report1(){
 		if(!empty($_POST['object'])){
 			$where="$where and (a.object in (".parseParm($_POST['object'])."))";
 		}	
-		//总摊销天数
-		$sql_sumday="(TIMESTAMPDIFF(DAY,sdate,edate)+1)";
-		//		已摊销天数
-		$sql_nowday="(TIMESTAMPDIFF(DAY,sdate,'#now')+1)";
-		//		已摊销金额
-		$sql_nowprice="ROUND((price / $sql_sumday * $sql_nowday),2)";
-		//		剩余摊销天数
-		$sql_lostday="(TIMESTAMPDIFF(DAY,'#now',edate))";
-		//		剩余摊销金额
-		$sql_lostprice="ROUND((price / $sql_sumday * $sql_lostday),2)";
+		
 		// 普通字段
 		$sql_field=" id,sdate, edate, price,shop,object,shop.caption as shop_s,object.caption as object_s
 			, $sql_sumday as sumday,
@@ -72,6 +92,10 @@ function report1(){
 					  ,'lostprice_sum'=>$lostprice_sum);
 		return $result;
 }
+
+
+
+
 function report2(){
 		global $Db;
 		$limit_sql=" limit ".$_POST['start'].",".$_POST['limit'];

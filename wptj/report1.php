@@ -21,7 +21,7 @@
 		<input type="hidden" id="hid_shop" name="shop"/>
 		<input type="hidden" id="hid_object" name="object"/>
 		<input type="hidden" id="hid_date" name="date"/>
-		<input type="hidden" id="hid_txzt" name="txzt"/>
+		<input type="hidden" id="hid_txtj" name="txtj"/>
 	</form>
 	
 </body>
