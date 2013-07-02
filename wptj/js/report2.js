@@ -42,8 +42,14 @@ Ext.onReady(function () {
 						code : '',
 						onTriggerClick : function () {
 							popWin('./DictSelect.php', 'shop', txt_shop, txt_shop_s, true, this.getValue());
+						},
+						listeners : {
+							specialkey : function (field, e) {
+								if (e.getKey() == Ext.EventObject.ENTER) {
+									this.onTriggerClick();
+								}
+							}
 						}
-
 					}, {
 						id : 'txt_object_s',
 						fieldLabel : '商品名称',
@@ -67,8 +73,14 @@ Ext.onReady(function () {
 						code : '',
 						onTriggerClick : function () {
 							popWin('./DictSelect.php', 'object', txt_object, txt_object_s, true, this.getValue());
+						},
+						listeners : {
+							specialkey : function (field, e) {
+								if (e.getKey() == Ext.EventObject.ENTER) {
+									this.onTriggerClick();
+								}
+							}
 						}
-
 					}, {
 						id : 'txt_sdate',
 						x : 440,

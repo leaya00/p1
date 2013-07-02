@@ -27,6 +27,13 @@ class Dbi{
 		}
 		return $result;
 	}
+	/*
+	 mysql_num_rows total
+	 */
+	function rows($result)
+	{
+		return mysqli_stmt_num_rows($result);
+	}
 	//预处理查询 
 	/*
 	$db=new Dbi();
@@ -49,13 +56,7 @@ class Dbi{
 		mysqli_stmt_execute($stmt);
 		return mysqli_stmt_get_result($stmt);
 	}
-	/*
-	 mysql_num_rows total
-	 */
-	function rows($result)
-	{
-		return mysqli_num_rows($result);
-	}
+	
 	/*
 	 get data store array
 	 */

@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,13 +15,10 @@
 
 
 <?php
-    $m="01,02";
-    $r = explode(",",$m);
-
-    foreach ($r as $key => $value) {
-            $r[$key]="'$value'";
-    }
-    print_r(implode($r, ","));
+	if(empty($_SESSION['username']))		
+		echo "空";
+	else
+		echo $_SESSION['username'];
 ?>
 </body>
 </html>

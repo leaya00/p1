@@ -49,7 +49,7 @@
 					listeners : {
 						'load' : function () {
 							myMask.hide();
-							Ext.getCmp('txt_tj').focus();
+							Ext.getCmp('txt_tj').focus(true,100);
 						}
 					}
 
@@ -110,6 +110,7 @@
 								labelWidth : 50,
 								width : 350,
 								height : 27,
+								value:defaultTJ,
 								labelAlign : 'right'
 							}, {
 								xtype : 'button',

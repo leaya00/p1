@@ -67,8 +67,14 @@ Ext.onReady(function () {
 								onTriggerClick : function () {
 									popWin('./DictSelect.php',
 										'shop', txt_shop, txt_shop_s, false, this.getValue());
+								},
+								listeners : {
+									specialkey : function (field, e) {
+										if (e.getKey() == Ext.EventObject.ENTER) {
+											this.onTriggerClick();
+										}
+									}
 								}
-
 							}, {
 								id : 'txt_shop_s',
 								fieldLabel : '店铺名称',
@@ -84,6 +90,13 @@ Ext.onReady(function () {
 								onTriggerClick : function () {
 									popWin('./DictSelect.php',
 										'object', txt_object, txt_object_s, false, this.getValue());
+								},
+								listeners : {
+									specialkey : function (field, e) {
+										if (e.getKey() == Ext.EventObject.ENTER) {
+											this.onTriggerClick();
+										}
+									}
 								}
 
 							}, {
@@ -360,10 +373,10 @@ Clear_form = function () {
 	txt_edate.setValue('');
 	txt_remark.setValue('');
 };
-check_save=function(){
-	
-	if(txt_sdate.getValue() && txt_edate.getValue() && txt_price.getValue()
-			&& txt_shop_s.getValue() &&txt_object_s.getValue())
+check_save = function () {
+
+	if (txt_sdate.getValue() && txt_edate.getValue() && txt_price.getValue()
+		 && txt_shop_s.getValue() && txt_object_s.getValue())
 		return true;
 	else
 		return false;
@@ -371,10 +384,10 @@ check_save=function(){
 }
 
 save = function () {
-	if(!check_save()){
+	if (!check_save()) {
 		alert("数据项目填写不全！");
 		return;
-	}	
+	}
 	myMask.show();
 	var mydata = {
 		id : $("#hid_id").val(),
@@ -387,8 +400,7 @@ save = function () {
 		remark : txt_remark.getValue(),
 		createname : 'test'
 	};
-	
-	
+
 	$.ajax({
 		type : "POST",
 		url : "./json/wptj_data.php?op=save",

@@ -4,7 +4,7 @@ txt_shop = null;
 txt_object = null;
 txt_shop_s = null;
 txt_object_s = null;
-txt_txtj=null;
+txt_txtj = null;
 Ext.onReady(function () {
 
 	LoadUI();
@@ -53,6 +53,13 @@ Ext.onReady(function () {
 						code : '',
 						onTriggerClick : function () {
 							popWin('./DictSelect.php', 'shop', txt_shop, txt_shop_s, true, this.getValue());
+						},
+						listeners : {
+							specialkey : function (field, e) {
+								if (e.getKey() == Ext.EventObject.ENTER) {
+									this.onTriggerClick();
+								}
+							}
 						}
 
 					}, {
@@ -78,6 +85,13 @@ Ext.onReady(function () {
 						code : '',
 						onTriggerClick : function () {
 							popWin('./DictSelect.php', 'object', txt_object, txt_object_s, true, this.getValue());
+						},
+						listeners : {
+							specialkey : function (field, e) {
+								if (e.getKey() == Ext.EventObject.ENTER) {
+									this.onTriggerClick();
+								}
+							}
 						}
 
 					}, {
@@ -101,7 +115,7 @@ Ext.onReady(function () {
 						queryMode : 'local',
 						displayField : 'caption',
 						valueField : 'value',
-						value:'tx1'
+						value : 'tx1'
 					},
 					ext_btnFind,
 					ext_btnExport
@@ -122,7 +136,7 @@ Ext.onReady(function () {
 	txt_shop_s = Ext.getCmp('txt_shop_s');
 	txt_object_s = Ext.getCmp('txt_object_s');
 	txt_txtj = Ext.getCmp('txt_txtj');
-	
+
 	//设置初始值
 	txt_date.setValue(new Date());
 });
@@ -155,7 +169,7 @@ LoadUI = function () {
 			x : 845,
 			y : 15,
 			handler : function () {
-				
+
 				try {
 					$('#hid_report').val('report1');
 					$('#hid_start').val(0);
@@ -166,7 +180,6 @@ LoadUI = function () {
 					$('#hid_txtj').val(txt_txtj.getValue());
 					$('#exportform').submit();
 
-					
 				} catch (e) {
 					alert("条件设置错误!");
 				}
