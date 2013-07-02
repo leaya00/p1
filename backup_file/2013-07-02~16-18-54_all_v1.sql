@@ -3,10 +3,10 @@
 -- Created by DBManage class, Power By yanue. 
 -- http://www.yanue.net 
 --
--- 主机: localhost
--- 生成日期: 2013 年  06 月 29 日 09:47
--- MySQL版本: 5.5.32
--- PHP 版本: 5.4.16
+-- 主机: 127.0.0.1
+-- 生成日期: 2013 年  07 月 02 日 16:18
+-- MySQL版本: 5.5.27
+-- PHP 版本: 5.4.7
 
 --
 -- 数据库: `lilang`
@@ -24,12 +24,13 @@ CREATE TABLE `user` (
   `username` varchar(40) NOT NULL,
   `password` varchar(10) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 user
 --
 
+INSERT INTO `user` VALUES('1','admin','admin');
 --
 -- 表的结构wptj_data
 --
@@ -42,16 +43,18 @@ CREATE TABLE `wptj_data` (
   `price` decimal(10,0) NOT NULL,
   `shop` varchar(20) CHARACTER SET latin1 NOT NULL,
   `object` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `remark` varchar(200) NOT NULL,
   `createname` varchar(100) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 wptj_data
 --
 
-INSERT INTO `wptj_data` VALUES('5','2013-04-04','2016-04-03','22644','002','01','test');
-INSERT INTO `wptj_data` VALUES('6','2013-06-01','2014-05-31','12000','002','01','test');
+INSERT INTO `wptj_data` VALUES('5','2013-04-04','2016-04-03','22644','002','01','','test');
+INSERT INTO `wptj_data` VALUES('6','2013-06-01','2014-05-31','12000','002','01','','test');
+INSERT INTO `wptj_data` VALUES('7','2012-07-02','2013-07-26','11111','001','02','xxxxx','test');
 --
 -- 表的结构wptj_dict
 --
@@ -63,7 +66,7 @@ CREATE TABLE `wptj_dict` (
   `code` varchar(20) CHARACTER SET latin1 NOT NULL,
   `caption` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 wptj_dict
@@ -77,7 +80,6 @@ INSERT INTO `wptj_dict` VALUES('5','object','02','空调2');
 INSERT INTO `wptj_dict` VALUES('6','','','');
 INSERT INTO `wptj_dict` VALUES('7','','','');
 INSERT INTO `wptj_dict` VALUES('8','','','');
-INSERT INTO `wptj_dict` VALUES('9','shop','001','shop1');
 INSERT INTO `wptj_dict` VALUES('10','shop','004','shop4');
 INSERT INTO `wptj_dict` VALUES('11','shop','005','shop5');
 INSERT INTO `wptj_dict` VALUES('12','shop','006','shop6');
@@ -99,3 +101,5 @@ INSERT INTO `wptj_dict` VALUES('27','object','17','kjljljk');
 INSERT INTO `wptj_dict` VALUES('28','object','18','4444');
 INSERT INTO `wptj_dict` VALUES('29','object','19','ghjkghjgh');
 INSERT INTO `wptj_dict` VALUES('30','object','21','jkljkljkl');
+INSERT INTO `wptj_dict` VALUES('31','shop','007','中华人民共和国');
+INSERT INTO `wptj_dict` VALUES('32','shop','001','某某');

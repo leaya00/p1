@@ -5,7 +5,7 @@ if(!defined('global_lib')){
 require_once './lib/dbUtils.php';
 require_once './lib/strUtils.php';
 
-$Db = new Db();
+$Db = new Dbi();
 // 已摊销完的那个 已摊销天数 和已摊销额 就可以直接等于总的摊销天数 和总金额了
 // 剩余部分为0
 function report1(){		

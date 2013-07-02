@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里
 require '../../lib/dbUtils.php';
-$Db = new Db();
+$Db = new Dbi();
 switch ($_GET['op']) {
 	case "select":
 		$tj="";
@@ -29,9 +29,8 @@ switch ($_GET['op']) {
 			,$_POST['type'],$_POST['code'],$_POST['caption'],$id);
 		}
 		//防止代码重复	
-				$query= $Db->query($v_sql);
-				$row=$Db->fetch($query);
-//		$row=$Db->query_fetch($v_sql);
+		$query= $Db->query($v_sql);
+		$row=$Db->fetch_array($query);
 		if($row['re']>0){
 			echo json_encode(array('result' => '代码重复了！'));	
 		}else{

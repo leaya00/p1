@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里
 require '../../lib/dbUtils.php';
-$Db = new Db();
+$Db = new Dbi();
 switch ($_GET['op']) {
 	case "select":
 		$tj="";

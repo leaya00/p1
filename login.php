@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,6 +24,8 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 	$db=new Db();
 	$result=$db->query_fetch("select count(1) as r from user where username='".$_POST['username']."' and password='".$_POST['password']."'");
 	print_r($result);
+	  // $_SESSION['username'] = 'hello world'; 
+
 }
 ?>
 <script>
