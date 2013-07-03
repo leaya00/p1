@@ -19,6 +19,7 @@
    </style> 
 </head>
 <body>
+	<h4><a href="../login.php">注销用户</a></h4>
 	<h3>用户名:<?php echo $_SESSION['username'];?></h3>
 	
 	<ul>	
@@ -33,7 +34,7 @@
 		<li><a href="report2.php" target="_blank">阶段摊销额汇总表</a></li>
 	</ul>
 	<ul>
-		<li><a href="../login.php">注销用户</a></li>
+		
 		<li> <a href="../backup" target="_blank">备份恢复数据</a></li>
 	</ul>
 </body>
