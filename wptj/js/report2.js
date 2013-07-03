@@ -246,11 +246,11 @@ LoadGrid = function () {
 					}
 				}, {
 					text : '摊销起始日期',
-					width : 100,
+					width : 120,
 					dataIndex : 'sdate'
 				}, {
 					text : '摊销截止日期',
-					width : 100,
+					width : 120,
 					dataIndex : 'edate'
 				}, {
 					text : '总摊销天数',
@@ -258,11 +258,11 @@ LoadGrid = function () {
 					dataIndex : 'sumday'
 				}, {
 					text : '本期摊销天数',
-					width : 100,
+					width : 120,
 					dataIndex : 'nowday'
 				}, {
 					text : '本期摊销金额',
-					width : 100,
+					width : 120,
 					dataIndex : 'nowprice',
 					summaryRenderer : function (value) {
 						if (gridStore.proxy.reader.jsonData) {

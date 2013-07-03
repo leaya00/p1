@@ -15,10 +15,32 @@ session_start();
 
 
 <?php
-	if(empty($_SESSION['username']))		
-		echo "空";
-	else
-		echo $_SESSION['username'];
+	require_once "./global.php";
+	/** Error reporting */
+	error_reporting(E_ALL);
+	ini_set('display_errors', TRUE);
+	ini_set('display_startup_errors', TRUE);
+	date_default_timezone_set('Europe/London');
+
+	define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+
+	date_default_timezone_set('PRC');
+
+	/** Include PHPExcel_IOFactory */
+	require_once './lib/PHPExcel_1.7.9_doc/PHPExcel/IOFactory.php';
+	// require_once './lib/PHPExcel_1.7.9_doc/PHPExcel.php';
+	
+	
+	
+	$objReader = PHPExcel_IOFactory::createReader('Excel5');
+	$objPHPExcel = PHPExcel_IOFactory::load("./wptj/template.xls");
+	$sheet = $objPHPExcel->getSheet(0);
+	$highestRow = $sheet->getHighestRow(); // 取得总行数
+	$highestColumn = $sheet->getHighestColumn(); // 取得总列数
+	echo $highestRow."--".$highestColumn;
+	$x=$sheet->getCell("A1")->getValue();
+	
+	echo $x;
 ?>
 </body>
 </html>

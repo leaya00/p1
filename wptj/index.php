@@ -9,15 +9,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+	<link href="../js/bootstrap/css/bootstrap.css"	rel="stylesheet" type="text/css" />
 	<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
-    <style type="text/css">
-	   <!--
-	   a:link { text-decoration: none;color: blue}
-	   a:active { text-decoration:blink}
-	   a:hover { text-decoration:underline;color: blue}
-	   a:visited { text-decoration: none;color: blue}
-	   -->
-   </style> 
+    <script src="../js/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 </head>
 <body>
 	<h4><a href="../login.php">注销用户</a></h4>
@@ -29,6 +23,7 @@
 	</ul>
 	<ul>
 		<li> <a href="editData.php" target="_blank">基本数据录入</a></li>
+		<li> <a href="importData.php" target="_blank">基本数据导入</a></li>
 	</ul>
 	<ul>
 		<li><a href="report1.php" target="_blank">剩余摊销汇总表</a></li>
