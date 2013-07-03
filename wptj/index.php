@@ -6,8 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>	
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>	
-	<meta http-equiv="X-UA-Compatible" content="IE=7" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 	<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
     <style type="text/css">
 	   <!--
