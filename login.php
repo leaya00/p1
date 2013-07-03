@@ -4,7 +4,7 @@
 <head>
 <title>登录系统</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 <script src="./js/jquery-1.7.1.min.js" type="text/javascript"></script>
 <link href="./js/ext-4.2.1/resources/css/ext-all-neptune.css"
 	rel="stylesheet" type="text/css" />
@@ -20,19 +20,19 @@ unset($_SESSION['username']);
 if(isset($_POST['username']) && isset($_POST['password'])){
 	require './lib/dbUtils.php';
 	//		登录成功跳转
-	
+
 	$db=new Dbi();
-	$result=$db->query_prepare_fetch_all('select username  from user where username=? and password=?',function($stmt){
-			$pwd=md5($_POST['password']);
-			mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$pwd);
-		}
-	);	
-	 if(count($result)>0){		
-		 $_SESSION['username'] = $result[0][0]; 
-		 echo "<script>location.href='./wptj/';</script>"; 
-	 }
-	
-	  
+	function setParam($stmt){
+		$pwd=md5($_POST['password']);
+		mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$pwd);
+	}
+	$result=$db->query_prepare_fetch_all('select username  from user where username=? and password=?',setParam);
+	if(count($result)>0){
+		$_SESSION['username'] = $result[0][0];
+		echo "<script>location.href='./wptj/';</script>";
+	}
+
+
 
 }
 ?>

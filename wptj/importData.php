@@ -31,9 +31,12 @@
 	$highestRow = $sheet->getHighestRow(); // 取得总行数
 	$highestColumn = $sheet->getHighestColumn(); // 取得总列数
 	echo $highestRow."--".$highestColumn;
-	$x=$sheet->getCell("A1")->getValue();
+	for ($row=2;$row<=$highestRow;$row++){
+		
+		$x=$sheet->getCell("A$row")->getValue();
+		echo "<br/>$x";
+	}
 	
-	echo $x;
 	
 	?>
 	<div class="container" style='width:500px;margin-top:50px;'>
