@@ -50,12 +50,9 @@ $sheet->setCellValueByColumnAndRow(9,$rowIndex, '已摊销天数');
 $sheet->getStyleByColumnAndRow(9,$rowIndex)->getFont()->setBold(true);
 $sheet->setCellValueByColumnAndRow(10,$rowIndex, '已摊销金额');
 $sheet->getStyleByColumnAndRow(10,$rowIndex)->getFont()->setBold(true);
-$sheet->setCellValueByColumnAndRow(11,$rowIndex, '剩余摊销天数');
-$sheet->getStyleByColumnAndRow(11,$rowIndex)->getFont()->setBold(true);
-$sheet->setCellValueByColumnAndRow(12,$rowIndex, '剩余摊销金额');
-$sheet->getStyleByColumnAndRow(12,$rowIndex)->getFont()->setBold(true);
+
 //输出数据
-$result=report1();
+$result=report2();
 $root=$result['root'];
 $rowIndex=2;
 foreach($root as $rowkey=>$row){ 
@@ -69,8 +66,7 @@ foreach($root as $rowkey=>$row){
 	$sheet->setCellValueByColumnAndRow(8,$rowIndex, $row['sumday']);
 	$sheet->setCellValueByColumnAndRow(9,$rowIndex, $row['nowday']);
 	$sheet->setCellValueByColumnAndRow(10,$rowIndex, $row['nowprice']);
-	$sheet->setCellValueByColumnAndRow(11,$rowIndex, $row['lostday']);
-	$sheet->setCellValueByColumnAndRow(12,$rowIndex, $row['lostprice']);
+	
 	
 	$rowIndex++;
 } 
@@ -84,7 +80,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/octet-stream');
-header('Content-Disposition: attachment;filename="report1.xls"');
+header('Content-Disposition: attachment;filename="report2.xls"');
 
 
 header('Cache-Control: max-age=0');

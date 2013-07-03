@@ -101,7 +101,7 @@ Ext.onReady(function () {
 						xtype : 'datefield',
 						format : 'Y-m-d',
 						allowBlank : false
-					}, ext_btnFind,
+					}, ext_btnFind,ext_btnExport
 
 				]
 			}, {
@@ -143,6 +143,29 @@ LoadUI = function () {
 					gridStore.proxy.setExtraParam('sdate', txt_sdate.getValue().format("yyyy-MM-dd"));
 					gridStore.proxy.setExtraParam('edate', txt_edate.getValue().format("yyyy-MM-dd"));
 					gridStore.reload();
+				} catch (e) {
+					alert("条件设置错误!");
+				}
+			}
+		});
+		ext_btnExport = Ext.create('Ext.Button', {
+			text : '导出',
+			icon : '../image/btn/export.png',
+			width : 100,
+			x : 845,
+			y : 15,
+			handler : function () {
+
+				try {
+					$('#hid_report').val('report2');
+					$('#hid_start').val(0);
+					$('#hid_limit').val(10000);
+					$('#hid_shop').val(txt_shop.getValue());
+					$('#hid_object').val(txt_object.getValue());
+					$('#hid_sdate').val(txt_sdate.getValue().format("yyyy-MM-dd"));
+					$('#hid_edate').val(txt_edate.getValue().format("yyyy-MM-dd"));
+					$('#exportform').submit();
+
 				} catch (e) {
 					alert("条件设置错误!");
 				}
