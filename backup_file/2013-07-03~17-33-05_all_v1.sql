@@ -4,7 +4,7 @@
 -- http://www.yanue.net 
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2013 年  07 月 02 日 16:18
+-- 生成日期: 2013 年  07 月 03 日 17:33
 -- MySQL版本: 5.5.27
 -- PHP 版本: 5.4.7
 
@@ -22,15 +22,15 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(40) NOT NULL,
-  `password` varchar(10) CHARACTER SET latin1 NOT NULL,
+  `password` varchar(100) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 user
 --
 
-INSERT INTO `user` VALUES('1','admin','admin');
+INSERT INTO `user` VALUES('11','admin','21232f297a57a5a743894a0e4a801fc3');
 --
 -- 表的结构wptj_data
 --
