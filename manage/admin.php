@@ -100,10 +100,10 @@
     </div>
 	<script>
 		adduser=function (){
-			$('#myalert').modal();
+			$("#add_form").submit();
 		};
 		showMyAlert=function(){
-			
+			$('#myalert').modal();
 		};
 	</script>
 	

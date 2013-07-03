@@ -23,7 +23,8 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 	
 	$db=new Dbi();
 	$result=$db->query_prepare_fetch_all('select username  from user where username=? and password=?',function($stmt){
-			mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$_POST['password']);
+			$pwd=md5($_POST['password']);
+			mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$pwd);
 		}
 	);	
 	 if(count($result)>0){		
