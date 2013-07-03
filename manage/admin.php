@@ -57,7 +57,7 @@
 				<div class="control-group">
 					<div class="controls">
 					
-						<button type="submit" class="btn btn-primary" >增加</button>
+						<input  type="button" class="btn btn-primary" onclick="adduser();" value='增加'>
 					</div>
 				</div>
 				
@@ -77,7 +77,7 @@
 					<td>1</td>
 					<td>张三</td>
 					<td style="width:140px;">
-						<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myalert">重置密码</button>
+						<button type="submit" class="btn btn-danger" data-toggle="modal" >重置密码</button>
 						<button type="submit" class="btn btn-danger">删除</button>
 					</td>
 				</tr>
@@ -98,5 +98,14 @@
 		
 		</div>
     </div>
+	<script>
+		adduser=function (){
+			$('#myalert').modal();
+		};
+		showMyAlert=function(){
+			
+		};
+	</script>
+	
 </body>
 </html>
