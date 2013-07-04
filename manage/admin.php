@@ -19,7 +19,7 @@
 			}
 		
 		?>
-	</p></h2>
+	</p></h3>
 	<?php
 		
 		if(!empty($_POST['username'])){
