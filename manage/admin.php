@@ -155,6 +155,10 @@ if(!empty($_POST['username'])){
 				};
 			};
 		delUser=function(id,text){
+				if(text=='admin'){
+					alert('管理员不能删除!');
+					return;
+				}
 				showMyAlert("提示","用户["+text+"]将被删除!");
 				okExec=function(){
 					var v={
