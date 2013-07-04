@@ -388,7 +388,7 @@ check_user=function(){
 		var selected = selModel.getSelection();
 		var r=selected[0].data.createname;
 		var h=$("#username").val();
-		if(r==h ||  r==''){
+		if(r==h || h=='admin' || r==''){
 			return true;
 		}
 	}

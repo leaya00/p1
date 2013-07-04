@@ -67,10 +67,12 @@
 				   		}else{
 				   			alert('修改密码失败!');
 					   	}
+				   		location.href='user.php';
 				   },
 				   error:function (XMLHttpRequest, textStatus, errorThrown) {
 					  
 					    alert('修改密码失败!\r\n'+XMLHttpRequest.responseText);
+					    location.href='user.php';
 					}
 				});
    	   	}
