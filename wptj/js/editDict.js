@@ -123,12 +123,14 @@ LoadUI = function () {
 			icon : '../image/btn/save.png',
 			width : 100,
 			margin : '15 0 0 5',
-			handler : function () {
-				ext_btnAdd.setDisabled(false);
-				ext_btnModify.setDisabled(false);
-				ext_btnSave.setDisabled(true);
-				ext_btnDelete.setDisabled(false);
-				save();
+			handler : function () {				
+				save(function(){
+					ext_btnAdd.setDisabled(false);
+					ext_btnModify.setDisabled(false);
+					ext_btnSave.setDisabled(true);
+					ext_btnDelete.setDisabled(false);
+					
+				});
 			}
 		});
 	ext_btnDelete = Ext.create('Ext.Button', {
@@ -256,7 +258,7 @@ Clear_form = function () {
 	txt_code.setValue('');
 	txt_caption.setValue('');
 };
-save = function () {
+save = function (fun) {
 	myMask.show();
 	var mydata = {
 		id : $("#hid_id").val(),
@@ -272,6 +274,9 @@ save = function () {
 			if (msg.result == true) {
 				gridStore.reload();
 				alert("信息: 保存成功!");
+				if(fun){
+					fun();
+				}
 			} else {
 				alert("错误信息: " + msg.result);
 				ext_btnSave.setDisabled(false);
