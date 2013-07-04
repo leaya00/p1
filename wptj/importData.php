@@ -12,86 +12,116 @@
 
 </head>
 <body>
-<h3><p class="text-success">
-		<?php
-			if(!empty($_GET['succ_msg'])){
-			
-				echo "导入成功第".$_GET['succ_msg']."行<br/>";
-			}
-			
-		?>
-	</p></h3>
-	<h3><p class="text-error">
-		<?php
-			if(!empty($_GET['error_msg'])){
-			
-				echo "导入失败第".$_GET['error_msg']."行<br/>";
-			}
-			
-		?>
-	</p></h3>
+<h3>
+<p class="text-success"><?php
+if(!empty($_GET['succ_msg'])){
+
+	echo "导入成功第".$_GET['succ_msg']."行<br/>";
+}
+
+?></p>
+</h3>
+<h3>
+<p class="text-error"><?php
+if(!empty($_GET['error_msg'])){
+
+	echo "导入失败第".$_GET['error_msg']."行<br/>";
+}
+
+?></p>
+</h3>
+<h3>
+<p class="text-error"><?php
+if(!empty($_GET['file_msg'])){
+
+	echo "上传文件失败:".$_GET['file_msg']."<br/>";
+}
+
+?></p>
+</h3>
 <?php
+
 if(!empty($_POST['importdata'])){
-	require_once "../global.php";
-	require_once './lib/dbUtils.php';
-	/** Error reporting */
-	error_reporting(E_ALL);
-	ini_set('display_errors', TRUE);
-	ini_set('display_startup_errors', TRUE);
-	date_default_timezone_set('PRC');
-
-	define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
-
-
-	/** Include PHPExcel_IOFactory */
-	require_once './lib/PHPExcel_1.7.9_doc/PHPExcel/IOFactory.php';
-
-	$objReader = PHPExcel_IOFactory::createReader('Excel5');
-	$objPHPExcel = PHPExcel_IOFactory::load("./wptj/template.xls");
-	$sheet = $objPHPExcel->getSheet(0);
-	$highestRow = $sheet->getHighestRow(); // 取得总行数
-	$highestColumn = $sheet->getHighestColumn(); // 取得总列数
-	//	echo $highestRow."--".$highestColumn;
-	$db=new Dbi();
-	$succ_msg=array();
-	$error_msg=array();
-	//shop,object,price,sdate,edate,remark
-	for ($row=2;$row<=$highestRow;$row++){
-		$sql= "INSERT INTO `wptj_data` (shop,object,price,sdate,edate,remark,createname) values (?,?,?,?,?,?,?)";
-		$shop=$sheet->getCell("A$row")->getValue();
-		$object=$sheet->getCell("B$row")->getValue();
-		$price=$sheet->getCell("C$row")->getValue();
-		$sdate=$sheet->getCell("D$row")->getValue();
-		$sdate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($sdate));
-		$edate=$sheet->getCell("E$row")->getValue();
-		$edate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($edate));
-		$remark=$sheet->getCell("F$row")->getValue();
-		$createname='import';
-		$stmt =mysqli_prepare($db->link,$sql);
-		mysqli_stmt_bind_param($stmt,'ssdssss',
-		$shop,$object,$price,$sdate,$edate,$remark,$createname);
-
-		$r=mysqli_stmt_execute($stmt);
-		
-		if($r){
-			$succ_msg[]=$row;
-		}else{
-
-			$error_msg[]=$row;
-		}
-		//
-		
-
+	//文件上传
+	if ($_FILES["inputExcel"]["error"] > 0)
+	{
+		$msg=$_FILES["inputExcel"]["error"];
+		if($msg==4)
+			$msg="没有选择文件!";
+		if($msg==1)
+			$msg="文件大小超过限制!";	
+		echo "<script>location.href='importData.php?file_msg=".urlencode($msg)."'</script>";
 	}
-	 echo "<script>location.href='importData.php?succ_msg=".implode($succ_msg, ",")."&error_msg=".implode($error_msg, ",")."'</script>";
+	else{
+		if(!is_dir("upload/")){
+			mkdir("upload/");
+		}
+		 move_uploaded_file($_FILES["inputExcel"]["tmp_name"],
+      	"upload/" . "xxx.xls");
+	}
+	//导入excel数据
+	if(false){
+		require_once "../global.php";
+		require_once './lib/dbUtils.php';
+		/** Error reporting */
+		error_reporting(E_ALL);
+		ini_set('display_errors', TRUE);
+		ini_set('display_startup_errors', TRUE);
+		date_default_timezone_set('PRC');
+
+		define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+
+
+		/** Include PHPExcel_IOFactory */
+		require_once './lib/PHPExcel_1.7.9_doc/PHPExcel/IOFactory.php';
+
+		$objReader = PHPExcel_IOFactory::createReader('Excel5');
+		$objPHPExcel = PHPExcel_IOFactory::load("./wptj/template_data.xls");
+		$sheet = $objPHPExcel->getSheet(0);
+		$highestRow = $sheet->getHighestRow(); // 取得总行数
+		$highestColumn = $sheet->getHighestColumn(); // 取得总列数
+		//	echo $highestRow."--".$highestColumn;
+		$db=new Dbi();
+		$succ_msg=array();
+		$error_msg=array();
+		//shop,object,price,sdate,edate,remark
+		for ($row=2;$row<=$highestRow;$row++){
+			$sql= "INSERT INTO `wptj_data` (shop,object,price,sdate,edate,remark,createname) values (?,?,?,?,?,?,?)";
+			$shop=$sheet->getCell("A$row")->getValue();
+			$object=$sheet->getCell("B$row")->getValue();
+			$price=$sheet->getCell("C$row")->getValue();
+			$sdate=$sheet->getCell("D$row")->getValue();
+			$sdate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($sdate));
+			$edate=$sheet->getCell("E$row")->getValue();
+			$edate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($edate));
+			$remark=$sheet->getCell("F$row")->getValue();
+			$createname='import';
+			$stmt =mysqli_prepare($db->link,$sql);
+			mysqli_stmt_bind_param($stmt,'ssdssss',
+			$shop,$object,$price,$sdate,$edate,$remark,$createname);
+
+			$r=mysqli_stmt_execute($stmt);
+
+			if($r){
+				$succ_msg[]=$row;
+			}else{
+
+				$error_msg[]=$row;
+			}
+			//
+		}
+	echo "<script>location.href='importData.php?succ_msg=".implode($succ_msg, ",")."&error_msg=".implode($error_msg, ",")."'</script>";
+	
+	}
+
 }
 ?>
 <div class="container" style='width: 500px; margin-top: 50px;'>
 
-<form name="form1" method="post" enctype="multipart/form-data"
+<form name="form1" id="form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 <div class="controls">
-<h4><a>模板下载</a></h4>
+<h4><a href="./template_data.xls">模板下载</a></h4>
 <hr />
 </div>
 <input type="hidden" name="importdata" value="true">
@@ -100,12 +130,17 @@ if(!empty($_POST['importdata'])){
 <div class="control-group"><label class="control-label">选择要导入的文件:</label>
 <div class="controls"><input type="file" name="inputExcel"
 	style='width: 300px;'><br />
-<input class='btn btn-primary' type="submit" value="导入数据"></div>
+<input class='btn btn-primary' type="button" onclick="exec();" value="导入数据"></div>
 
 </div>
 
 </form>
 
 </div>
+<script>
+	function exec(){
+		$("#form1").submit();
+		}
+</script>
 </body>
 </html>
