@@ -202,6 +202,10 @@ LoadUI = function () {
 			width : 100,
 			margin : '15 0 0 5',
 			handler : function () {
+				if (!check_save()) {
+					alert("数据项目填写不全！");
+					return;
+				}
 				ext_btnAdd.setDisabled(false);
 				ext_btnModify.setDisabled(false);
 				ext_btnSave.setDisabled(true);
@@ -383,11 +387,7 @@ check_save = function () {
 
 }
 
-save = function () {
-	if (!check_save()) {
-		alert("数据项目填写不全！");
-		return;
-	}
+save = function () {	
 	myMask.show();
 	var mydata = {
 		id : $("#hid_id").val(),
@@ -397,8 +397,8 @@ save = function () {
 		price : txt_price.getValue(),
 		shop : txt_shop.getValue(),
 		object : txt_object.getValue(),
-		remark : txt_remark.getValue(),
-		createname : 'test'
+		remark : txt_remark.getValue()
+		
 	};
 
 	$.ajax({

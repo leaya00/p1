@@ -1,5 +1,5 @@
 <?php	
-	require_once("lib/checkUser_json.php");
+	require_once("../lib/checkUser_json.php");
 ?>
 <?php
 header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里
@@ -32,12 +32,12 @@ switch ($_GET['op']) {
 		if($id==""){
 			$sql= sprintf("INSERT INTO `wptj_data` (sdate,edate,price,shop,object,createname,remark) values ('%s','%s','%s','%s','%s','%s','%s')"
 			,$_POST['sdate'],$_POST['edate'],$_POST['price']
-			,$_POST['shop'],$_POST['object'],$_POST['createname'],$_POST['remark']);
+			,$_POST['shop'],$_POST['object'],$_SESSION['username'],$_POST['remark']);
 		}else{
 			$sql= sprintf("UPDATE  `wptj_data` set sdate='%s',edate='%s',price='%s',shop='%s',object='%s'
 			 ,createname='%s',remark='%s' where id=%s"
 			,$_POST['sdate'],$_POST['edate'],$_POST['price']
-			,$_POST['shop'],$_POST['object'],$_POST['createname'],$_POST['remark']
+			,$_POST['shop'],$_POST['object'],$_SESSION['username'],$_POST['remark']
 			,$id);
 		}
 		$r= ($Db->query($sql));

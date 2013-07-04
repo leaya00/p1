@@ -98,7 +98,7 @@ if(!empty($_POST['importdata'])){
 			$edate=$sheet->getCell("E$row")->getValue();
 			$edate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($edate));
 			$remark=$sheet->getCell("F$row")->getValue();
-			$createname='import';
+			$createname=$_SESSION['username'];
 			$stmt =mysqli_prepare($db->link,$sql);
 			mysqli_stmt_bind_param($stmt,'ssdssss',
 			$shop,$object,$price,$sdate,$edate,$remark,$createname);

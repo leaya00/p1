@@ -29,9 +29,6 @@
 		<li><a href="report1.php" target="_blank">剩余摊销汇总表</a></li>
 		<li><a href="report2.php" target="_blank">阶段摊销额汇总表</a></li>
 	</ul>
-	<ul>
-		
-		<li> <a href="../backup" target="_blank">备份恢复数据</a></li>
-	</ul>
+	
 </body>
 </html>
