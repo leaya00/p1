@@ -16,11 +16,12 @@
 <script src="../js/utils.js" type="text/javascript"></script>
 
 </head>
-<body>
+<body >
 
 <script type="text/javascript">
-
+	
 	LoadInfo = function (dictType, setDictValue, isMuti, defaultTJ) {
+		
 		Ext.onReady(function () {
 			myMask = new Ext.LoadMask(Ext.getBody(), {
 					msg : "请等待，正在执行任务..."
@@ -30,6 +31,7 @@
 				extend : 'Ext.data.Model',
 				fields : ['id', 'code', 'type', 'caption']
 			});
+			
 			gridStore = Ext.create('Ext.data.Store', {
 					buffered : false,
 					pageSize : 50,
@@ -49,13 +51,25 @@
 					model : 'gridModel',
 					autoLoad : false,
 					listeners : {
-						'load' : function () {
+						'load' : function (s, records, successful, eOpts) {
 							myMask.hide();
-							Ext.getCmp('txt_tj').focus(true,100);
+							if (records.length > 0) {
+								dataGrid.getSelectionModel().select(0);
+								dataGrid.getEl().addKeyMap({
+								    eventName: "keyup",
+								    binding: [{
+								        key: 13,
+								        fn:  function(){ 
+								    		Ext.getCmp('btnOk').fireEvent('click');
+										 }
+								    }]
+								});
+							}
 						}
 					}
 
 				});
+			
 			var tmpModel = "SINGLE";
 			//SINGLE,单 SIMPLE 多
 			if (isMuti) {
@@ -135,9 +149,11 @@
 								xtype : 'button',
 								text : '确定选择',
 								width : 100,
+								id:'btnOk',
 								x : 80,
 								y : 7,
-								handler : function () {
+								listeners: {
+					                "click": function () {
 									var selModel = dataGrid.getSelectionModel();
 									if (selModel.hasSelection()) {
 										var selected = selModel.getSelection();
@@ -151,6 +167,7 @@
 										setDictValue(tmpcode.join(','), tmpcaption.join(','));
 									}
 								}
+							}
 							}, {
 								xtype : 'button',
 								text : '赋空值',
