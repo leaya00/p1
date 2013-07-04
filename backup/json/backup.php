@@ -1,3 +1,6 @@
+<?php	
+	require_once("../../lib/checkUser_json.php");
+?>
 <?php
 header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里
 require '../../lib/dbUtils.php';

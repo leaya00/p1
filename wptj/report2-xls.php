@@ -1,3 +1,6 @@
+<?php	
+	require_once("lib/checkUser_json.php");
+?>
 <?php
 require_once "../global.php";
 require_once './wptj/lib/report.php';

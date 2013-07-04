@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php	
-	require_once("../lib/checkUser.php");
+	require_once("lib/checkUser.php");
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,7 +14,7 @@
     <script src="../js/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 </head>
 <body>
-	<h4><a href="../login.php">注销用户</a></h4>
+	<h4><a href="../">返回首页</a></h4>
 	<h3>用户名:<?php echo $_SESSION['username'];?></h3>
 	
 	<ul>	

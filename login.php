@@ -31,7 +31,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 
 	if(count($result)>0){
 		$_SESSION['username'] = $result[0][0];
-		echo "<script>location.href='./wptj/';</script>";
+		echo "<script>location.href='./';</script>";
 	}
 
 
