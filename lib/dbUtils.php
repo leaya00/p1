@@ -8,7 +8,8 @@ class Dbi{
 	/******************************/
 	public $link;
 	function __construct() {
-		$this->link = mysqli_connect(self::$root,self::$user,self::$pass, self::$db);
+		//"p:".持久链接
+		$this->link = mysqli_connect("p:".self::$root,self::$user,self::$pass, self::$db);
 		if (mysqli_connect_errno()) {
 			echo "Failed to connect to MySQL: (" . mysqli_connect_error . ") " ;
 		}
@@ -34,10 +35,9 @@ class Dbi{
 	{
 		return mysqli_stmt_num_rows($result);
 	}
-	//预处理查询 
+	
+
 	/*
-
-
 	 get data store array
 	 */
 	function fetch_array($result){
@@ -71,7 +71,7 @@ class Dbi{
 		return mysqli_fetch_all($q,MYSQLI_BOTH);
 	}
 	
-	//	
+	//预处理查询 
 //		$stmt =mysqli_prepare($this->link,$sql);
 //		mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$_POST['password']);
 //		mysqli_stmt_execute($stmt);

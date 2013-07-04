@@ -12,10 +12,11 @@ session_start();
 
 </head>
 <body>
-
+ddddddd
 
 <?php
-	echo __DIR__;
+	exit();
 ?>
+hahahah
 </body>
 </html>
