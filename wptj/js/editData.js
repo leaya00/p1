@@ -1,4 +1,4 @@
-Ext.require(['Ext.grid.*']);
+Ext.require( [ 'Ext.grid.*' ]);
 
 txt_shop = null;
 txt_object = null;
@@ -8,278 +8,320 @@ txt_price = null;
 txt_sdate = null;
 txt_edate = null;
 txt_remark = null;
-Ext.onReady(function () {
-	myMask = new Ext.LoadMask($('body').get(0), {
-			msg : "请等待，正在执行任务..."
+Ext
+		.onReady(function() {
+			myMask = new Ext.LoadMask($('body').get(0), {
+				msg : "请等待，正在执行任务..."
+			});
+			LoadUI();
+			LoadGrid();
+			Ext
+					.create(
+							'Ext.Viewport',
+							{
+								layout : 'border',
+								border : false,
+								items : [
+										{
+											border : false,
+											region : 'north',
+											height : 180,
+											layout : 'anchor',
+											margin : '5 5 0 5',
+											items : [
+													{
+														border : false,
+														region : 'north',
+														layout : 'table',
+														height : 80,
+														items : [
+																ext_btnAdd,
+																ext_btnModify,
+																ext_btnSave,
+																ext_btnDelete,
+																{
+																	margin : '15 0 0 30',
+																	id : 'txt_seach',
+																	labelWidth : 50,
+																	xtype : 'textfield',
+																	labelAlign : 'right',
+																	fieldLabel : '关键字'
+																},
+																{
+																	margin : '15 0 0 0',
+																	xtype : 'button',
+																	text : '搜索',
+																	handler : function() {
+																		gridStore.proxy
+																				.setExtraParam(
+																						'tj',
+																						Ext
+																								.getCmp(
+																										'txt_seach')
+																								.getValue());
+																		gridStore
+																				.reload();
+																	}
+																} ]
+													},
+													{
+														border : false,
+														region : 'center',
+														xtype : 'form',
+														layout : {
+															type : 'table',
+															columns : 4
+														},
+														defaultType : 'textfield',
+														fieldDefaults : {
+															labelWidth : 80,
+															labelAlign : 'right'
+														},
+														items : [
+																{
+																	id : 'txt_shop',
+																	fieldLabel : '店铺代码',
+																	xtype : 'triggerfield',
+																	triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
+																	onTriggerClick : function() {
+																		popWin(
+																				'./DictSelect.php',
+																				'shop',
+																				txt_shop,
+																				txt_shop_s,
+																				false,
+																				this
+																						.getValue());
+																	},
+																	listeners : {
+																		specialkey : function(
+																				field,
+																				e) {
+																			if (e
+																					.getKey() == Ext.EventObject.ENTER) {
+																				this
+																						.onTriggerClick();
+																			}
+																		}
+																	}
+																},
+																{
+																	id : 'txt_shop_s',
+																	fieldLabel : '店铺名称',
+																	allowBlank : false,
+																	readOnly : true
+																},
+																{
+																	id : 'txt_object',
+																	fieldLabel : '商品代码',
+																	xtype : 'triggerfield',
+																	triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
+																	code : '',
+																	onTriggerClick : function() {
+																		popWin(
+																				'./DictSelect.php',
+																				'object',
+																				txt_object,
+																				txt_object_s,
+																				false,
+																				this
+																						.getValue());
+																	},
+																	listeners : {
+																		specialkey : function(
+																				field,
+																				e) {
+																			if (e
+																					.getKey() == Ext.EventObject.ENTER) {
+																				this
+																						.onTriggerClick();
+																			}
+																		}
+																	}
+
+																},
+																{
+																	id : 'txt_object_s',
+																	fieldLabel : '商品名称',
+																	allowBlank : false,
+																	readOnly : true
+																},
+																{
+																	id : 'txt_price',
+																	xtype : 'numberfield',
+																	fieldLabel : '总额',
+																	minValue : 0,
+																	hideTrigger : true,
+																	allowBlank : false,
+																	keyNavEnabled : false,
+																	mouseWheelEnabled : false
+
+																},
+																{
+																	id : 'txt_sdate',
+																	fieldLabel : '开始时间',
+																	xtype : 'datefield',
+																	format : 'Y-m-d',
+																	allowBlank : false
+																},
+																{
+																	id : 'txt_edate',
+																	fieldLabel : '结束时间',
+																	xtype : 'datefield',
+																	format : 'Y-m-d',
+																	allowBlank : false,
+																	colspan : 2
+
+																},
+																{
+																	id : 'txt_remark',
+																	name : 'message',
+																	fieldLabel : '备注',
+																	width : 470,
+																	colspan : 2
+																} ]
+
+													}
+
+											]
+										}, {
+											region : 'center',
+											margin : '5 5 0 5',
+											layout : 'fit',
+											items : [ dataGrid ]
+										} ]
+							});
+			txt_shop = Ext.getCmp('txt_shop');
+			txt_shop_s = Ext.getCmp('txt_shop_s');
+			txt_object = Ext.getCmp('txt_object');
+			txt_object_s = Ext.getCmp('txt_object_s');
+			txt_price = Ext.getCmp('txt_price');
+			txt_sdate = Ext.getCmp('txt_sdate');
+			txt_edate = Ext.getCmp('txt_edate');
+			txt_remark = Ext.getCmp('txt_remark');
 		});
-	LoadUI();
-	LoadGrid();
-	Ext.create('Ext.Viewport', {
-		layout : 'border',
-		border : false,
-		items : [{
-				border : false,
-				region : 'north',
-				height : 180,
-				layout : 'anchor',
-				margin : '5 5 0 5',
-				items : [{
-						border : false,
-						region : 'north',
-						layout : 'table',
-						height : 80,
-						items : [ext_btnAdd, ext_btnModify,
-							ext_btnSave, ext_btnDelete, {
-								margin : '15 0 0 30',
-								id : 'txt_seach',
-								labelWidth : 50,
-								xtype : 'textfield',
-								labelAlign : 'right',
-								fieldLabel : '关键字'
-							}, {
-								margin : '15 0 0 0',
-								xtype : 'button',
-								text : '搜索',
-								handler : function () {
-									gridStore.proxy.setExtraParam('tj', Ext.getCmp('txt_seach').getValue());
-									gridStore.reload();
-								}
-							}
-						]
-					}, {
-						border : false,
-						region : 'center',
-						xtype : 'form',
-						layout : {
-							type : 'table',
-							columns : 4
-						},
-						defaultType : 'textfield',
-						fieldDefaults : {
-							labelWidth : 80,
-							labelAlign : 'right'
-						},
-						items : [{
-								id : 'txt_shop',
-								fieldLabel : '店铺代码',
-								xtype : 'triggerfield',
-								triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
-								onTriggerClick : function () {
-									popWin('./DictSelect.php',
-										'shop', txt_shop, txt_shop_s, false, this.getValue());
-								},
-								listeners : {
-									specialkey : function (field, e) {
-										if (e.getKey() == Ext.EventObject.ENTER) {
-											this.onTriggerClick();
-										}
-									}
-								}
-							}, {
-								id : 'txt_shop_s',
-								fieldLabel : '店铺名称',
-								allowBlank : false,
-								readOnly : true
-							}, {
-								id : 'txt_object',
-								fieldLabel : '商品代码',
-								xtype : 'triggerfield',
-								triggerCls : Ext.baseCSSPrefix
-								 + 'form-search-trigger',
-								code : '',
-								onTriggerClick : function () {
-									popWin('./DictSelect.php',
-										'object', txt_object, txt_object_s, false, this.getValue());
-								},
-								listeners : {
-									specialkey : function (field, e) {
-										if (e.getKey() == Ext.EventObject.ENTER) {
-											this.onTriggerClick();
-										}
-									}
-								}
 
-							}, {
-								id : 'txt_object_s',
-								fieldLabel : '商品名称',
-								allowBlank : false,
-								readOnly : true
-							}, {
-								id : 'txt_price',
-								xtype : 'numberfield',
-								fieldLabel : '总额',
-								minValue : 0, // prevents negative
-								// numbers
-								// Remove spinner buttons, and arrow
-								// key and mouse wheel listeners
-								hideTrigger : true,
-								allowBlank : false,
-								keyNavEnabled : false,
-								mouseWheelEnabled : false
-
-							}, {
-								id : 'txt_sdate',
-								fieldLabel : '开始时间',
-								xtype : 'datefield',
-								format : 'Y-m-d',
-								allowBlank : false
-							}, {
-								id : 'txt_edate',
-								fieldLabel : '结束时间',
-								xtype : 'datefield',
-								format : 'Y-m-d',
-								allowBlank : false,
-								colspan : 2
-
-							}, {
-								id : 'txt_remark',
-								name : 'message',
-								fieldLabel : '备注',
-								width : 470,
-								colspan : 2
-							}
-						]
-
-					}
-
-				]
-			}, {
-				region : 'center',
-				margin : '5 5 0 5',
-				layout : 'fit',
-				items : [dataGrid]
-			}
-		]
-	});
-	txt_shop = Ext.getCmp('txt_shop');
-	txt_shop_s = Ext.getCmp('txt_shop_s');
-	txt_object = Ext.getCmp('txt_object');
-	txt_object_s = Ext.getCmp('txt_object_s');
-	txt_price = Ext.getCmp('txt_price');
-	txt_sdate = Ext.getCmp('txt_sdate');
-	txt_edate = Ext.getCmp('txt_edate');
-	txt_remark = Ext.getCmp('txt_remark');
-});
-
-LoadUI = function () {
+LoadUI = function() {
 
 	ext_btnAdd = Ext.create('Ext.Button', {
-			text : '添加',
-			icon : '../image/btn/add.png',
-			width : 100,
-			margin : '15 0 0 30',
-			handler : function () {
-				ext_btnAdd.setDisabled(true);
-				ext_btnModify.setDisabled(true);
-				ext_btnSave.setDisabled(false);
-				ext_btnDelete.setDisabled(true);
-				$("#hid_id").val("");
-				Set_formState(true);
-				Clear_form();
-			}
-		});
+		text : '添加',
+		icon : '../image/btn/add.png',
+		width : 100,
+		margin : '15 0 0 30',
+		handler : function() {
+			ext_btnAdd.setDisabled(true);
+			ext_btnModify.setDisabled(true);
+			ext_btnSave.setDisabled(false);
+			ext_btnDelete.setDisabled(true);
+			$("#hid_id").val("");
+			Set_formState(true);
+			Clear_form();
+		}
+	});
 	ext_btnModify = Ext.create('Ext.Button', {
-			text : '修改',
-			icon : '../image/btn/modify.png',
-			width : 100,
-			margin : '15 0 0 5',
-			handler : function () {
-				if(!check_user()){
-					alert('不能操作此条数据');
-					return;
-				}
-				if (ext_btnModify.getText() == "修改") {
-					ext_btnSave.setDisabled(false);
-					ext_btnModify.setText("取消修改");
-					Set_formState(true);
-				} else {
-					ext_btnSave.setDisabled(true);
-					ext_btnModify.setText("修改");
-					Set_formState(false);
-
-				}
+		text : '修改',
+		icon : '../image/btn/modify.png',
+		width : 100,
+		margin : '15 0 0 5',
+		handler : function() {
+			if (!check_user()) {
+				alert('不能操作此条数据');
+				return;
 			}
-		});
-	ext_btnSave = Ext.create('Ext.Button', {
-			text : '保存',
-			icon : '../image/btn/save.png',
-			width : 100,
-			margin : '15 0 0 5',
-			handler : function () {
-				if (!check_save()) {
-					alert("数据项目填写不全！");
-					return;
-				}
-				ext_btnAdd.setDisabled(false);
-				ext_btnModify.setDisabled(false);
+			if (ext_btnModify.getText() == "修改") {
+				ext_btnSave.setDisabled(false);
+				ext_btnModify.setText("取消修改");
+				Set_formState(true);
+			} else {
 				ext_btnSave.setDisabled(true);
-				ext_btnDelete.setDisabled(false);
-				save();
+				ext_btnModify.setText("修改");
+				Set_formState(false);
+
 			}
-		});
+		}
+	});
+	ext_btnSave = Ext.create('Ext.Button', {
+		text : '保存',
+		icon : '../image/btn/save.png',
+		width : 100,
+		margin : '15 0 0 5',
+		handler : function() {
+			if (!check_save()) {
+				alert("数据项目填写不全！");
+				return;
+			}
+			ext_btnAdd.setDisabled(false);
+			ext_btnModify.setDisabled(false);
+			ext_btnSave.setDisabled(true);
+			ext_btnDelete.setDisabled(false);
+			save();
+		}
+	});
 	ext_btnDelete = Ext.create('Ext.Button', {
-			text : '删除',
-			icon : '../image/btn/del.png',
-			width : 100,
-			margin : '15 0 0 5',
-			handler : function () {
-				del();
-			}
-		});
+		text : '删除',
+		icon : '../image/btn/del.png',
+		width : 100,
+		margin : '15 0 0 5',
+		handler : function() {
+			del();
+		}
+	});
 
 };
 
-LoadGrid = function () {
+LoadGrid = function() {
 
 	Ext.define('gridModel', {
 		extend : 'Ext.data.Model',
-		fields : ['id', 'sdate', 'edate', 'price', 'shop', 'object',
-			'createname', 'shop_s', 'object_s', 'remark']
+		fields : [ 'id', 'sdate', 'edate', {
+			name : 'price',
+			sortType : 'asFloat'
+		}, 'shop', 'object', 'createname', 'shop_s', 'object_s', 'remark' ]
 	});
 	gridStore = Ext.create('Ext.data.Store', {
-			buffered : false,
-			pageSize : 300,
-			proxy : {
-				type : "ajax",
-				url : "./json/wptj_data.php",
-				reader : {
-					root : 'root',
-					totalProperty : 'count'
-				},
-				extraParams : {
-					op : 'select'
-				}
+		buffered : false,
+		pageSize : 300,
+		proxy : {
+			type : "ajax",
+			url : "./json/wptj_data.php",
+			reader : {
+				root : 'root',
+				totalProperty : 'count'
 			},
-			model : 'gridModel',
-			autoLoad : true,
-			listeners : {
-				'load' : function (s, records, successful, eOpts) {
-					Set_formState(false);
-					if (records.length > 0) {
+			extraParams : {
+				op : 'select'
+			}
+		},
+		model : 'gridModel',
+		autoLoad : true,
+		listeners : {
+			'load' : function(s, records, successful, eOpts) {
+				Set_formState(false);
+				if (records.length > 0) {
 
-						dataGrid.getSelectionModel().select(0);
-						dataGrid.fireEventArgs("itemclick", [null, records[0],
-								null, 0]);
-					} else {
-						Clear_form();
-						ext_btnAdd.setDisabled(false);
-						ext_btnModify.setDisabled(true);
-						ext_btnSave.setDisabled(true);
-						ext_btnDelete.setDisabled(true);
-					}
+					dataGrid.getSelectionModel().select(0);
+					dataGrid.fireEventArgs("itemclick", [ null, records[0],
+							null, 0 ]);
+				} else {
+					Clear_form();
+					ext_btnAdd.setDisabled(false);
+					ext_btnModify.setDisabled(true);
+					ext_btnSave.setDisabled(true);
+					ext_btnDelete.setDisabled(true);
 				}
 			}
-		});
+		}
+	});
 
 	dataGrid = Ext.create('Ext.grid.Panel', {
-			store : gridStore,
-			sortableColumns : false,
-			'columns' : [{
-					xtype : 'rownumberer',
-					width : 30,
-					sortable : false
-				},
-				// {
+		store : gridStore,
+		sortableColumns : false,
+		'columns' : [ {
+			xtype : 'rownumberer',
+			width : 30,
+			sortable : false
+		},
+		// {
 				// text : 'id',
 				// width : 120,
 				// dataIndex : 'id'
@@ -321,49 +363,48 @@ LoadGrid = function () {
 					text : '创建人',
 					width : 120,
 					dataIndex : 'createname'
-				}
-			],
+				} ],
 
-			columnLines : true,
-			enableLocking : true,
-			bbar : {
-				xtype : 'pagingtoolbar',
-				store : gridStore,
-				displayInfo : true
-			},
-			iconCls : 'icon-grid',
-			margin : '0 0 20 0',
-			header : false,
-			autoScroll : true,
-			listeners : {
-				'itemclick' : function (me, record, item, index, e, eOpts) {
-					Set_formState(false);
-					ext_btnModify.setText("修改");
-					ext_btnAdd.setDisabled(false);
-					ext_btnModify.setDisabled(false);
-					ext_btnSave.setDisabled(true);
-					ext_btnDelete.setDisabled(false);
+		columnLines : true,
+		enableLocking : true,
+		bbar : {
+			xtype : 'pagingtoolbar',
+			store : gridStore,
+			displayInfo : true
+		},
+		iconCls : 'icon-grid',
+		margin : '0 0 20 0',
+		header : false,
+		autoScroll : true,
+		listeners : {
+			'itemclick' : function(me, record, item, index, e, eOpts) {
+				Set_formState(false);
+				ext_btnModify.setText("修改");
+				ext_btnAdd.setDisabled(false);
+				ext_btnModify.setDisabled(false);
+				ext_btnSave.setDisabled(true);
+				ext_btnDelete.setDisabled(false);
 
-					var data = record.data;
-					$("#hid_id").val(data.id);
+				var data = record.data;
+				$("#hid_id").val(data.id);
 
-					txt_shop.setValue(data.shop);
-					txt_shop_s.setValue(data.shop_s);
-					txt_object.setValue(data.object);
-					txt_object_s.setValue(data.object_s);
-					txt_object.code = data.object;
-					txt_price.setValue(data.price);
-					txt_sdate.setValue(data.sdate);
-					txt_edate.setValue(data.edate);
-					txt_remark.setValue(data.remark);
-				}
+				txt_shop.setValue(data.shop);
+				txt_shop_s.setValue(data.shop_s);
+				txt_object.setValue(data.object);
+				txt_object_s.setValue(data.object_s);
+				txt_object.code = data.object;
+				txt_price.setValue(data.price);
+				txt_sdate.setValue(data.sdate);
+				txt_edate.setValue(data.edate);
+				txt_remark.setValue(data.remark);
 			}
+		}
 
-		});
+	});
 
 };
 
-Set_formState = function (v) {
+Set_formState = function(v) {
 	txt_shop.setDisabled(!v);
 	txt_object.setDisabled(!v);
 	txt_price.setDisabled(!v);
@@ -371,7 +412,7 @@ Set_formState = function (v) {
 	txt_edate.setDisabled(!v);
 	txt_remark.setDisabled(!v);
 };
-Clear_form = function () {
+Clear_form = function() {
 	txt_shop.setValue('');
 	txt_object.setValue('');
 	txt_shop_s.setValue('');
@@ -381,30 +422,30 @@ Clear_form = function () {
 	txt_edate.setValue('');
 	txt_remark.setValue('');
 };
-//检查当前用户是否和当前记录创建人匹配
-check_user=function(){
+// 检查当前用户是否和当前记录创建人匹配
+check_user = function() {
 	var selModel = dataGrid.getSelectionModel();
 	if (selModel.hasSelection()) {
 		var selected = selModel.getSelection();
-		var r=selected[0].data.createname;
-		var h=$("#username").val();
-		if(r==h || h=='admin' || r==''){
+		var r = selected[0].data.createname;
+		var h = $("#username").val();
+		if (r == h || h == 'admin' || r == '') {
 			return true;
 		}
 	}
 	return false;
 };
-check_save = function () {
+check_save = function() {
 
 	if (txt_sdate.getValue() && txt_edate.getValue() && txt_price.getValue()
-		 && txt_shop_s.getValue() && txt_object_s.getValue())
+			&& txt_shop_s.getValue() && txt_object_s.getValue())
 		return true;
 	else
 		return false;
 
 }
 
-save = function () {	
+save = function() {
 	myMask.show();
 	var mydata = {
 		id : $("#hid_id").val(),
@@ -415,14 +456,14 @@ save = function () {
 		shop : txt_shop.getValue(),
 		object : txt_object.getValue(),
 		remark : txt_remark.getValue()
-		
+
 	};
 
-	$.ajax({
+	$.ajax( {
 		type : "POST",
 		url : "./json/wptj_data.php?op=save",
 		data : mydata,
-		success : function (msg) {
+		success : function(msg) {
 			if (msg.result == true) {
 				gridStore.reload();
 				alert("信息: 保存成功!");
@@ -433,17 +474,17 @@ save = function () {
 		}
 	});
 };
-del = function () {
-	Ext.MessageBox.confirm('确认删除', '您确认要删除此条信息?', function (re) {
+del = function() {
+	Ext.MessageBox.confirm('确认删除', '您确认要删除此条信息?', function(re) {
 		myMask.show();
 		if (re == "yes") {
-			$.ajax({
+			$.ajax( {
 				type : "POST",
 				url : "./json/wptj_data.php?op=delete",
 				data : {
 					id : $("#hid_id").val()
 				},
-				success : function (msg) {
+				success : function(msg) {
 					if (msg.result == true) {
 						gridStore.reload();
 						alert("信息: 删除成功!");
