@@ -42,27 +42,28 @@ if(!empty($_GET['file_msg'])){
 <?php
 
 if(!empty($_POST['importdata'])){
+	$uploadDir="upload/";
 	//文件上传
 	if ($_FILES["inputExcel"]["error"] > 0)
 	{
 		$msg=$_FILES["inputExcel"]["error"];
 		if($msg==4)
-			$msg="没有选择文件!";
+		$msg="没有选择文件!";
 		if($msg==1)
-			$msg="文件大小超过限制!";	
+		$msg="文件大小超过限制!";	
 		echo "<script>location.href='importData.php?file_msg=".urlencode($msg)."'</script>";
 	}
 	else{
-		if(!is_dir("upload/")){
-			mkdir("upload/");
+		if(!is_dir($uploadDir)){
+			mkdir($uploadDir);
 		}
-		 move_uploaded_file($_FILES["inputExcel"]["tmp_name"],
-      	"upload/" . "xxx.xls");
-	}
-	//导入excel数据
-	if(false){
-		require_once "../global.php";
-		require_once './lib/dbUtils.php';
+		$filename=uniqid().".xls";
+		move_uploaded_file($_FILES["inputExcel"]["tmp_name"],
+		$uploadDir.$filename);
+
+		//导入excel数据
+
+		require_once '../lib/dbUtils.php';
 		/** Error reporting */
 		error_reporting(E_ALL);
 		ini_set('display_errors', TRUE);
@@ -73,10 +74,10 @@ if(!empty($_POST['importdata'])){
 
 
 		/** Include PHPExcel_IOFactory */
-		require_once './lib/PHPExcel_1.7.9_doc/PHPExcel/IOFactory.php';
+		require_once '../lib/PHPExcel_1.7.9_doc/PHPExcel/IOFactory.php';
 
 		$objReader = PHPExcel_IOFactory::createReader('Excel5');
-		$objPHPExcel = PHPExcel_IOFactory::load("./wptj/template_data.xls");
+		$objPHPExcel = PHPExcel_IOFactory::load($uploadDir.$filename);
 		$sheet = $objPHPExcel->getSheet(0);
 		$highestRow = $sheet->getHighestRow(); // 取得总行数
 		$highestColumn = $sheet->getHighestColumn(); // 取得总列数
@@ -109,17 +110,20 @@ if(!empty($_POST['importdata'])){
 				$error_msg[]=$row;
 			}
 			//
-		}
-	echo "<script>location.href='importData.php?succ_msg=".implode($succ_msg, ",")."&error_msg=".implode($error_msg, ",")."'</script>";
-	
+		}		
+		//删除文件
+		unlink($uploadDir.$filename);
+		echo "<script>location.href='importData.php?succ_msg=".implode($succ_msg, ",")."&error_msg=".implode($error_msg, ",")."'</script>";
+
 	}
+
 
 }
 ?>
 <div class="container" style='width: 500px; margin-top: 50px;'>
 
-<form name="form1" id="form1" method="post" enctype="multipart/form-data"
-	class="form-horizontal">
+<form name="form1" id="form1" method="post"
+	enctype="multipart/form-data" class="form-horizontal">
 <div class="controls">
 <h4><a href="./template_data.xls">模板下载</a></h4>
 <hr />
@@ -130,7 +134,8 @@ if(!empty($_POST['importdata'])){
 <div class="control-group"><label class="control-label">选择要导入的文件:</label>
 <div class="controls"><input type="file" name="inputExcel"
 	style='width: 300px;'><br />
-<input class='btn btn-primary' type="button" onclick="exec();" value="导入数据"></div>
+<input class='btn btn-primary' type="button" onclick="exec();"
+	value="导入数据"></div>
 
 </div>
 
