@@ -36,28 +36,8 @@ class Dbi{
 	}
 	//预处理查询 
 	/*
-	$db=new Dbi();
-	$r=$db->query_prepare('select count(1) as r from user where username=? and password=?',
-		function($stmt){
-			mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$_POST['password']);
-		}
-	);	
-	$result=array();
-		while($row =$db->fetch_array($r)){
-			$result[]=$row;
-		}
-	print_r($result);
-	*/
-	function query_prepare($sql,$fun=null){
-		$stmt =mysqli_prepare($this->link,$sql);
-		if(!empty($fun) ){
-			$fun($stmt);
-		}
-		mysqli_stmt_execute($stmt);
-		return mysqli_stmt_get_result($stmt);
-	}
-	
-	/*
+
+
 	 get data store array
 	 */
 	function fetch_array($result){
@@ -90,9 +70,13 @@ class Dbi{
 		$q=$this->query($sql);		
 		return mysqli_fetch_all($q,MYSQLI_BOTH);
 	}
-	function query_prepare_fetch_all($sql,$fun=null){
-		$q=$this->query_prepare($sql,$fun);
-		return mysqli_fetch_all($q,MYSQLI_BOTH);
-	}
+	
+	//	
+//		$stmt =mysqli_prepare($this->link,$sql);
+//		mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$_POST['password']);
+//		mysqli_stmt_execute($stmt);
+//		$result= mysqli_stmt_get_result($stmt);
+//      mysqli_fetch_all($result,MYSQLI_BOTH);
+//	
 }
 

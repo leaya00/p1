@@ -22,11 +22,13 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 	//		登录成功跳转
 
 	$db=new Dbi();
-	function setParam($stmt){
-		$pwd=md5($_POST['password']);
-		mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$pwd);
-	}
-	$result=$db->query_prepare_fetch_all('select username  from user where username=? and password=?',setParam);
+	$stmt =mysqli_prepare($db->link,'select username  from user where username=? and password=?');
+	$pwd=md5($_POST['password']);
+	mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$pwd);
+	mysqli_stmt_execute($stmt);
+	$result= mysqli_stmt_get_result($stmt);
+	$result= mysqli_fetch_all($result,MYSQLI_BOTH);
+
 	if(count($result)>0){
 		$_SESSION['username'] = $result[0][0];
 		echo "<script>location.href='./wptj/';</script>";
