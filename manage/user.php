@@ -37,7 +37,7 @@
 		</div>
 		<div class="control-group">
 		<div class="controls"><input type="button" class="btn btn-primary"
-			onclick="adduser();" value='修改密码'></div>
+			onclick="checkValue();" value='修改密码'></div>
 		</div>
 		
 		</form>
@@ -48,10 +48,31 @@
 			var p2=$('#txt_password2').val();
 			var p3=$('#txt_password3').val();
 			if(p2!=p3){
-				alert('新密码输入不一致！');
+				alert('2次密码输入不一致！');
 				return false;
 			}
-			//todo:需要知道当前用户名
+			var v={					
+					op:'userModifyPwd',
+					oldvalue:$('#txt_password1').val(),
+					newvalue:$('#txt_password2').val()
+					};
+			$.ajax({
+				   type: "POST",
+				   url: "./json/manage.php",
+				   data: v,
+				   dataType:'json',
+				   success: function(msg){
+				   		if(msg.result){
+				     		alert('修改密码成功!');
+				   		}else{
+				   			alert('修改密码失败!');
+					   	}
+				   },
+				   error:function (XMLHttpRequest, textStatus, errorThrown) {
+					  
+					    alert('修改密码失败!\r\n'+XMLHttpRequest.responseText);
+					}
+				});
    	   	}
    </script>
 </body>

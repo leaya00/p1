@@ -16,7 +16,7 @@
 	<script src="./js/popWinDictSelect.js" type="text/javascript"></script>
 </head>
 <body>
-	
+	 <input id="username" value="<?php echo $_SESSION['username'];?>" type="hidden" />
     <input id="hid_id" type="hidden" />
 </body>
 </html>

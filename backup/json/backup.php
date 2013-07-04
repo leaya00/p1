@@ -1,5 +1,8 @@
 <?php	
 	require_once("../../lib/checkUser_json.php");
+	if($_SESSION['username']!='admin'){
+			exit();
+		}
 ?>
 <?php
 header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里

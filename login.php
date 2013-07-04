@@ -22,7 +22,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 	//		登录成功跳转
 
 	$db=new Dbi();
-	$stmt =mysqli_prepare($db->link,'select username  from user where username=? and password=?');
+	$stmt =mysqli_prepare($db->link,'select id,username  from user where username=? and password=?');
 	$pwd=md5($_POST['password']);
 	mysqli_stmt_bind_param($stmt,'ss',$_POST['username'],$pwd);
 	mysqli_stmt_execute($stmt);
@@ -30,7 +30,8 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 	$result= mysqli_fetch_all($result,MYSQLI_BOTH);
 
 	if(count($result)>0){
-		$_SESSION['username'] = $result[0][0];
+		$_SESSION['username'] = $result[0]["username"];
+		$_SESSION['userid']= $result[0]["id"];
 		echo "<script>location.href='./';</script>";
 	}
 

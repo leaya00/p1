@@ -87,6 +87,11 @@ if(!empty($_POST['importdata'])){
 		$db=new Dbi();
 		$succ_msg=array();
 		$error_msg=array();
+		//admin 录入人填写空
+		$writeUser=$_SESSION['username'];
+		if($writeUser=='admin'){
+			$writeUser='';
+		}
 		//shop,object,price,sdate,edate,remark
 		for ($row=2;$row<=$highestRow;$row++){
 			$sql= "INSERT INTO `wptj_data` (shop,object,price,sdate,edate,remark,createname) values (?,?,?,?,?,?,?)";
@@ -98,7 +103,7 @@ if(!empty($_POST['importdata'])){
 			$edate=$sheet->getCell("E$row")->getValue();
 			$edate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($edate));
 			$remark=$sheet->getCell("F$row")->getValue();
-			$createname=$_SESSION['username'];
+			$createname=$writeUser;
 			$stmt =mysqli_prepare($db->link,$sql);
 			mysqli_stmt_bind_param($stmt,'ssdssss',
 			$shop,$object,$price,$sdate,$edate,$remark,$createname);

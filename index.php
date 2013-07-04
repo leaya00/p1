@@ -23,8 +23,20 @@
 		<li><a href="./wptj/" target="_blank">物品摊销子系统</a></li>
 	</ul>
 	<ul>
+		<?php 
+			if($_SESSION['username']=='admin'){
+				echo '<li> <a href="./backup" target="_blank">备份恢复数据</a></li>';
+			}
+		?>	
 		
-		<li> <a href="./backup" target="_blank">备份恢复数据</a></li>
+	</ul>
+	<ul>
+		<?php 
+			if($_SESSION['username']=='admin'){
+				echo '<li> <a href="./manage/admin.php" target="_blank">管理用户</a></li>';
+			}
+		?>		
+		<li> <a href="./manage/user.php" target="_blank">修改密码</a></li>
 	</ul>
 </body>
 </html>

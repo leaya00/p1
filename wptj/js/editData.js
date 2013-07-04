@@ -184,6 +184,10 @@ LoadUI = function () {
 			width : 100,
 			margin : '15 0 0 5',
 			handler : function () {
+				if(!check_user()){
+					alert('不能操作此条数据');
+					return;
+				}
 				if (ext_btnModify.getText() == "修改") {
 					ext_btnSave.setDisabled(false);
 					ext_btnModify.setText("取消修改");
@@ -376,6 +380,19 @@ Clear_form = function () {
 	txt_sdate.setValue('');
 	txt_edate.setValue('');
 	txt_remark.setValue('');
+};
+//检查当前用户是否和当前记录创建人匹配
+check_user=function(){
+	var selModel = dataGrid.getSelectionModel();
+	if (selModel.hasSelection()) {
+		var selected = selModel.getSelection();
+		var r=selected[0].data.createname;
+		var h=$("#username").val();
+		if(r==h ||  r==''){
+			return true;
+		}
+	}
+	return false;
 };
 check_save = function () {
 

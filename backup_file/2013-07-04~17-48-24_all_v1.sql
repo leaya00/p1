@@ -4,7 +4,7 @@
 -- http://www.yanue.net 
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2013 年  07 月 04 日 16:55
+-- 生成日期: 2013 年  07 月 04 日 17:48
 -- MySQL版本: 5.5.27
 -- PHP 版本: 5.4.7
 
@@ -25,14 +25,14 @@ CREATE TABLE `user` (
   `password` varchar(100) CHARACTER SET latin1 NOT NULL,
   `createtimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 user
 --
 
 INSERT INTO `user` VALUES('11','admin','21232f297a57a5a743894a0e4a801fc3','0000-00-00 00:00:00');
-INSERT INTO `user` VALUES('15','用户1','202cb962ac59075b964b07152d234b70','2013-07-04 16:50:21');
+INSERT INTO `user` VALUES('16','test','098f6bcd4621d373cade4e832627b4f6','2013-07-04 17:25:15');
 --
 -- 表的结构wptj_data
 --
@@ -49,15 +49,17 @@ CREATE TABLE `wptj_data` (
   `createname` varchar(100) CHARACTER SET latin1 NOT NULL,
   `createtimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 wptj_data
 --
 
-INSERT INTO `wptj_data` VALUES('5','2013-04-04','2016-04-03','22644.00','002','01','','test','0000-00-00 00:00:00');
-INSERT INTO `wptj_data` VALUES('6','2013-06-01','2014-05-31','12000.00','002','01','','test','0000-00-00 00:00:00');
-INSERT INTO `wptj_data` VALUES('7','2012-07-02','2013-07-26','11111.00','001','02','xxxxx','test','0000-00-00 00:00:00');
+INSERT INTO `wptj_data` VALUES('5','2013-04-04','2016-04-03','22644.00','002','01','','','0000-00-00 00:00:00');
+INSERT INTO `wptj_data` VALUES('6','2013-06-01','2014-05-31','12000.00','002','01','ahahah','test','0000-00-00 00:00:00');
+INSERT INTO `wptj_data` VALUES('7','2012-07-02','2013-07-26','11111.00','001','02','mmmm','','0000-00-00 00:00:00');
+INSERT INTO `wptj_data` VALUES('137','2013-07-04','2013-07-25','3333.00','005','05','vvv','','2013-07-04 17:42:01');
+INSERT INTO `wptj_data` VALUES('138','2013-07-11','2013-07-26','3434.00','005','04','ffff','test','2013-07-04 17:44:07');
 --
 -- 表的结构wptj_dict
 --
