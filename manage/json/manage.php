@@ -16,4 +16,6 @@ switch ($_POST['op']) {
 		mysqli_stmt_bind_param($stmt,'i',$_POST['id']);
 		$result=mysqli_stmt_execute($stmt);     	
 		echo json_encode(array('result'=>$result));
+	case "checkpwd":
+		break;
 }
