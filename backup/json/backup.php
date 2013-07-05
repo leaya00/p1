@@ -10,7 +10,7 @@ require '../../lib/dbUtils.php';
 require ('../../lib/ioUtils.php');
 require '../../lib/DbManage.php';
 $backup_file = "../../backup_file/";
-$backup=new DbManage(Dbi::$root,Dbi::$user,Dbi::$pass,Dbi::$db);
+$backup=new DbManage(Dbi::$root,Dbi::$user,Dbi::$pass,Dbi::$db,Dbi::$charset);
 switch ($_POST['op']) {
 	case "backup":
 		$r=$backup->backup('','../../backup_file/',null);

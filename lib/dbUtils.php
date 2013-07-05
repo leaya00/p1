@@ -5,6 +5,7 @@ class Dbi{
 	public static  $user='root';
 	public static  $pass='root';
 	public static  $db='lilang';
+	public static $charset='utf8';
 	/******************************/
 	public $link;
 	function __construct() {
@@ -13,6 +14,7 @@ class Dbi{
 		if (mysqli_connect_errno()) {
 			echo "Failed to connect to MySQL: (" . mysqli_connect_error . ") " ;
 		}
+		$this->query("SET NAMES ".self::$charset);
 	}
 	
 	/*

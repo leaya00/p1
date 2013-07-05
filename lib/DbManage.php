@@ -48,18 +48,18 @@ class DbManage {
    * @param string $thisatabase         
    * @param string $charset         
    */
-  function __construct($host = 'localhost', $username = 'root', $password = '', $thisatabase = 'test') {
+  function __construct($host = 'localhost', $username = 'root', $password = '', $thisatabase = 'test',$charset='utf8') {
     $this->host = $host;
     $this->username = $username;
     $this->password = $password;
     $this->database = $thisatabase;
-//    $this->charset = $charset;
+    $this->charset = $charset;
     // 连接数据库
     $this->db = mysql_connect ( $this->host, $this->username, $this->password ) or die ( "数据库连接失败." );
     // 选择使用哪个数据库
     mysql_select_db ( $this->database, $this->db ) or die ( "无法打开数据库" );
     // 数据库编码方式
-//    mysql_query ( 'SET NAMES ' . $this->charset, $this->db );
+   mysql_query ( 'SET NAMES ' . $this->charset, $this->db );
   }
  
   /*
