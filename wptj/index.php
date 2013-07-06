@@ -18,8 +18,8 @@
 	<h3>用户名:<?php echo $_SESSION['username'];?></h3>
 	
 	<ul>	
-		<li><a href="editdict.php?type=shop" target="_blank">店铺录入</a></li>
-		<li><a href="editdict.php?type=object" target="_blank">物品录入</a></li>
+		<li><a href="editDict.php?type=shop" target="_blank">店铺录入</a></li>
+		<li><a href="editDict.php?type=object" target="_blank">物品录入</a></li>
 	</ul>
 	<ul>
 		<li> <a href="editData.php" target="_blank">基本数据录入</a></li>
