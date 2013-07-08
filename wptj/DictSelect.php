@@ -56,15 +56,7 @@
 							if (records.length > 0) {
 								dataGrid.getSelectionModel().select(0);
 								dataGrid.focus();
-								dataGrid.getEl().addKeyMap({
-								    eventName: "keyup",
-								    binding: [{
-								        key: 13,
-								        fn:  function(){ 
-								    		Ext.getCmp('btnOk').fireEvent('click');
-										 }
-								    }]
-								});
+								
 							}
 						}
 					}
@@ -188,6 +180,15 @@
 
 			});
 			gridStore.load();
+			dataGrid.getEl().addKeyMap({
+								    eventName: "keyup",
+								    binding: [{
+								        key: 13,
+								        fn:  function(){ 
+								    		Ext.getCmp('btnOk').fireEvent('click');
+										 }
+								    }]
+								});
 		});
 
 	};
