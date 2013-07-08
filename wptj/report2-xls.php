@@ -54,7 +54,8 @@ $sheet->setCellValueByColumnAndRow(9,$rowIndex, '已摊销天数');
 $sheet->getStyleByColumnAndRow(9,$rowIndex)->getFont()->setBold(true);
 $sheet->setCellValueByColumnAndRow(10,$rowIndex, '已摊销金额');
 $sheet->getStyleByColumnAndRow(10,$rowIndex)->getFont()->setBold(true);
-
+$sheet->setCellValueByColumnAndRow(11,$rowIndex, '报销日期');
+$sheet->getStyleByColumnAndRow(11,$rowIndex)->getFont()->setBold(true);
 //输出数据
 $result=report2();
 $root=$result['root'];
@@ -70,7 +71,7 @@ foreach($root as $rowkey=>$row){
 	$sheet->setCellValueByColumnAndRow(8,$rowIndex, $row['sumday']);
 	$sheet->setCellValueByColumnAndRow(9,$rowIndex, $row['nowday']);
 	$sheet->setCellValueByColumnAndRow(10,$rowIndex, $row['nowprice']);
-	
+	$sheet->setCellValueByColumnAndRow(11,$rowIndex, $row['postdate']);
 	
 	$rowIndex++;
 } 

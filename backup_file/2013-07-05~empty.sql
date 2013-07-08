@@ -46,6 +46,7 @@ CREATE TABLE `wptj_data` (
   `price` decimal(10,2) NOT NULL,
   `shop` varchar(20) NOT NULL,
   `object` varchar(20) NOT NULL,
+  `postdate` date NOT NULL,
   `remark` varchar(200) NOT NULL,
   `createname` varchar(100) NOT NULL,
   `createtimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -14,7 +14,7 @@ switch ($_GET['op']) {
 		}
 		$limit_sql=" limit ".$_GET['start'].",".$_GET['limit'];
 
-		$base_sql="SELECT a.id,a.shop,a.object,a.price,a.sdate,a.edate,a.createname,shop.caption as shop_s,object.caption object_s,a.remark,a.createtimestamp
+		$base_sql="SELECT a.id,a.shop,a.object,a.price,a.sdate,a.edate,a.postdate,a.createname,shop.caption as shop_s,object.caption object_s,a.remark,a.createtimestamp
 			FROM`wptj_data`AS a
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='shop') AS shop ON a.shop = shop.code
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code $tj order by id desc";
@@ -27,7 +27,7 @@ switch ($_GET['op']) {
 		// $Db->close();
 		break;
 	case "save":
-		// 'id', 'sdate', 'edate','price','shop','object','createname','remark'
+		// 'id', 'sdate', 'edate','postdate','price','shop','object','createname','remark'
 		$id=$_POST['id'];
 		//admin 录入人填写空
 		$writeUser=$_SESSION['username'];
@@ -35,13 +35,13 @@ switch ($_GET['op']) {
 			$writeUser='';
 		}
 		if($id==""){
-			$sql= sprintf("INSERT INTO `wptj_data` (sdate,edate,price,shop,object,createname,remark) values ('%s','%s','%s','%s','%s','%s','%s')"
-			,$_POST['sdate'],$_POST['edate'],$_POST['price']
+			$sql= sprintf("INSERT INTO `wptj_data` (sdate,edate,postdate,price,shop,object,createname,remark) values ('%s','%s','%s','%s','%s','%s','%s','%s')"
+			,$_POST['sdate'],$_POST['edate'],$_POST['postdate'],$_POST['price']
 			,$_POST['shop'],$_POST['object'],$writeUser,$_POST['remark']);
 		}else{
-			$sql= sprintf("UPDATE  `wptj_data` set sdate='%s',edate='%s',price='%s',shop='%s',object='%s'
+			$sql= sprintf("UPDATE  `wptj_data` set sdate='%s',edate='%s',postdate='%s',price='%s',shop='%s',object='%s'
 			 ,createname='%s',remark='%s' where id=%s"
-			 ,$_POST['sdate'],$_POST['edate'],$_POST['price']
+			 ,$_POST['sdate'],$_POST['edate'],$_POST['postdate'],$_POST['price']
 			 ,$_POST['shop'],$_POST['object'],$writeUser,$_POST['remark']
 			 ,$id);
 		}

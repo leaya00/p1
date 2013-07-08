@@ -56,7 +56,7 @@ function report1(){
 		}	
 		
 		// 普通字段
-		$sql_field=" id,sdate, edate, price,shop,object,shop.caption as shop_s,object.caption as object_s
+		$sql_field=" id,sdate, edate,postdate, price,shop,object,shop.caption as shop_s,object.caption as object_s
 			, $sql_sumday as sumday,
 			$sql_nowday as nowday,
 			$sql_nowprice as nowprice,
@@ -123,7 +123,7 @@ function report2(){
 		//已摊销金额
 		$sql_nowprice="ROUND((price / ".$sql_sumday." * ".$sql_nowday."),2)";
 		//普通字段
-		$sql_field="id,sdate, edate, price,shop,object,shop.caption as shop_s,object.caption as object_s
+		$sql_field="id,sdate, edate,postdate, price,shop,object,shop.caption as shop_s,object.caption as object_s
 			, $sql_sumday as sumday,
 			  $sql_nowday as nowday,
 			  $sql_nowprice as nowprice	";

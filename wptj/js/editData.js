@@ -7,6 +7,7 @@ txt_object_s = null;
 txt_price = null;
 txt_sdate = null;
 txt_edate = null;
+txt_postdate=null;
 txt_remark = null;
 //锁定快捷键
 isLock=false;
@@ -173,7 +174,20 @@ Ext.onReady(function () {
 								xtype : 'datefield',
 								format : 'Y-m-d',
 								allowBlank : false,
-								colspan : 2,
+								listeners : {
+									specialkey : function (field, e) {
+										if (e.getKey() == Ext.EventObject.ENTER) {
+											Ext.getCmp('txt_postdate').focus(true);
+										}
+									}
+								}
+
+							}, {
+								id : 'txt_postdate',
+								fieldLabel : '报销时间',
+								xtype : 'datefield',
+								format : 'Y-m-d',
+								allowBlank : false,
 								listeners : {
 									specialkey : function (field, e) {
 										if (e.getKey() == Ext.EventObject.ENTER) {
@@ -216,6 +230,7 @@ Ext.onReady(function () {
 	txt_price = Ext.getCmp('txt_price');
 	txt_sdate = Ext.getCmp('txt_sdate');
 	txt_edate = Ext.getCmp('txt_edate');
+	txt_postdate = Ext.getCmp('txt_postdate');
 	txt_remark = Ext.getCmp('txt_remark');
 });
 
@@ -299,7 +314,7 @@ LoadGrid = function () {
 
 	Ext.define('gridModel', {
 		extend : 'Ext.data.Model',
-		fields : ['id', 'sdate', 'edate', {
+		fields : ['id', 'sdate', 'edate','postdate', {
 				name : 'price',
 				sortType : 'asFloat'
 			}, 'shop', 'object', 'createname', 'shop_s', 'object_s', 'remark', 'createtimestamp']
@@ -381,6 +396,10 @@ LoadGrid = function () {
 					width : 120,
 					dataIndex : 'edate'
 				}, {
+					text : '报销时间',
+					width : 120,
+					dataIndex : 'postdate'
+				}, {
 					text : '备注',
 					width : 120,
 					// flex : 1,
@@ -427,6 +446,7 @@ LoadGrid = function () {
 					txt_price.setValue(data.price);
 					txt_sdate.setValue(data.sdate);
 					txt_edate.setValue(data.edate);
+					txt_postdate.setValue(data.postdate);
 					txt_remark.setValue(data.remark);
 				}
 			}
@@ -441,7 +461,9 @@ Set_formState = function (v) {
 	txt_price.setDisabled(!v);
 	txt_sdate.setDisabled(!v);
 	txt_edate.setDisabled(!v);
+	txt_postdate.setDisabled(!v);
 	txt_remark.setDisabled(!v);
+	
 };
 Clear_form = function () {
 	txt_shop.setValue('');
@@ -451,6 +473,7 @@ Clear_form = function () {
 	txt_price.setValue('');
 	txt_sdate.setValue('');
 	txt_edate.setValue('');
+	txt_postdate.setValue('');
 	txt_remark.setValue('');
 };
 // 检查当前用户是否和当前记录创建人匹配
@@ -468,7 +491,7 @@ check_user = function () {
 };
 check_save = function () {
 
-	if (txt_sdate.getValue() && txt_edate.getValue() && txt_price.getValue()
+	if (txt_sdate.getValue() && txt_edate.getValue() && txt_postdate.getValue() && txt_price.getValue()
 		 && txt_shop_s.getValue() && txt_object_s.getValue())
 		return true;
 	else
@@ -486,6 +509,7 @@ save = function () {
 		price : txt_price.getValue(),
 		shop : txt_shop.getValue(),
 		object : txt_object.getValue(),
+		postdate:txt_postdate.getValue().format("yyyy-MM-dd"),
 		remark : txt_remark.getValue()
 
 	};

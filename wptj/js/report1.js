@@ -222,7 +222,7 @@ LoadGrid = function() {
 	// price,sumday,nowday,nowprice,lostday,lostprice,shop,object
 	Ext.define('gridModel', {
 		extend : 'Ext.data.Model',
-		fields : [ 'id', 'sdate', 'edate', {
+		fields : [ 'id', 'sdate', 'edate', 'postdate', {
 			name : 'price',
 			sortType : 'asFloat'
 		}, {
@@ -309,6 +309,10 @@ LoadGrid = function() {
 			text : '摊销截止日期',
 			width : 120,
 			dataIndex : 'edate'
+		}, {
+			text : '报销日期',
+			width : 120,
+			dataIndex : 'postdate'
 		}, {
 			text : '总摊销天数',
 			width : 100,

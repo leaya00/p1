@@ -92,9 +92,9 @@ if(!empty($_POST['importdata'])){
 		if($writeUser=='admin'){
 			$writeUser='';
 		}
-		//shop,object,price,sdate,edate,remark
+		//shop,object,price,sdate,edate,postdate,remark
 		for ($row=2;$row<=$highestRow;$row++){
-			$sql= "INSERT INTO `wptj_data` (shop,object,price,sdate,edate,remark,createname) values (?,?,?,?,?,?,?)";
+			$sql= "INSERT INTO `wptj_data` (shop,object,price,sdate,edate,postdate,remark,createname) values (?,?,?,?,?,?,?,?)";
 			$shop=$sheet->getCell("A$row")->getValue();
 			$object=$sheet->getCell("B$row")->getValue();
 			$price=$sheet->getCell("C$row")->getValue();
@@ -102,11 +102,13 @@ if(!empty($_POST['importdata'])){
 			$sdate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($sdate));
 			$edate=$sheet->getCell("E$row")->getValue();
 			$edate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($edate));
-			$remark=$sheet->getCell("F$row")->getValue();
+			$postdate=$sheet->getCell("F$row")->getValue();
+			$postdate=date('Y-m-d',PHPExcel_Shared_Date::ExcelToPHP($postdate));
+			$remark=$sheet->getCell("G$row")->getValue();
 			$createname=$writeUser;
 			$stmt =mysqli_prepare($db->link,$sql);
-			mysqli_stmt_bind_param($stmt,'ssdssss',
-			$shop,$object,$price,$sdate,$edate,$remark,$createname);
+			mysqli_stmt_bind_param($stmt,'ssdsssss',
+			$shop,$object,$price,$sdate,$edate,$postdate,$remark,$createname);
 
 			$r=mysqli_stmt_execute($stmt);
 

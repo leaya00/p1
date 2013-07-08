@@ -56,6 +56,8 @@ $sheet->setCellValueByColumnAndRow(11,$rowIndex, '剩余摊销天数');
 $sheet->getStyleByColumnAndRow(11,$rowIndex)->getFont()->setBold(true);
 $sheet->setCellValueByColumnAndRow(12,$rowIndex, '剩余摊销金额');
 $sheet->getStyleByColumnAndRow(12,$rowIndex)->getFont()->setBold(true);
+$sheet->setCellValueByColumnAndRow(13,$rowIndex, '报销日期');
+$sheet->getStyleByColumnAndRow(13,$rowIndex)->getFont()->setBold(true);
 //输出数据
 $result=report1();
 $root=$result['root'];
@@ -73,7 +75,7 @@ foreach($root as $rowkey=>$row){
 	$sheet->setCellValueByColumnAndRow(10,$rowIndex, $row['nowprice']);
 	$sheet->setCellValueByColumnAndRow(11,$rowIndex, $row['lostday']);
 	$sheet->setCellValueByColumnAndRow(12,$rowIndex, $row['lostprice']);
-	
+	$sheet->setCellValueByColumnAndRow(13,$rowIndex, $row['postdate']);
 	$rowIndex++;
 } 
 // Rename worksheet
