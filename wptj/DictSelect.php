@@ -55,6 +55,7 @@
 							myMask.hide();
 							if (records.length > 0) {
 								dataGrid.getSelectionModel().select(0);
+								dataGrid.focus();
 								dataGrid.getEl().addKeyMap({
 								    eventName: "keyup",
 								    binding: [{
