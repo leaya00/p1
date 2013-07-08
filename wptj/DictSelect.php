@@ -180,15 +180,21 @@
 
 			});
 			gridStore.load();
-			dataGrid.getEl().addKeyMap({
-								    eventName: "keyup",
-								    binding: [{
-								        key: 13,
-								        fn:  function(){ 
-								    		Ext.getCmp('btnOk').fireEvent('click');
-										 }
-								    }]
-								});
+			// dataGrid.getEl().addKeyMap({
+								    // eventName: "keyup",
+								    // binding: [{
+								        // key: 13,
+								        // fn:  function(){ 
+								    		// Ext.getCmp('btnOk').fireEvent('click');
+										 // }
+								    // }]
+								// });
+			$('body').keyup(function(e){				
+				if(e.keyCode==13){
+					Ext.getCmp('btnOk').fireEvent('click');
+				}
+				
+			});
 		});
 
 	};
