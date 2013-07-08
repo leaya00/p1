@@ -14,7 +14,7 @@ switch ($_GET['op']) {
 		}
 		$limit_sql=" limit ".$_GET['start'].",".$_GET['limit'];
 
-		$base_sql="SELECT a.id,a.shop,a.object,a.price,a.sdate,a.edate,a.createname,shop.caption as shop_s,object.caption object_s,a.remark
+		$base_sql="SELECT a.id,a.shop,a.object,a.price,a.sdate,a.edate,a.createname,shop.caption as shop_s,object.caption object_s,a.remark,a.createtimestamp
 			FROM`wptj_data`AS a
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='shop') AS shop ON a.shop = shop.code
 			LEFT JOIN (SELECT * FROM wptj_dict WHERE TYPE='object') AS object ON a.object= object.code $tj order by id desc";

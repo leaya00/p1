@@ -15,7 +15,7 @@ session_start();
 ddddddd
 
 <?php
-	exit();
+	echo $_SESSION['username'];
 ?>
 hahahah
 </body>

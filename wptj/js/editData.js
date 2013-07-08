@@ -250,7 +250,7 @@ LoadGrid = function () {
 		fields : ['id', 'sdate', 'edate', {
 				name : 'price',
 				sortType : 'asFloat'
-			}, 'shop', 'object', 'createname', 'shop_s', 'object_s', 'remark']
+			}, 'shop', 'object', 'createname', 'shop_s', 'object_s', 'remark','createtimestamp']
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 			buffered : false,
@@ -331,12 +331,17 @@ LoadGrid = function () {
 				}, {
 					text : '备注',
 					width : 120,
-					flex : 1,
+					// flex : 1,
 					dataIndex : 'remark'
 				}, {
 					text : '创建人',
 					width : 120,
 					dataIndex : 'createname'
+				}
+				, {
+					text : '创建时间',
+					width : 220,
+					dataIndex : 'createtimestamp'
 				}
 			],
 

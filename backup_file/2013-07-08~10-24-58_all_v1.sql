@@ -4,7 +4,7 @@
 -- http://www.yanue.net 
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2013 年  07 月 04 日 17:48
+-- 生成日期: 2013 年  07 月 08 日 10:24
 -- MySQL版本: 5.5.27
 -- PHP 版本: 5.4.7
 
@@ -22,10 +22,10 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(40) NOT NULL,
-  `password` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `password` varchar(100) NOT NULL,
   `createtimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 user
@@ -33,6 +33,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` VALUES('11','admin','21232f297a57a5a743894a0e4a801fc3','0000-00-00 00:00:00');
 INSERT INTO `user` VALUES('16','test','098f6bcd4621d373cade4e832627b4f6','2013-07-04 17:25:15');
+INSERT INTO `user` VALUES('17','中文','c4ca4238a0b923820dcc509a6f75849b','2013-07-08 09:55:23');
 --
 -- 表的结构wptj_data
 --
@@ -43,13 +44,13 @@ CREATE TABLE `wptj_data` (
   `sdate` date NOT NULL,
   `edate` date NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `shop` varchar(20) CHARACTER SET latin1 NOT NULL,
-  `object` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `shop` varchar(20) NOT NULL,
+  `object` varchar(20) NOT NULL,
   `remark` varchar(200) NOT NULL,
-  `createname` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `createname` varchar(100) NOT NULL,
   `createtimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 wptj_data
@@ -60,6 +61,9 @@ INSERT INTO `wptj_data` VALUES('6','2013-06-01','2014-05-31','12000.00','002','0
 INSERT INTO `wptj_data` VALUES('7','2012-07-02','2013-07-26','11111.00','001','02','mmmm','','0000-00-00 00:00:00');
 INSERT INTO `wptj_data` VALUES('137','2013-07-04','2013-07-25','3333.00','005','05','vvv','','2013-07-04 17:42:01');
 INSERT INTO `wptj_data` VALUES('138','2013-07-11','2013-07-26','3434.00','005','04','ffff','test','2013-07-04 17:44:07');
+INSERT INTO `wptj_data` VALUES('139','2013-07-12','2013-07-26','444.00','005','06','dd','test','2013-07-08 09:49:41');
+
+INSERT INTO `wptj_data` VALUES('143','2013-07-17','2013-07-24','444.00','001','02','','中文','2013-07-08 10:11:28');
 --
 -- 表的结构wptj_dict
 --
@@ -67,8 +71,8 @@ INSERT INTO `wptj_data` VALUES('138','2013-07-11','2013-07-26','3434.00','005','
 DROP TABLE IF EXISTS `wptj_dict`;
 CREATE TABLE `wptj_dict` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(20) CHARACTER SET latin1 NOT NULL,
-  `code` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `code` varchar(20) NOT NULL,
   `caption` varchar(80) NOT NULL,
   `createtimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
