@@ -16,9 +16,11 @@ function report1(){
 		$where="where '#now'>=sdate ";
 		//摊销状态
 			
-		if($_POST['txtj']=='tx1'){
-			//未摊销完
-			$where="$where and '#now'<=edate";
+		if($_POST['txtj']=='tx1' || $_POST['txtj']=='tx3'){
+			if($_POST['txtj']=='tx1'){
+				//未摊销完
+				$where="$where and '#now'<=edate";
+			}
 			//总摊销天数
 			$sql_sumday="(TIMESTAMPDIFF(DAY,sdate,edate)+1)";
 			//		已摊销天数
@@ -29,7 +31,8 @@ function report1(){
 			$sql_lostday="(TIMESTAMPDIFF(DAY,'#now',edate))";
 			//		剩余摊销金额
 			$sql_lostprice="ROUND((price / $sql_sumday * $sql_lostday),2)";
-		}else{
+		}
+		if($_POST['txtj']=='tx2'){
 			//已经摊销完
 			$where="$where and '#now'>edate";
 			//总摊销天数
@@ -43,6 +46,7 @@ function report1(){
 			//		剩余摊销金额
 			$sql_lostprice="(0)";
 		}
+		
 		// 其他限定条件
 		if(!empty($_POST['shop'])){
 			$where="$where and (a.shop in (".parseParm($_POST['shop'])."))";

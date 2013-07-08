@@ -18,7 +18,11 @@ Ext
 				}, {
 					"value" : "tx2",
 					"caption" : "已摊销完"
-				} ]
+				} 
+				, {
+					"value" : "tx3",
+					"caption" : "全部"
+				}]
 			});
 			Ext
 					.create(
