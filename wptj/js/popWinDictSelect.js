@@ -1,6 +1,5 @@
 
-popWin = function(url, dictType, dist_cm,dist_cm_s,isMuti,defaultTJ) {
-	
+popWin = function(url, dictType, dist_cm,dist_cm_s,isMuti,defaultTJ,onClosed) {
 		var pop_win = Ext
 			.create(
 					'Ext.window.Window',
@@ -18,6 +17,9 @@ popWin = function(url, dictType, dist_cm,dist_cm_s,isMuti,defaultTJ) {
 						listeners : {
 							'close':function(){
 								$('#select_iframe').attr('src','about:blank');
+								if (onClosed) {
+									onClosed();
+								}
 							}
 						}
 						
@@ -28,6 +30,7 @@ popWin = function(url, dictType, dist_cm,dist_cm_s,isMuti,defaultTJ) {
 		dist_cm_s.setValue(caption);
 		dist_cm.setValue(code);
 		pop_win.close();
+		
 	};
 	$('#select_iframe').load(function() {
 		// 装载内容

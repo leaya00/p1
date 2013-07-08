@@ -78,7 +78,9 @@ Ext.onReady(function () {
 										txt_shop_s,
 										false,
 										this
-										.getValue());
+										.getValue(), function () {
+										Ext.getCmp('txt_object').focus(true);
+									});
 								},
 								listeners : {
 									specialkey : function (field, e) {
@@ -106,7 +108,9 @@ Ext.onReady(function () {
 										txt_object_s,
 										false,
 										this
-										.getValue());
+										.getValue(), function () {
+										Ext.getCmp('txt_price').focus(true);
+									});
 								},
 								listeners : {
 									specialkey : function (field, e) {
@@ -129,28 +133,56 @@ Ext.onReady(function () {
 								hideTrigger : true,
 								allowBlank : false,
 								keyNavEnabled : false,
-								mouseWheelEnabled : false
+								mouseWheelEnabled : false,
+								listeners : {
+									specialkey : function (field, e) {
+										if (e.getKey() == Ext.EventObject.ENTER) {
+											Ext.getCmp('txt_sdate').focus(true);
+										}
+									}
+								}
 
 							}, {
 								id : 'txt_sdate',
 								fieldLabel : '开始时间',
 								xtype : 'datefield',
 								format : 'Y-m-d',
-								allowBlank : false
+								allowBlank : false,
+								listeners : {
+									specialkey : function (field, e) {
+										if (e.getKey() == Ext.EventObject.ENTER) {
+											Ext.getCmp('txt_sdate').focus(true);
+										}
+									}
+								}
 							}, {
 								id : 'txt_edate',
 								fieldLabel : '结束时间',
 								xtype : 'datefield',
 								format : 'Y-m-d',
 								allowBlank : false,
-								colspan : 2
+								colspan : 2,
+								listeners : {
+									specialkey : function (field, e) {
+										if (e.getKey() == Ext.EventObject.ENTER) {
+											Ext.getCmp('txt_remark').focus(true);
+										}
+									}
+								}
 
 							}, {
 								id : 'txt_remark',
 								name : 'message',
 								fieldLabel : '备注',
 								width : 470,
-								colspan : 2
+								colspan : 2,
+								listeners : {
+									specialkey : function (field, e) {
+										if (e.getKey() == Ext.EventObject.ENTER) {
+											ext_btnSave.fireEvent('click');
+										}
+									}
+								}
 							}
 						]
 
@@ -219,16 +251,19 @@ LoadUI = function () {
 			icon : '../image/btn/save.png',
 			width : 100,
 			margin : '15 0 0 5',
-			handler : function () {
-				if (!check_save()) {
-					alert("数据项目填写不全！");
-					return;
+			listeners : {
+				"click" : function () {
+
+					if (!check_save()) {
+						alert("数据项目填写不全！");
+						return;
+					}
+					ext_btnAdd.setDisabled(false);
+					ext_btnModify.setDisabled(false);
+					ext_btnSave.setDisabled(true);
+					ext_btnDelete.setDisabled(false);
+					save();
 				}
-				ext_btnAdd.setDisabled(false);
-				ext_btnModify.setDisabled(false);
-				ext_btnSave.setDisabled(true);
-				ext_btnDelete.setDisabled(false);
-				save();
 			}
 		});
 	ext_btnDelete = Ext.create('Ext.Button', {
@@ -250,7 +285,7 @@ LoadGrid = function () {
 		fields : ['id', 'sdate', 'edate', {
 				name : 'price',
 				sortType : 'asFloat'
-			}, 'shop', 'object', 'createname', 'shop_s', 'object_s', 'remark','createtimestamp']
+			}, 'shop', 'object', 'createname', 'shop_s', 'object_s', 'remark', 'createtimestamp']
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 			buffered : false,
@@ -337,8 +372,7 @@ LoadGrid = function () {
 					text : '创建人',
 					width : 120,
 					dataIndex : 'createname'
-				}
-				, {
+				}, {
 					text : '创建时间',
 					width : 220,
 					dataIndex : 'createtimestamp'
