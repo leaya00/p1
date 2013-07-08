@@ -51,7 +51,7 @@ Ext.onReady(function () {
 									gridStore.proxy
 									.setExtraParam('tj', Ext.getCmp('txt_seach').getValue());
 									gridStore
-									.reload();
+									.loadPage(1);
 								}
 							}
 						]

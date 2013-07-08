@@ -186,7 +186,7 @@ LoadUI = function() {
 				gridStore.proxy.setExtraParam('txtj', txt_txtj.getValue());
 				gridStore.proxy.setExtraParam('date', txt_date.getValue()
 						.format("yyyy-MM-dd"));
-				gridStore.reload();
+				gridStore.loadPage(1);
 			} catch (e) {
 				alert("条件设置错误!");
 			}

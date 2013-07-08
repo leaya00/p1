@@ -171,7 +171,7 @@ LoadUI = function() {
 						.format("yyyy-MM-dd"));
 				gridStore.proxy.setExtraParam('edate', txt_edate.getValue()
 						.format("yyyy-MM-dd"));
-				gridStore.reload();
+				gridStore.loadPage(1);
 			} catch (e) {
 				alert("条件设置错误!");
 			}

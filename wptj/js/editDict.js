@@ -41,7 +41,7 @@ Ext.onReady(function () {
 								text : '搜索',
 								handler : function () {
 									gridStore.proxy.setExtraParam('tj', Ext.getCmp('txt_seach').getValue());
-									gridStore.reload();
+									gridStore.loadPage(1);;
 								}
 							}
 

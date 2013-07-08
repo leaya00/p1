@@ -130,7 +130,7 @@
 								handler : function () {
 									myMask.show();
 									gridStore.proxy.setExtraParam('tj', Ext.getCmp('txt_tj').getValue());
-									gridStore.reload();
+									gridStore.loadPage(1);
 								}
 							}
 						]
