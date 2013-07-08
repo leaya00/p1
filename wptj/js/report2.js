@@ -223,7 +223,7 @@ LoadGrid = function() {
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 		buffered : false,
-		pageSize : 25,
+		pageSize : 50,
 		proxy : {
 			type : "ajax",
 			actionMethods : 'post',

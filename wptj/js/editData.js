@@ -321,7 +321,7 @@ LoadGrid = function () {
 	});
 	gridStore = Ext.create('Ext.data.Store', {
 			buffered : false,
-			pageSize : 300,
+			pageSize : 50,
 			proxy : {
 				type : "ajax",
 				url : "./json/wptj_data.php",

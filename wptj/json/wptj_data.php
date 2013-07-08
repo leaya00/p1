@@ -22,6 +22,7 @@ switch ($_GET['op']) {
 		$data=$Db->query_fetch_all("select count(1) from ($base_sql) as temp");
 		$count=$data[0][0];
 		$data=$Db->query_fetch_all($base_sql.$limit_sql);
+		// file_put_contents('c:/xxx.txt',$base_sql.$limit_sql);
 		$result=array('root'=>$data,'count'=>$count);
 		echo json_encode($result);
 		// $Db->close();
