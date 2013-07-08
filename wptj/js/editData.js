@@ -8,6 +8,8 @@ txt_price = null;
 txt_sdate = null;
 txt_edate = null;
 txt_remark = null;
+//锁定快捷键
+isLock=false;
 Ext.onReady(function () {
 	myMask = new Ext.LoadMask($('body').get(0), {
 			msg : "请等待，正在执行任务..."
@@ -71,6 +73,7 @@ Ext.onReady(function () {
 								xtype : 'triggerfield',
 								triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 								onTriggerClick : function () {
+									isLock=true;
 									popWin(
 										'./DictSelect.php',
 										'shop',
@@ -79,11 +82,15 @@ Ext.onReady(function () {
 										false,
 										this
 										.getValue(), function () {
+										isLock=false;
 										Ext.getCmp('txt_object').focus(true);
 									});
 								},
 								listeners : {
 									specialkey : function (field, e) {
+										if(isLock){
+											return;
+										}
 										if (e.getKey() == Ext.EventObject.ENTER) {
 											this.onTriggerClick();
 										}
@@ -101,6 +108,7 @@ Ext.onReady(function () {
 								triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 								code : '',
 								onTriggerClick : function () {
+									isLock=true;
 									popWin(
 										'./DictSelect.php',
 										'object',
@@ -109,11 +117,15 @@ Ext.onReady(function () {
 										false,
 										this
 										.getValue(), function () {
+										isLock=false;
 										Ext.getCmp('txt_price').focus(true);
 									});
 								},
 								listeners : {
 									specialkey : function (field, e) {
+										if(isLock){
+											return;
+										}
 										if (e.getKey() == Ext.EventObject.ENTER) {
 											this.onTriggerClick();
 										}
