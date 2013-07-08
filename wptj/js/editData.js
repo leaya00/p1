@@ -273,6 +273,10 @@ LoadUI = function () {
 			width : 100,
 			margin : '15 0 0 5',
 			handler : function () {
+				if (!check_user()) {
+					alert('不能操作此条数据');
+					return;
+				}
 				del();
 			}
 		});
