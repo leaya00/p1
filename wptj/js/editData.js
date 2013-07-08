@@ -150,8 +150,8 @@ Ext.onReady(function () {
 								allowBlank : false,
 								listeners : {
 									specialkey : function (field, e) {
-										if (e.getKey() == Ext.EventObject.ENTER) {
-											Ext.getCmp('txt_sdate').focus(true);
+										if (e.getKey() == e.ENTER) {
+											Ext.getCmp('txt_edate').focus(true);
 										}
 									}
 								}
@@ -222,6 +222,7 @@ LoadUI = function () {
 				$("#hid_id").val("");
 				Set_formState(true);
 				Clear_form();
+				Ext.getCmp('txt_shop').focus(true);
 			}
 		});
 	ext_btnModify = Ext.create('Ext.Button', {
