@@ -1,5 +1,6 @@
 <?php	
 	require_once("lib/checkUser_json.php");
+	set_time_limit(0);
 ?>
 <?php
 require_once "../global.php";

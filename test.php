@@ -15,6 +15,7 @@ session_start();
 ddddddd
 
 <?php
+//php.ini  max_execution_time = 30
 	echo $_SESSION['username'];
 ?>
 hahahah
