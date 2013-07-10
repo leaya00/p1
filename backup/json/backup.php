@@ -3,6 +3,7 @@
 	if($_SESSION['username']!='admin'){
 			exit();
 		}
+	set_time_limit(0);
 ?>
 <?php
 header("Content-Type: application/json; charset=utf-8");     //编码及内容类型头信息加在这里
