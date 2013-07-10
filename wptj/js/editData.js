@@ -47,13 +47,19 @@ Ext.onReady(function () {
 								margin : '15 0 0 0',
 								xtype : 'button',
 								text : '搜索',
-								handler : function () {
+								handler : function () {									
 									gridStore.proxy
 									.setExtraParam('tj', Ext.getCmp('txt_seach').getValue());
 									gridStore
 									.loadPage(1);
 								}
 							}
+							,{
+									id:'cbx_isReload',
+									xtype : 'checkbox',
+									boxLabel:'保存后是否刷新数据',
+									margin : '10 0 0 20',
+								}
 						]
 					}, {
 						border : false,
@@ -290,6 +296,7 @@ LoadUI = function () {
 					ext_btnModify.setDisabled(false);
 					ext_btnSave.setDisabled(true);
 					ext_btnDelete.setDisabled(false);
+					ext_btnModify.setText("修改");
 					save();
 				}
 			}
@@ -520,7 +527,11 @@ save = function () {
 		data : mydata,
 		success : function (msg) {
 			if (msg.result == true) {
-				gridStore.reload();
+				if(Ext.getCmp('cbx_isReload').getValue()){
+					gridStore.reload();
+				}else{
+					Set_formState(false);
+				}
 				alert("信息: 保存成功!");
 			} else {
 				alert("错误信息: " + msg.result);
