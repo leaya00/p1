@@ -81,4 +81,9 @@ class Dbi{
 //      mysqli_fetch_all($result,MYSQLI_BOTH);
 //	
 }
-
+//pdo预备
+// $dbh = new PDO('mysql:host=localhost;dbname=lilang', 'root', 'root',array(PDO::ATTR_PERSISTENT=>true));
+	// $dbh->exec('SET NAMES utf8');
+	// $result=$dbh->query('select * from wptj_dict');
+	// $r=$result->fetchAll();
+	// print_r($r);
