@@ -59,6 +59,7 @@ Ext.onReady(function () {
 									xtype : 'checkbox',
 									boxLabel:'保存后是否刷新数据',
 									margin : '10 0 0 20',
+									checked:true
 								}
 						]
 					}, {
@@ -165,7 +166,7 @@ Ext.onReady(function () {
 								id : 'txt_sdate',
 								fieldLabel : '开始时间',
 								xtype : 'datefield',
-								format : 'Y-m-d',
+								format : 'Ymd',
 								allowBlank : false,
 								listeners : {
 									specialkey : function (field, e) {
@@ -178,7 +179,7 @@ Ext.onReady(function () {
 								id : 'txt_edate',
 								fieldLabel : '结束时间',
 								xtype : 'datefield',
-								format : 'Y-m-d',
+								format : 'Ymd',
 								allowBlank : false,
 								listeners : {
 									specialkey : function (field, e) {
@@ -192,7 +193,7 @@ Ext.onReady(function () {
 								id : 'txt_postdate',
 								fieldLabel : '报销时间',
 								xtype : 'datefield',
-								format : 'Y-m-d',
+								format : 'Ymd',
 								allowBlank : false,
 								listeners : {
 									specialkey : function (field, e) {
@@ -520,7 +521,6 @@ save = function () {
 		remark : txt_remark.getValue()
 
 	};
-
 	$.ajax({
 		type : "POST",
 		url : "./json/wptj_data.php?op=save",
