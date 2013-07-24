@@ -142,7 +142,7 @@ if(!empty($_POST['importdata'])){
 
 
 <div class="control-group"><label class="control-label">选择要导入的文件:</label>
-<div class="controls"><input type="file" name="inputExcel"
+<div class="controls"><input type="file" name="inputExcel" id="inputExcel"
 	style='width: 300px;'><br />
 <input class='btn btn-primary' type="button" onclick="exec();"
 	value="导入数据"></div>
@@ -153,8 +153,22 @@ if(!empty($_POST['importdata'])){
 
 </div>
 <script>
+	function GetFileName(filepath) {
+           if (filepath != "") {
+               var names = filepath.split("\\");
+               return names[names.length - 1];
+           }
+     }
 	function exec(){
-		$("#form1").submit();
+		var filepath=$("#inputExcel").val();
+		if(filepath===''){
+			alert('请选择文件');
+			return;
+		}
+		var r=confirm("是否要导入'"+GetFileName(filepath)+"'？");
+		if(r){
+			$("#form1").submit();
+			}
 		}
 </script>
 </body>

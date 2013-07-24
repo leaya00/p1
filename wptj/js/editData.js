@@ -7,10 +7,10 @@ txt_object_s = null;
 txt_price = null;
 txt_sdate = null;
 txt_edate = null;
-txt_postdate=null;
+txt_postdate = null;
 txt_remark = null;
 //锁定快捷键
-isLock=false;
+isLock = false;
 Ext.onReady(function () {
 	myMask = new Ext.LoadMask($('body').get(0), {
 			msg : "请等待，正在执行任务..."
@@ -47,20 +47,19 @@ Ext.onReady(function () {
 								margin : '15 0 0 0',
 								xtype : 'button',
 								text : '搜索',
-								handler : function () {									
+								handler : function () {
 									gridStore.proxy
 									.setExtraParam('tj', Ext.getCmp('txt_seach').getValue());
 									gridStore
 									.loadPage(1);
 								}
+							}, {
+								id : 'cbx_isReload',
+								xtype : 'checkbox',
+								boxLabel : '保存后是否刷新数据',
+								margin : '10 0 0 20',
+								checked : true
 							}
-							,{
-									id:'cbx_isReload',
-									xtype : 'checkbox',
-									boxLabel:'保存后是否刷新数据',
-									margin : '10 0 0 20',
-									checked:true
-								}
 						]
 					}, {
 						border : false,
@@ -81,7 +80,7 @@ Ext.onReady(function () {
 								xtype : 'triggerfield',
 								triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 								onTriggerClick : function () {
-									isLock=true;
+									isLock = true;
 									popWin(
 										'./DictSelect.php',
 										'shop',
@@ -90,13 +89,13 @@ Ext.onReady(function () {
 										false,
 										this
 										.getValue(), function () {
-										isLock=false;
+										isLock = false;
 										Ext.getCmp('txt_object').focus(true);
 									});
 								},
 								listeners : {
 									specialkey : function (field, e) {
-										if(isLock){
+										if (isLock) {
 											return;
 										}
 										if (e.getKey() == Ext.EventObject.ENTER) {
@@ -116,7 +115,7 @@ Ext.onReady(function () {
 								triggerCls : Ext.baseCSSPrefix + 'form-search-trigger',
 								code : '',
 								onTriggerClick : function () {
-									isLock=true;
+									isLock = true;
 									popWin(
 										'./DictSelect.php',
 										'object',
@@ -125,13 +124,13 @@ Ext.onReady(function () {
 										false,
 										this
 										.getValue(), function () {
-										isLock=false;
+										isLock = false;
 										Ext.getCmp('txt_price').focus(true);
 									});
 								},
 								listeners : {
 									specialkey : function (field, e) {
-										if(isLock){
+										if (isLock) {
 											return;
 										}
 										if (e.getKey() == Ext.EventObject.ENTER) {
@@ -322,7 +321,7 @@ LoadGrid = function () {
 
 	Ext.define('gridModel', {
 		extend : 'Ext.data.Model',
-		fields : ['id', 'sdate', 'edate','postdate', {
+		fields : ['id', 'sdate', 'edate', 'postdate', {
 				name : 'price',
 				sortType : 'asFloat'
 			}, 'shop', 'object', 'createname', 'shop_s', 'object_s', 'remark', 'createtimestamp']
@@ -471,7 +470,7 @@ Set_formState = function (v) {
 	txt_edate.setDisabled(!v);
 	txt_postdate.setDisabled(!v);
 	txt_remark.setDisabled(!v);
-	
+
 };
 Clear_form = function () {
 	txt_shop.setValue('');
@@ -517,7 +516,7 @@ save = function () {
 		price : txt_price.getValue(),
 		shop : txt_shop.getValue(),
 		object : txt_object.getValue(),
-		postdate:txt_postdate.getValue().format("yyyy-MM-dd"),
+		postdate : txt_postdate.getValue().format("yyyy-MM-dd"),
 		remark : txt_remark.getValue()
 
 	};
@@ -527,9 +526,9 @@ save = function () {
 		data : mydata,
 		success : function (msg) {
 			if (msg.result == true) {
-				if(Ext.getCmp('cbx_isReload').getValue()){
+				if (Ext.getCmp('cbx_isReload').getValue()) {
 					gridStore.reload();
-				}else{
+				} else {
 					Set_formState(false);
 				}
 				alert("信息: 保存成功!");
@@ -552,7 +551,11 @@ del = function () {
 				},
 				success : function (msg) {
 					if (msg.result == true) {
-						gridStore.reload();
+						if (Ext.getCmp('cbx_isReload').getValue()) {
+							gridStore.reload();
+						} else {
+							Set_formState(false);
+						}
 						alert("信息: 删除成功!");
 					} else {
 						alert("错误信息: " + msg.result);
