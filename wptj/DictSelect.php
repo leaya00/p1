@@ -55,7 +55,7 @@
 							myMask.hide();
 							if (records.length > 0) {
 								dataGrid.getSelectionModel().select(0);
-								dataGrid.focus();
+								dataGrid.getView().focusRow();
 								
 							}
 						}
@@ -192,9 +192,12 @@
 			$('body').keyup(function(e){				
 				if(e.keyCode==13){
 					Ext.getCmp('btnOk').fireEvent('click');
+					
 				}
 				
 			});
+			
+			
 		});
 
 	};
