@@ -34,7 +34,7 @@
 			
 			gridStore = Ext.create('Ext.data.Store', {
 					buffered : false,
-					pageSize : 50,
+					pageSize : 200,
 					proxy : {
 						type : "ajax",
 						actionMethods : 'post',
